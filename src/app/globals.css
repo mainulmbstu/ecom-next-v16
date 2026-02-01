@@ -1,0 +1,338 @@
+/* @import "tailwindcss";
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui";
+/* @plugin "tailwindcss-animate"; */
+
+@theme {
+  --text-tiny: 0.625rem;
+  --text-tiny--line-height: 1.5rem;
+  --text-tiny--letter-spacing: 0.125rem;
+  --text-tiny--font-weight: 500;
+}
+@theme {
+  --test-400: #ffad00;
+  --font-roboto: "Roboto", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+.bg-test {
+  background-color: var(--test-400);
+}
+@utility black-theme {
+  background-color: rgb(0, 0, 0);
+  color: #ffffff;
+}
+/* working */
+@utility card {
+  background-color: #e6e6e6;
+  /* background-color: var(--color-gray); */
+  border-radius: var(--rounded-lg);
+  padding: 10px;
+  box-shadow: var(--shadow-xl);
+  color: #0a0a0a;
+}
+/* customize class */
+@layer components {
+  .card1 {
+    background: #000;
+  }
+}
+
+/* customize base element */
+@layer base {
+  h1 {
+    /* font-size: var(--text-5xl); */
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+  h2 {
+    /* @apply font-bold text-4xl */
+    font-size: 2em;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  h4 {
+    font-size: 1.33em;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 1.17em;
+    font-weight: bold;
+  }
+  h6 {
+    font-size: 1em;
+    font-weight: bold;
+  }
+  /* a {
+    color: var(--color-blue-600);
+    text-decoration-line: underline;
+  } */
+  hr {
+    margin: 12px 0;
+  }
+  input,
+  textarea,
+  select {
+    width: 100%;
+    background-color: white;
+  }
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+[data-theme="dark"] {
+  --background: black;
+  --foreground: white;
+}
+
+/* custom theme app e use na korle  */
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --color: white;
+  }
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input:focus {
+  outline-width: 0;
+  border-color: #df5d5d;
+}
+
+th {
+  font-weight: bolder;
+  background-color: aquamarine;
+}
+/* 
+* {
+  scrollbar-gutter: stable;
+} */
+
+.size-font {
+  font-size: clamp(8px, 1vw, 100px);
+}
+
+.input {
+  cursor: text;
+  border: var(--border) solid #0000;
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 1;
+  appearance: none;
+  align-items: center;
+  gap: calc(0.25rem /* 4px */ * 2) /* 0.5rem = 8px */;
+  background-color: var(--color-base-100) /* var(--color-base-100) */;
+  padding-inline: calc(0.25rem /* 4px */ * 3) /* 0.75rem = 12px */;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: clamp(3rem /* 48px */, 20rem /* 320px */, 100%);
+  height: var(--size);
+  font-size: 0.875rem /* 14px */;
+  touch-action: manipulation;
+  border-start-start-radius: var(
+    --join-ss,
+    var(--radius-field) /* var(--radius-field) */
+  );
+  border-start-end-radius: var(
+    --join-se,
+    var(--radius-field) /* var(--radius-field) */
+  );
+  border-end-start-radius: var(
+    --join-es,
+    var(--radius-field) /* var(--radius-field) */
+  );
+  border-end-end-radius: var(
+    --join-ee,
+    var(--radius-field) /* var(--radius-field) */
+  );
+  border-color: var(--input-color);
+  box-shadow:
+    0 1px
+      color-mix(in oklab, var(--input-color) calc(var(--depth) * 10%), #0000)
+      inset,
+    0 -1px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset;
+  --size: calc(var(--size-field, 0.25rem /* 4px */) * 10);
+  --input-color: color-mix(
+    in oklab,
+    var(--color-base-content) /* var(--color-base-content) */ 20%,
+    #0000
+  );
+  &:where(input) {
+    display: inline-flex;
+  }
+  :where(input) {
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    &:focus,
+    &:focus-within {
+      --tw-outline-style: none;
+      outline-style: none;
+      @media (forced-colors: active) {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+    }
+  }
+  :where(input[type="url"]),
+  :where(input[type="email"]) {
+    direction: ltr;
+  }
+  :where(input[type="date"]) {
+    display: inline-block;
+  }
+  &:focus,
+  &:focus-within {
+    --input-color: var(--color-base-content) /* var(--color-base-content) */;
+    box-shadow: 0 1px
+      color-mix(in oklab, var(--input-color) calc(var(--depth) * 10%), #0000);
+    outline: 2px solid var(--input-color);
+    outline-offset: 2px;
+    isolation: isolate;
+    z-index: 1;
+  }
+  &:has(> input[disabled]),
+  &:is(:disabled, [disabled]) {
+    cursor: not-allowed;
+    border-color: var(--color-base-200) /* var(--color-base-200) */;
+    background-color: var(--color-base-200) /* var(--color-base-200) */;
+    color: color-mix(
+      in oklab,
+      var(--color-base-content) /* var(--color-base-content) */ 40%,
+      transparent
+    );
+    &::placeholder {
+      color: color-mix(
+        in oklab,
+        var(--color-base-content) /* var(--color-base-content) */ 20%,
+        transparent
+      );
+    }
+    box-shadow: none;
+  }
+  &:has(> input[disabled]) > input[disabled] {
+    cursor: not-allowed;
+  }
+  &::-webkit-date-and-time-value {
+    text-align: inherit;
+  }
+  &[type="number"] {
+    &::-webkit-inner-spin-button {
+      margin-block: calc(0.25rem /* 4px */ * -3) /* -0.75rem = -12px */;
+      margin-inline-end: calc(0.25rem /* 4px */ * -3) /* -0.75rem = -12px */;
+    }
+  }
+  &::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset-inline-end: 0.75em;
+  }
+}
+
+.join {
+  display: inline-flex;
+  align-items: stretch;
+  --join-ss: 0;
+  --join-se: 0;
+  --join-es: 0;
+  --join-ee: 0;
+  :where(.join-item) {
+    border-start-start-radius: var(--join-ss, 0);
+    border-start-end-radius: var(--join-se, 0);
+    border-end-start-radius: var(--join-es, 0);
+    border-end-end-radius: var(--join-ee, 0);
+    * {
+      --join-ss: var(--radius-field) /* var(--radius-field) */;
+      --join-se: var(--radius-field) /* var(--radius-field) */;
+      --join-es: var(--radius-field) /* var(--radius-field) */;
+      --join-ee: var(--radius-field) /* var(--radius-field) */;
+    }
+  }
+  > .join-item:where(:first-child) {
+    --join-ss: var(--radius-field) /* var(--radius-field) */;
+    --join-se: 0;
+    --join-es: var(--radius-field) /* var(--radius-field) */;
+    --join-ee: 0;
+  }
+  :first-child:not(:last-child) {
+    :where(.join-item) {
+      --join-ss: var(--radius-field) /* var(--radius-field) */;
+      --join-se: 0;
+      --join-es: var(--radius-field) /* var(--radius-field) */;
+      --join-ee: 0;
+    }
+  }
+  > .join-item:where(:last-child) {
+    --join-ss: 0;
+    --join-se: var(--radius-field) /* var(--radius-field) */;
+    --join-es: 0;
+    --join-ee: var(--radius-field) /* var(--radius-field) */;
+  }
+  :last-child:not(:first-child) {
+    :where(.join-item) {
+      --join-ss: 0;
+      --join-se: var(--radius-field) /* var(--radius-field) */;
+      --join-es: 0;
+      --join-ee: var(--radius-field) /* var(--radius-field) */;
+    }
+  }
+  > .join-item:where(:only-child) {
+    --join-ss: var(--radius-field) /* var(--radius-field) */;
+    --join-se: var(--radius-field) /* var(--radius-field) */;
+    --join-es: var(--radius-field) /* var(--radius-field) */;
+    --join-ee: var(--radius-field) /* var(--radius-field) */;
+  }
+  :only-child {
+    :where(.join-item) {
+      --join-ss: var(--radius-field) /* var(--radius-field) */;
+      --join-se: var(--radius-field) /* var(--radius-field) */;
+      --join-es: var(--radius-field) /* var(--radius-field) */;
+      --join-ee: var(--radius-field) /* var(--radius-field) */;
+    }
+  }
+}

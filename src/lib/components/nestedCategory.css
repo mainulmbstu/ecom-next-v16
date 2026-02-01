@@ -1,0 +1,57 @@
+.catPage {
+  min-height: 40px;
+  width: 100%;
+  background-color: azure;
+  box-shadow: 1px 2px 10px -2px;
+  position: sticky;
+  top: 55px;
+  z-index: 2;
+}
+.catPage ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.catPage > ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 10px;
+  position: relative;
+  /* background-color: brown; */
+}
+.catPage > ul > li > span {
+  display: block;
+  line-height: 40px;
+  cursor: pointer;
+  padding: 5px 0px;
+  margin-right: 20px;
+}
+
+.catPage > ul > li > span:hover {
+  color: red;
+}
+.catPage > ul > li > ul {
+  background-color: rgb(236, 223, 223);
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 0 10px 10px;
+  z-index: 1;
+  display: none;
+}
+.catPage > ul > li:hover > ul {
+  display: block;
+  z-index: 1;
+}
+.catPage > ul > li > ul > li {
+  float: left;
+  /* margin-right: 10px; */
+}
+
+.catPage > ul > li > ul > li > a {
+  font-weight: bold;
+}
+.catPage > ul > li > ul > li a {
+  display: block;
+  padding: 5px 20px 5px 0;
+}
