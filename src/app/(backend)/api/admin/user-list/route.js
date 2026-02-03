@@ -7,7 +7,6 @@ export async function GET(req) {
   let page = req.nextUrl.searchParams.get("page");
   let perPage = req.nextUrl.searchParams.get("perPage");
   let skip = (page - 1) * perPage;
-
   try {
     await dbConnect();
     const total = await UserModel.find(
@@ -18,7 +17,7 @@ export async function GET(req) {
           { phone: { $regex: keyword, $options: "i" } },
         ],
       },
-      { password: 0 }
+      { password: 0 },
     );
 
     const userList = await UserModel.find(
@@ -29,7 +28,7 @@ export async function GET(req) {
           { phone: { $regex: keyword, $options: "i" } },
         ],
       },
-      { password: 0 }
+      { password: 0 },
     )
       .skip(skip)
       .limit(perPage)

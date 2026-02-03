@@ -1,3 +1,4 @@
+import { wait } from "@/lib/helpers/helperFunction";
 import Image from "next/image";
 
 export const metadata = {
@@ -10,6 +11,7 @@ const About = async () => {
     "use server";
     console.log(22222222222);
   };
+  await wait(10000);
   return <div>About</div>;
 };
 

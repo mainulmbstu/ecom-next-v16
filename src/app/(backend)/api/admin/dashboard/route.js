@@ -12,7 +12,7 @@ export async function POST(req) {
     let todayShort = todayFull.toDateString();
     let today = new Date(todayShort);
     let todayNow = new Date();
-    console.log(startDate);
+
     await dbConnect();
     const orders = await OrderModel.find({
       createdAt: { $gte: sdate, $lte: edate },

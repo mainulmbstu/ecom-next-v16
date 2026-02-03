@@ -24,6 +24,7 @@ const Users = async ({ searchParams }) => {
     `${process.env.BASE_URL}/api/admin/user-list?keyword=${keyword}&page=${page}&perPage=${perPage}`,
     {
       cache: "force-cache",
+      next: { tags: ["user-list", "max"] },
     },
   );
   let data = await res.json();

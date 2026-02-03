@@ -3,7 +3,7 @@ import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { uploadOnCloudinary } from "@/lib/helpers/cloudinary";
 import slugify from "slugify";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import { CategoryModel } from "@/lib/models/categoryModdel";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
@@ -41,7 +41,9 @@ export async function POST(req) {
       user: userInfo?._id,
       picture: url && url,
     });
-    revalidatePath("/", "layout"); // layout means 'path/*'
+    revalidateTag("category-list", "max");
+    // revalidatePath("/", "layout");
+    // layout means 'path/*'
     // revalidatePath("/post/category/[category]", 'page');  // // page means 'exact path'
 
     return Response.json({

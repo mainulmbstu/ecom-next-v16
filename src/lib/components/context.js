@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Axios } from "../helpers/AxiosInstance";
 import { getTokenData } from "../helpers/getTokenData";
@@ -23,11 +23,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
   let catPlainFunc = async () => {
+    // let res = await fetch(`/api/both/category-list`, {
+    //   cache: "force-cache",
+    //   next: { tags: ["category-list"] },
+    // });
+    // let data = await res.json();
     let { data } = await Axios.get(`/api/both/category-list`);
     setCatPlain(data?.categoryList);
     setCatNested(data?.nestedCategory);
-    // let { data } = await Axios.get(`/api/user/category`);
-    // setCatPlain(data?.catPlain);
   };
   useEffect(() => {
     let storageCart = localStorage.getItem("cart");

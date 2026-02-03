@@ -62,7 +62,6 @@ export const totalAction = async (startDate, endDate) => {
     if (!totalSale || totalSale?.length === 0) {
       return { msg: "No data found" };
     }
-    console.log(resultArr);
     return {
       data: {
         dateTotalProds,

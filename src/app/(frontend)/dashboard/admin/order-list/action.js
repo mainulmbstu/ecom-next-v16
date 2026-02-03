@@ -3,7 +3,7 @@
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { OrderModel } from "@/lib/models/OrderModel";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 const {
   createPayment,
   executePayment,
@@ -16,6 +16,8 @@ export const StatusAction = async (value, id) => {
     await dbConnect();
     await OrderModel.findByIdAndUpdate({ _id: id }, { status: value });
     // revalidatePath("/dashboard/admin/order-list");
+
+    updateTag("order-list");
 
     return {
       message: `Order has been successfully updated to ${value} `,
@@ -85,6 +87,7 @@ export const bkashRefund = async (value) => {
       };
     }
     // revalidatePath("/dashboard/admin/order-list");
+    updateTag("order-list");
 
     return {
       success: false,

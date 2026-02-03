@@ -20,7 +20,7 @@ const HomeCatPage = () => {
                   className="w-32 min-h-20 h-15 m-auto object-contain"
                   width={200}
                   height={100}
-                  alt=""
+                  alt="image"
                 />
                 <p className=" text-center">{item?.name} </p>
               </Link>

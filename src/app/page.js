@@ -11,9 +11,11 @@ const Home = async ({ searchParams }) => {
   );
   // console.log(data);
   return (
-    <Suspense fallback=<Skeleton />>
-      <Home1 searchParams={searchParams} promise={data} />
-    </Suspense>
+    <div>
+      <Suspense fallback=<Skeleton />>
+        <Home1 searchParams={searchParams} promise={data} />
+      </Suspense>
+    </div>
   );
 };
 

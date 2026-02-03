@@ -4,11 +4,15 @@ import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { CategoryModel } from "@/lib/models/categoryModdel";
 import { ProductModel } from "@/lib/models/productModel";
+import { cacheLife, cacheTag } from "next/cache";
 
 //===========================================================
 export const allProductAction = async (keyword, page = 1, perPage) => {
+  "use cache";
+  cacheLife("days");
+  cacheTag("product-list");
   let skip = (page - 1) * perPage;
-  // let limit = page * perPage;
+  let limit = page * perPage;
   try {
     await dbConnect();
     // let author = await UserModel.find({
@@ -19,7 +23,7 @@ export const allProductAction = async (keyword, page = 1, perPage) => {
       offer: { $gt: 0 },
     })
       .populate("category", "name", CategoryModel)
-      .limit(7)
+      .limit(limit)
       .sort({ createdAt: -1 });
     let offerIds = offerList?.length && offerList.map((item) => item._id);
 
@@ -44,7 +48,11 @@ export const allProductAction = async (keyword, page = 1, perPage) => {
       .skip(skip)
       .limit(perPage)
       .sort({ createdAt: -1 });
-    return { offerList, list, total: total?.length };
+    return {
+      offerList: JSON.stringify(offerList),
+      list: JSON.stringify(list),
+      total: total?.length,
+    };
   } catch (error) {
     console.log(error);
     return { message: await getErrorMessage(error) };

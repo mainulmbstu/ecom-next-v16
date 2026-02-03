@@ -19,7 +19,7 @@ const Contact = async ({ searchParams }) => {
   // let userInfo = await getTokenData(await getCookieValue("token"));
 
   let data = await getAllAction(keyword, page, perPage);
-  let contacts = data?.list;
+  let contacts = JSON.parse(data?.list);
   let unread =
     contacts?.length && contacts.filter((item) => item?.replies?.length === 0);
 
@@ -118,7 +118,7 @@ const Contact = async ({ searchParams }) => {
       </div>
       <div className=" mt-3 ">
         <Pagination
-          total={data?.total}
+          total={data?.total || 1}
           page={page}
           perPage={perPage}
           spms1="keyword"

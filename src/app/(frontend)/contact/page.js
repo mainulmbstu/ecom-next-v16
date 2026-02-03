@@ -2,6 +2,9 @@ import ContactPage from "./ContactPage";
 import moment from "moment";
 import Pagination from "@/lib/components/pagination";
 import { getMessageAction } from "./action";
+import { getTokenData } from "@/lib/helpers/getTokenData";
+import { getCookieValue } from "@/lib/helpers/getCookieValue";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Contact",
@@ -12,12 +15,16 @@ const Contact = async ({ searchParams }) => {
   let spms = await searchParams;
   let page = Number((await spms["page"]) ?? "1");
   let perPage = Number((await spms["perPage"]) ?? "12");
+  let userInfo = await getTokenData(await getCookieValue("token"));
 
-  let data = await getMessageAction(page, perPage);
-  let contacts = data?.list;
+  let data = await getMessageAction(page, perPage, userInfo);
+  let contacts = JSON.parse(data?.list);
+  let data2 = getMessageAction(page, perPage, userInfo);
   return (
     <div className="px-2">
-      <ContactPage />
+      <Suspense>
+        <ContactPage promise={data2} />
+      </Suspense>
       <h2 className=" box-decoration-slice bg-linear-to-r from-blue-400 via-yellow-300 to-pink-400">
         Message history
       </h2>

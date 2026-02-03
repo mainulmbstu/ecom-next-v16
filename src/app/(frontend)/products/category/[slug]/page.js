@@ -21,7 +21,11 @@ const CategoryPage = async ({ params, searchParams }) => {
   let perPage = Number((await spms["perPage"]) ?? "30");
 
   let res = await fetch(
-    `${process.env.BASE_URL}/api/admin/product?keyword=${keyword}&category=${slug}&page=${page}&perPage=${perPage}`
+    `${process.env.BASE_URL}/api/admin/product?keyword=${keyword}&category=${slug}&page=${page}&perPage=${perPage}`,
+    {
+      cache: "force-cache",
+      next: { tags: ["product-list"] },
+    },
   );
   let data = await res.json();
   let entries = data?.productList;

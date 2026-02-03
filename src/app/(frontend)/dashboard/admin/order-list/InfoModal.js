@@ -32,7 +32,7 @@ const InfoModal = ({ value }) => {
         <p key={k.trxID}>
           {" "}
           {k} : {paymentInfo[k]}{" "}
-        </p>
+        </p>,
       );
     }
     return text;
@@ -58,7 +58,7 @@ const InfoModal = ({ value }) => {
                 <SubmitButton title={"View details"} design={"btn-accent"} />
               </div>
             </Form>
-            <p> {info()} </p>
+            {info()}
           </div>
           <div className="modal-action">
             <form method="dialog">

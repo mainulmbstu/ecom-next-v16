@@ -33,8 +33,8 @@ const Page2 = () => {
   }, [seconds]);
 
   let clientAction = async (today) => {
-    today === "today" ? setHead(true) : setHead(false);
     let todayDate = new Date().toDateString();
+    today === "today" ? setHead(true) : setHead(false);
     // let data = await totalAction(startDate, endDate);
     let { data } = await Axios.post("/api/admin/dashboard", {
       startDate: today === "today" ? todayDate : startDate,
@@ -79,6 +79,15 @@ const Page2 = () => {
       <hr />
       <div>
         <Form action={() => clientAction("today")} className="w-64">
+          {/* <div className="hidden">
+            <input
+              defaultValue={startDate}
+              className="input"
+              type="datetime-local"
+              id="sdate"
+              name="sdate"
+            />
+          </div> */}
           <div className="mt-3">
             <SubmitButton
               title={"Click to get today's Data"}

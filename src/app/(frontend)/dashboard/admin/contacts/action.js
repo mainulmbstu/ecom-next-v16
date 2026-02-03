@@ -4,16 +4,17 @@ import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import { ContactModel, ContactReplyModel } from "@/lib/models/ContactModel";
-import { revalidatePath } from "next/cache";
+import { cacheTag, revalidatePath, updateTag } from "next/cache";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
 
 //===========================================================
 export const getAllAction = async (keyword, page = 1, perPage) => {
+  "use cache";
+  cacheTag("contacts");
   let skip = (page - 1) * perPage;
   let editKey = keyword === "unread" ? "" : keyword;
   try {
     await dbConnect();
-
     const total = await ContactModel.find({
       email: { $regex: editKey, $options: "i" },
     });
@@ -26,9 +27,9 @@ export const getAllAction = async (keyword, page = 1, perPage) => {
       .sort({ createdAt: -1 });
     let unread =
       list?.length && list.filter((item) => item?.replies?.length === 0);
-
     return {
-      list: keyword === "unread" ? unread : list,
+      list:
+        keyword === "unread" ? JSON.stringify(unread) : JSON.stringify(list),
       total: keyword === "unread" ? unread?.length : total?.length,
     };
   } catch (error) {
@@ -56,7 +57,8 @@ export const replyAction = async (cid, formData) => {
       { userName: userInfo?.name, msg: reply, date: Date.now() },
     ];
     await findmsg.save();
-    revalidatePath("/", "layout");
+    // revalidatePath("/", "layout");
+    updateTag("contacts");
     return { success: true, message: "Replied successfully" };
   } catch (error) {
     console.log(error);

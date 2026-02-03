@@ -19,8 +19,8 @@ const Card = async ({ item }) => {
             fill
             priority={true}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            blurDataURL={blurData}
-            placeholder="blur"
+            // blurDataURL={blurData}
+            // placeholder="blur"
             className=" object-contain"
             src={item?.picture[0]?.secure_url}
             alt=""

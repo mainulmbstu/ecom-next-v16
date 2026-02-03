@@ -4,8 +4,12 @@ import SubmitButton from "@/lib/components/SubmitButton";
 import Form from "next/form";
 import toast from "react-hot-toast";
 import { contactAction } from "./action";
+import { use } from "react";
 
-const ContactPage = () => {
+const ContactPage = ({ promise }) => {
+  // let data = use(promise);
+  // let list = JSON.parse(data?.list);
+  // console.log(list);
   let { userInfo } = useAuth();
   let clientAction = async (formData) => {
     let data = await contactAction(formData);
