@@ -80,14 +80,14 @@ export const bkashRefund = async (value) => {
         { "payment.refund": "refunded" },
         { new: true },
       );
+      // revalidatePath("/dashboard/admin/order-list");
+      updateTag("order-list");
       return {
         success: true,
         message: `BDT ${amount} has been refunded successfully`,
         result,
       };
     }
-    // revalidatePath("/dashboard/admin/order-list");
-    updateTag("order-list");
 
     return {
       success: false,

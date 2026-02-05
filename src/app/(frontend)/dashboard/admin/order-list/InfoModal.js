@@ -24,12 +24,11 @@ const InfoModal = ({ value }) => {
       toast.error(data?.message);
     }
   };
-
   let info = () => {
     let text = [];
     for (let k in paymentInfo) {
       text.push(
-        <p key={k.trxID}>
+        <p key={k}>
           {" "}
           {k} : {paymentInfo[k]}{" "}
         </p>,

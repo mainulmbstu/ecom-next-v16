@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/helpers/dbConnect";
 import { OrderModel } from "@/lib/models/OrderModel";
 import { ProductModel } from "@/lib/models/productModel";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 const {
   createPayment,
@@ -39,7 +40,7 @@ export async function GET(req, res) {
         "payment.trxn_id": result?.trxID,
         "payment.bkashNo": result?.customerMsisdn,
       },
-      { new: true }
+      { new: true },
     );
     if (updated.isModified) {
       for (let v of updated.products) {
@@ -56,6 +57,7 @@ export async function GET(req, res) {
     };
   // You may use here WebSocket, server-sent events, or other methods to notify your client
   if (response?.statusCode === "0000") {
+    revalidateTag("order-list");
     redirect(`/products/payment/success?paymentID=${paymentID}`);
   } else {
     await OrderModel.findOneAndDelete({
