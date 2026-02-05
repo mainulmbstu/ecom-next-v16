@@ -9,8 +9,7 @@ export async function proxy(request) {
   // var userInfo = jwt.verify(token, process.env.JWT_KEY);
   // console.log(process.env.JWT_KEY);
   let path = request.nextUrl.pathname;
-  let publicPaths =
-    path === "/user/login" || path === "/user/register" || path === "/cart";
+  let publicPaths = path === "/user/login" || path === "/user/register";
   // || path === "/";
 
   if (publicPaths) {
@@ -47,7 +46,6 @@ export const config = {
     "/user/login/:path*",
     "/user/register/:path*",
     "/post/:path*",
-    "/cart",
   ],
 
   // matcher: [

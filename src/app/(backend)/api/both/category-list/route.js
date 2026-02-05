@@ -7,7 +7,6 @@ export async function GET(req) {
   let page = req.nextUrl.searchParams.get("page");
   let perPage = req.nextUrl.searchParams.get("perPage");
   let skip = (page - 1) * perPage;
-
   try {
     await dbConnect();
     const total = await CategoryModel.find({

@@ -16,7 +16,10 @@ const CategoryList = async ({ searchParams }) => {
 
   let res = await fetch(
     `${process.env.BASE_URL}/api/admin/category-list?keyword=${keyword}&page=${page}&perPage=${perPage}`,
-    { cache: "force-cache", next: { tags: ["category-list"] } },
+    {
+      cache: "force-cache",
+      next: { tags: ["category-list"] },
+    },
   );
   let data = await res.json();
   let entries = data?.categoryList;

@@ -147,7 +147,7 @@ export const CartPage = () => {
       });
 
       console.log(data);
-      // router.push(data?.url);
+      // router.push(data?.sslcz?.baseURL);
     } catch (error) {
       console.log(error);
     } finally {
@@ -351,9 +351,14 @@ export const CartPage = () => {
           </div>
           {userInfo && cart?.length && gateway == "ssl" ? (
             <div className="my-4 w-full">
-              <button onClick={checkoutSSL} className="btn btn-success w-full">
-                Check out(SSL)
-              </button>
+              <Form action={checkoutSSL} className="w-full">
+                <div className="mt-3">
+                  <SubmitButton
+                    title={"Check out (SSL)"}
+                    design={"btn-success w-full"}
+                  />
+                </div>
+              </Form>
             </div>
           ) : userInfo && cart?.length && gateway == "bkash" ? (
             <div className="my-4 w-full">

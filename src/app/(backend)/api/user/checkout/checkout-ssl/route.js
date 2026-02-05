@@ -1,3 +1,6 @@
+// export const runtime = "nodejs";
+//'edge' or 'nodejs'  eta default
+
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
@@ -10,7 +13,6 @@ const SSLCommerzPayment = require("sslcommerz-lts");
 
 export async function POST(req) {
   let frontData = await req.json();
-
   const { cart, total } = frontData;
   let trxn_id = Date.now();
   let baseurl = process.env.BASE_URL;
@@ -45,38 +47,40 @@ export async function POST(req) {
     ship_postcode: 1000,
     ship_country: "Bangladesh",
   };
+  // console.log(66666666666666666666, userInfo);
 
-  // sslcommerz
-  // const store_id = process.env.STORE_ID;
-  // const store_passwd = process.env.STORE_PASS;
-  // const is_live = false; //true for live, false for sandbox
-  // const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
-  // // console.log(sslcz);
-  // return Response.json(sslcz);
+  //sslcommerz;
+  const store_id = process.env.STORE_ID;
+  const store_passwd = process.env.STORE_PASS;
+  const is_live = false; //true for live, false for sandbox
+  const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+  console.log(sslcz);
+  // sslcz.init(data);
   // sslcz.init(data).then((apiResponse) => {
   //   // Redirect the user to payment gateway
   //   let GatewayPageURL = apiResponse.GatewayPageURL;
   //   // res.send({ url: GatewayPageURL });
   //   console.log("Redirecting to: ", GatewayPageURL);
 
-  //   // let order = {
-  //   //   products: cart,
-  //   //   total,
-  //   //   payment: {
-  //   //     trxn_id,
-  //   //     ssl_sessionkey: apiResponse.sessionkey,
-  //   //   },
-  //   //   user: userInfo?._id,
-  //   // };
-  //   // OrderModel.create(order);
+  //   //   // let order = {
+  //   //   //   products: cart,
+  //   //   //   total,
+  //   //   //   payment: {
+  //   //   //     trxn_id,
+  //   //   //     ssl_sessionkey: apiResponse.sessionkey,
+  //   //   //   },
+  //   //   //   user: userInfo?._id,
+  //   //   // };
+  //   //   // OrderModel.create(order);
   // });
 
   try {
-    const store_id = process.env.STORE_ID;
-    const store_passwd = process.env.STORE_PASS;
-    const is_live = false; //true for live, false for sandbox
-    const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
-    sslcz.init(data);
+    const apiResponse = await sslcz.init(data);
+    // const store_id = process.env.STORE_ID;
+    // const store_passwd = process.env.STORE_PASS;
+    // const is_live = false; //true for live, false for sandbox
+    // const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+    // sslcz.init(data);
     // sslcz.init(data).then((apiResponse) => {
     //   // Redirect the user to payment gateway
     //   let GatewayPageURL = apiResponse.GatewayPageURL;
@@ -84,8 +88,11 @@ export async function POST(req) {
     //   console.log("Redirecting to: ", GatewayPageURL);
     // });
     // console.log(sslcz);
-    return Response.json({ sslcz, data });
+    return NextResponse.json(apiResponse);
+    // return Response.json({ sslcz, data });
   } catch (error) {
+    // if u use redirect in try block
+    if (error.message === "NEXT_REDIRECT") throw error;
     console.log(error);
     return Response.json({ message: await getErrorMessage(error) });
   }

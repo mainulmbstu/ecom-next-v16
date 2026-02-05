@@ -41,8 +41,10 @@ export async function POST(req) {
       user: userInfo?._id,
       picture: url && url,
     });
-    revalidateTag("category-list", "max");
+    revalidateTag("category-list", { expire: 0 });
+    // for immediate update {expire:0}, 'max' for update after refresh or next visit.
     // revalidatePath("/", "layout");
+    // revalidatePath("/dashboard/admin/create-category");
     // layout means 'path/*'
     // revalidatePath("/post/category/[category]", 'page');  // // page means 'exact path'
 

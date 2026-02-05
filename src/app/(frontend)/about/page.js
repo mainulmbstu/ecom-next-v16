@@ -11,7 +11,7 @@ const About = async () => {
     "use server";
     console.log(22222222222);
   };
-  await wait(10000);
+  await wait(5000);
   return <div>About</div>;
 };
 

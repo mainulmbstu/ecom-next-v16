@@ -13,9 +13,8 @@ const Home12 = async ({ searchParams, promise }) => {
   let perPage = Number((await spms["perPage"]) ?? "30");
 
   let data = await allProductAction(keyword, page, perPage);
-
-  let entries = JSON.parse(data?.list);
-  let offerList = JSON.parse(data?.offerList);
+  let entries = !data?.message ? JSON.parse(data?.list) : [];
+  let offerList = !data?.message ? JSON.parse(data?.offerList) : [];
   // let [mmmm] = await Promise.all([promise]);
   // let mmm = await promise.then((d) => d);
   // console.log(JSON.parse(mmm?.offerList));
@@ -94,7 +93,7 @@ const Home12 = async ({ searchParams, promise }) => {
       /> */}
       <div className=" mt-3 ">
         <Pagination
-          total={data?.total}
+          total={data?.total || 1}
           page={page}
           perPage={perPage}
           spms1="keyword"

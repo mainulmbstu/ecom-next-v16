@@ -7,6 +7,8 @@ const nextConfig = {
   // },
   cacheComponents: true,
   experimental: {
+    // serverComponentsHmrCache: false,
+    // defaults to true
     serverActions: {
       bodySizeLimit: "2mb",
       // allowedOrigins: ["my-proxy.com", "*.my-proxy.com"],

@@ -18,9 +18,9 @@ export const loginAction = async (formData) => {
   if (!email || !password) {
     return { message: "Please enter all required fields" };
   }
-
   try {
     await dbConnect();
+    console.log(44444444444);
     const user = await UserModel.findOne({ email });
     if (!user) {
       return { message: "User does not exist" };
