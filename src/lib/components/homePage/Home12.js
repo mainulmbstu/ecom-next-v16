@@ -13,6 +13,7 @@ const Home12 = async ({ searchParams, promise }) => {
   let perPage = Number((await spms["perPage"]) ?? "30");
 
   let data = await allProductAction(keyword, page, perPage);
+  // let postList = JSON.parse(data?.postList) ?? [];
   let entries = !data?.message ? JSON.parse(data?.list) : [];
   let offerList = !data?.message ? JSON.parse(data?.offerList) : [];
   // let [mmmm] = await Promise.all([promise]);

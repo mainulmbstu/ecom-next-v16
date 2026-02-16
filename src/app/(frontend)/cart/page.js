@@ -356,6 +356,7 @@ export const CartPage = () => {
                   <SubmitButton
                     title={"Check out (SSL)"}
                     design={"btn-success w-full"}
+                    disable="true"
                   />
                 </div>
               </Form>

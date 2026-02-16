@@ -5,6 +5,7 @@ import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { UserModel } from "@/lib/models/userModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -20,7 +21,6 @@ export const loginAction = async (formData) => {
   }
   try {
     await dbConnect();
-    console.log(44444444444);
     const user = await UserModel.findOne({ email });
     if (!user) {
       return { message: "User does not exist" };
@@ -46,7 +46,7 @@ export const loginAction = async (formData) => {
     //   // httpOnly: true,
     //   maxAge: 3600 * 24,
     // }); // expiry time in second
-
+    revalidatePath("/");
     // redirect("/cart");
     return {
       success: true,
