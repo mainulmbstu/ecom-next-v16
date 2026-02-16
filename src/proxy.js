@@ -9,11 +9,16 @@ export async function proxy(request) {
   // var userInfo = jwt.verify(token, process.env.JWT_KEY);
   // console.log(process.env.JWT_KEY);
   let path = request.nextUrl.pathname;
+  let search = request.nextUrl.searchParams;
+  let lastPath = search.get("lastPath");
   let publicPaths = path === "/user/login" || path === "/user/register";
   // || path === "/";
 
   if (publicPaths) {
     if (userInfo) {
+      if (lastPath) {
+        return NextResponse.redirect(new URL(lastPath, request.url));
+      }
       if (path !== "/") {
         return NextResponse.redirect(new URL("/", request.url));
       }
