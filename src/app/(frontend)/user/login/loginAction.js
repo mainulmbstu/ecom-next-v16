@@ -52,6 +52,7 @@ export const loginAction = async (formData) => {
       success: true,
       message: `Login successful `,
       token,
+      userInfo: JSON.stringify(userInfo),
     };
   } catch (error) {
     // if u use redirect in try block

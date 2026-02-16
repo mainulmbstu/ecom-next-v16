@@ -14,7 +14,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 
 const LoginForm = () => {
-  let { setToken, setUserInfo, getUserInfo } = useAuth();
+  let { setToken, setUserInfo } = useAuth();
   let router = useRouter();
   const [showpass, setShowPass] = useState(false);
   let lastPath = useSearchParams().get("lastPath");
@@ -24,9 +24,9 @@ const LoginForm = () => {
       // Swal.fire("Success", data?.message, "success");
       toast.success(data?.message);
       setToken(data?.token);
-      // setUserInfo(data?.userInfo);
-      getUserInfo();
+      setUserInfo(JSON.parse(data?.userInfo));
       router.push(lastPath ? lastPath : "/");
+      console.log(JSON.parse(data?.userInfo));
     } else {
       // Swal.fire("Error", data?.message, "error");
       toast.error(data?.message);

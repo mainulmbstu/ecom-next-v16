@@ -7,11 +7,7 @@ export const metadata = {
 };
 
 const About = async () => {
-  let mmm = async () => {
-    "use server";
-    console.log(22222222222);
-  };
-  await wait(5000);
+  await wait(2000);
   return <div>About</div>;
 };
 
