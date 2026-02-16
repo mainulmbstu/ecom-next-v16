@@ -46,7 +46,7 @@ export const loginAction = async (formData) => {
     //   // httpOnly: true,
     //   maxAge: 3600 * 24,
     // }); // expiry time in second
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     // redirect("/cart");
     return {
       success: true,
