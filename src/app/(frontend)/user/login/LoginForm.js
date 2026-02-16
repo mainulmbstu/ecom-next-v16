@@ -26,6 +26,7 @@ const LoginForm = () => {
       setToken(data?.token);
       // setUserInfo(data?.userInfo?.mm);
       router.push(lastPath ? lastPath : "/");
+      router.refresh();
     } else {
       // Swal.fire("Error", data?.message, "error");
       toast.error(data?.message);
