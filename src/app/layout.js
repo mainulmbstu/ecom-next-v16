@@ -74,7 +74,7 @@ export default function RootLayout({ children }) {
             </Suspense>
             <Suspense fallback={<h2>Loading</h2>}></Suspense>
             <Offline />
-            <div className="pt-16  flex  flex-col min-h-[100vh]">
+            <div className="pt-16  flex  flex-col min-h-screen">
               <NestedCategory />
               <div>{children}</div>
               <div className=" mt-auto">{<Footer />}</div>

@@ -32,7 +32,7 @@ export async function POST(req) {
       for (let file of files) {
         let { secure_url, public_id } = await uploadOnCloudinary(
           file,
-          "ecomNextProduct",
+          "Product",
         );
         url = [...url, { secure_url, public_id }];
       }
@@ -56,8 +56,9 @@ export async function POST(req) {
     if (url) product.picture = url;
 
     await product.save();
-    revalidateTag("product-list", "max");
-    // revalidatePath("/", "layout");
+    revalidateTag("product-list", { expire: 0 });
+    // for immediate update {expire:0}, 'max' for update after refresh or next visit.
+    // revalidatePath("/dashboard/admin/create-product", "page");
     // layout means 'path/*'
     // revalidatePath("/post/category/[category]", 'page');  // // page means 'exact path'
 

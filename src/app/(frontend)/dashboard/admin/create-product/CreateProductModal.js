@@ -9,20 +9,30 @@ import Image from "next/image";
 import blogBanner from "@/assets/blog.svg";
 import SubmitButton from "@/lib/components/SubmitButton";
 import { useRouter } from "next/navigation";
+import ProgressBar from "@/lib/components/ProgressBar";
 
 const CreateProductModal = () => {
   let [loading, setLoading] = useState(false);
   const [picture, setPicture] = useState("");
   let { catPlain, catPlainFunc } = useAuth();
+  const [progress, setProgress] = useState(0);
   let router = useRouter();
 
   let clientAction = async (formData) => {
     setLoading(true);
-    let { data } = await Axios.post("/api/admin/product", formData);
+    let { data } = await Axios.post("/api/admin/product", formData, {
+      onUploadProgress: (progressEvent) => {
+        const prog = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total,
+        );
+        setProgress(prog);
+      },
+    });
     setLoading(false);
     if (data?.success) {
       // Swal.fire("Success", data?.message, "success");
       router.refresh("/dashboard/admin/create-product");
+      setProgress(0);
       toast.success(data?.message);
     } else {
       Swal.fire("Error", data?.message, "error");
@@ -170,6 +180,7 @@ const CreateProductModal = () => {
                   />
                 </div>
                 <div className="mt-3">
+                  <ProgressBar progress={progress} color={"bg-blue-400"} />
                   <SubmitButton title={"Submit"} design={"btn-accent"} />
                 </div>
               </Form>

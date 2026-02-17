@@ -30,7 +30,7 @@ export async function POST(req) {
     if (file?.size) {
       let { secure_url, public_id } = await uploadOnCloudinary(
         file,
-        "ecomNextCategory",
+        "category",
       );
       url = { secure_url, public_id };
     }

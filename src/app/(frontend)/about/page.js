@@ -1,5 +1,5 @@
 import { wait } from "@/lib/helpers/helperFunction";
-import Image from "next/image";
+import AboutPage from "./AboutPage";
 
 export const metadata = {
   title: "about",
@@ -8,7 +8,12 @@ export const metadata = {
 
 const About = async () => {
   await wait(2000);
-  return <div>About</div>;
+
+  return (
+    <div>
+      <AboutPage />
+    </div>
+  );
 };
 
 export default About;

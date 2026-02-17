@@ -27,9 +27,9 @@ const Users = async ({ searchParams }) => {
       next: { tags: ["user-list", "max"] },
     },
   );
-  let data = await res.json();
+  let {userList, total} = await res.json();
   // let { data } = await axios.get(`https://jsonplaceholder.typicode.com/posts`);
-  let entries = data?.userList;
+  let entries = userList;
   return (
     <div>
       <div className="my-3">
@@ -50,7 +50,7 @@ const Users = async ({ searchParams }) => {
         </Form>
       </div>
       <div className=" card p-2 mt-5">
-        <h4>Total Users: ( {data?.total})</h4>
+        <h4>Total Users: ( {total})</h4>
         {/* <h4>Total Sale: {<PriceFormat price={totalPrice} />}</h4> */}
       </div>
       <div className="">
@@ -115,7 +115,7 @@ const Users = async ({ searchParams }) => {
       </div>
       <div className=" mt-3 ">
         <Pagination
-          total={data?.total}
+          total={total}
           page={page}
           perPage={perPage}
           spms1="keyword"

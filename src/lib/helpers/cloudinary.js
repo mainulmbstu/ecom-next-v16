@@ -17,7 +17,7 @@ cloudinary.config({
 
 // Upload an image
 
-export const uploadOnCloudinary = async (file, folderName) => {
+export const uploadOnCloudinary = async (file, folderName = "common") => {
   try {
     let bufferData = await file.arrayBuffer();
     let buffer = Buffer.from(bufferData);

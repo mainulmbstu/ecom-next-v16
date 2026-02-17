@@ -9,21 +9,32 @@ import Image from "next/image";
 import blogBanner from "@/assets/blog.svg";
 import SubmitButton from "@/lib/components/SubmitButton";
 import { useRouter } from "next/navigation";
+import ProgressBar from "@/lib/components/ProgressBar";
 
 const CreateCategoryModal = () => {
   let [loading, setLoading] = useState(false);
   const [picture, setPicture] = useState("");
   let { catPlain, catPlainFunc } = useAuth();
+  const [progress, setProgress] = useState(0);
+
   let router = useRouter();
 
   let clientAction = async (formData) => {
     setLoading(true);
-    let { data } = await Axios.post("/api/admin/create-category", formData);
+    let { data } = await Axios.post("/api/admin/create-category", formData, {
+      onUploadProgress: (progressEvent) => {
+        const prog = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total,
+        );
+        setProgress(prog);
+      },
+    });
     setLoading(false);
     if (data?.success) {
       catPlainFunc();
       // Swal.fire("Success", data?.message, "success");
       router.refresh("/dashboard/admin/create-category");
+      setProgress(0);
       toast.success(data?.message);
     } else {
       Swal.fire("Error", data?.message, "error");
@@ -109,6 +120,8 @@ const CreateCategoryModal = () => {
                   />
                 </div>
                 <div className="mt-3">
+                  <ProgressBar progress={progress} color={"bg-blue-400"} />
+
                   <SubmitButton title={"Submit"} design={"btn-accent"} />
                 </div>
               </Form>

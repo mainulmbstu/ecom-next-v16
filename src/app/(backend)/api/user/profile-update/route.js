@@ -33,10 +33,7 @@ export async function POST(req) {
     if (file?.size) {
       userExist.picture?.public_id &&
         (await deleteImageOnCloudinary(userExist.picture?.public_id));
-      let { secure_url, public_id } = await uploadOnCloudinary(
-        file,
-        "blognextprofile"
-      );
+      let { secure_url, public_id } = await uploadOnCloudinary(file, "profile");
       userExist.picture = { secure_url, public_id };
     }
     if (name) userExist.name = name;
