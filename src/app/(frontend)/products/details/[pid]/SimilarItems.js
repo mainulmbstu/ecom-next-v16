@@ -5,7 +5,7 @@ import { similarItemsAction } from "./action";
 const SimilarItems = async ({ pid }) => {
   let similarItemsPromise = similarItemsAction(pid);
   let data = await similarItemsPromise;
-  let similarItems = data?.similarItems;
+  let similarItems = JSON.parse(data?.similarItems || []);
   return (
     <div className=" mb-4">
       <h4>Similar Products</h4>

@@ -8,7 +8,7 @@ import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { CommentModel } from "@/lib/models/CommentModel";
 import { LikeModel } from "@/lib/models/LikeModel";
-import { revalidatePath } from "next/cache";
+import { cacheLife, cacheTag, revalidatePath, updateTag } from "next/cache";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import { ProductModel } from "@/lib/models/productModel";
 import { RatingModel } from "@/lib/models/RatingModel";
@@ -27,6 +27,9 @@ export const detailsAction = async (pid) => {
 };
 //===========================
 export const similarItemsAction = async (pid) => {
+  "use cache";
+  cacheLife("days");
+  cacheTag("similar-list");
   try {
     await dbConnect();
     const item = await ProductModel.findById(pid);
@@ -38,7 +41,7 @@ export const similarItemsAction = async (pid) => {
       .limit(12)
       .sort({ updatedAt: -1 });
 
-    return { similarItems };
+    return { similarItems: JSON.stringify(similarItems) };
   } catch (error) {
     console.log(error);
     return { message: await getErrorMessage(error) };
@@ -64,10 +67,13 @@ export const likeStatusAction = async (pid) => {
 export const likeAction = async (pid) => {
   let userInfo = await getTokenData(await getCookieValue("token"));
   try {
-    await dbConnect();
+    if (!userInfo) {
+      return { message: "User is not authenticated" };
+    }
     if (!pid) {
       return { message: "pid is required" };
     }
+    await dbConnect();
 
     await LikeModel.create({
       product: pid,
@@ -78,7 +84,8 @@ export const likeAction = async (pid) => {
     let item = await ProductModel.findById(pid);
     item.like = item?.like + 1;
     await item.save();
-    revalidatePath("/", "layout");
+    // revalidatePath("/", "layout");
+    updateTag("product-list");
   } catch (error) {
     console.log(error);
     return { message: await getErrorMessage(error) };
@@ -90,6 +97,12 @@ export const commentAction = async (pid, comment) => {
   let userInfo = await getTokenData(await getCookieValue("token"));
 
   try {
+    if (!userInfo) {
+      return { message: "User is not authenticated" };
+    }
+    if (!pid) {
+      return { message: "pid is required" };
+    }
     await dbConnect();
     let comm = new CommentModel();
     comm.product = pid;
@@ -99,7 +112,8 @@ export const commentAction = async (pid, comment) => {
     let item = await ProductModel.findById(pid);
     item.review = item?.review + 1;
     await item.save();
-    revalidatePath("/", "layout");
+    // revalidatePath("/", "layout");
+    updateTag("comment-list");
     return { success: true, message: "Commented successfully" };
   } catch (error) {
     console.log(error);
@@ -112,6 +126,12 @@ export const ratingAction = async (pid, rating) => {
   let userInfo = await getTokenData(await getCookieValue("token"));
 
   try {
+    if (!userInfo) {
+      return { message: "User is not authenticated" };
+    }
+    if (!pid) {
+      return { message: "pid is required" };
+    }
     await dbConnect();
     await RatingModel.create({
       product: pid,
@@ -124,7 +144,8 @@ export const ratingAction = async (pid, rating) => {
     item.rating = calRating.toFixed(1);
     item.ratingNo = item?.ratingNo + 1;
     await item.save();
-    revalidatePath("/", "layout");
+    // revalidatePath("/", "layout");
+    updateTag("product-list");
     return { success: true, message: "Rated successfully" };
   } catch (error) {
     console.log(error);
@@ -140,7 +161,8 @@ export const deletePostAction = async (id = "") => {
       (await deleteImageOnCloudinary(post.picture?.public_id));
     await LikeModel.deleteMany({ post: id });
     await CommentModel.deleteMany({ post: id });
-    revalidatePath("/", "layout");
+    // revalidatePath("/", "layout");
+    updateTag("product-list");
 
     return {
       message: `${post?.title} has been deleted successfully`,

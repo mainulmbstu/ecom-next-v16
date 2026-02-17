@@ -15,8 +15,10 @@ const CommentModal = ({ pid }) => {
     let data = await commentAction(pid, comment);
     setLoading(false);
     if (data?.success) {
-      toast.success(data?.message);
+      Swal.fire("Success", data?.message, "success");
       setComment("");
+    } else {
+      Swal.fire("Error", data?.message || "Failed to submit comment", "error");
     }
   };
   return (

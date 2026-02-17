@@ -15,8 +15,10 @@ const RatingModal = ({ pid }) => {
     let data = await ratingAction(pid, rating);
     setLoading(false);
     if (data?.success) {
-      toast.success(data?.message);
+      Swal.fire("Success", data?.message, "success");
       setRating("");
+    } else {
+      Swal.fire("Error", data?.message || "Failed to submit rating", "error");
     }
   };
   return (
