@@ -6,12 +6,14 @@ import Form from "next/form";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useAuth } from "@/lib/components/context";
-import { useRouter, useSearchParams } from "next/navigation";
 import loginImage from "@/assets/login.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+// import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 const LoginForm = () => {
   let { setToken, setUserInfo } = useAuth();

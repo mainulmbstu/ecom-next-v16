@@ -8,6 +8,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { CldVideoPlayer } from "next-cloudinary";
+import "next-cloudinary/dist/cld-video-player.css";
 
 const AboutPage = () => {
   const [picture, setPicture] = useState("");
@@ -68,6 +70,14 @@ const AboutPage = () => {
           </div>
         </Form>
       </div>
+      <div className="my-5">
+        {/* <CldVideoPlayer
+          width="400"
+          height="300"
+          src="https://res.cloudinary.com/dgj1icpu7/video/upload/v1702428300/00Video_wjiekc.mp4"
+        /> */}
+      </div>
+      <video controls src="/00Video.mp4"></video>
     </div>
   );
 };

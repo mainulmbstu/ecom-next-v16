@@ -10,9 +10,10 @@ cloudinary.config({
   api_secret: "TT4K81WU5_4uFTrNLh1Kl2hIBWs", // Click 'View API Keys' above to copy your API secret
 });
 // cloudinary.config({
-//   cloud_name: process.env.cloud_name,
-//   api_key: process.env.api_key,
-//   api_secret: process.env.api_secret, // Click 'View API Keys' above to copy your API secret
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET,
+//  // Click 'View API Keys' above to copy your API secret
 // });
 
 // Upload an image
@@ -27,14 +28,20 @@ export const uploadOnCloudinary = async (file, folderName = "common") => {
     // fs.writeFileSync(filePath, buffer);
     let result = await new Promise((resolve, reject) => {
       cloudinary.uploader
-        .upload_stream({ folder: folderName }, function (error, result) {
-          if (error) {
-            reject(error);
-            return;
-          }
-          resolve(result);
-          return result;
-        })
+        .upload_stream(
+          {
+            resource_type: "auto",
+            folder: folderName,
+          },
+          function (error, result) {
+            if (error) {
+              reject(error);
+              return;
+            }
+            resolve(result);
+            return result;
+          },
+        )
         .end(buffer);
     });
     // const result = await cloudinary.uploader.upload(filePath, {
@@ -47,7 +54,7 @@ export const uploadOnCloudinary = async (file, folderName = "common") => {
     //   return { msg: "Failed to delete image from server", error };
     // }
     return {
-      secure_url: result.secure_url,
+      secure_url: result?.secure_url,
       public_id: result.public_id,
       // filePath,
     };
@@ -56,6 +63,7 @@ export const uploadOnCloudinary = async (file, folderName = "common") => {
     return { msg: "error from upload cloudinary", error };
   }
 };
+
 //========================================================
 export const deleteImageOnCloudinary = async (public_id) => {
   try {

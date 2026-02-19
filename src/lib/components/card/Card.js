@@ -31,7 +31,7 @@ const Card = async ({ item }) => {
           <div
             className={
               item?.offer
-                ? "offerDisc p-3 text-white text-center bg-red-500 animate-pulse absolute right-0 top-[-10px] rounded-full"
+                ? "offerDisc p-3 text-white text-center bg-red-500 animate-pulse absolute right-0 -top-2.5 rounded-full"
                 : "hidden"
             }
           >
@@ -82,16 +82,17 @@ const Card = async ({ item }) => {
           </Link>
           <div>
             <AddToCartBTN
-              item={{
-                _id: item?._id.toString(),
-                name: item?.name,
-                picture: item?.picture,
-                price: item?.price,
-                category: item?.category?.name,
-                color: item?.color,
-                amount: item?.amount,
-                quantity: item?.quantity,
-              }}
+              // item={{
+              //   _id: item?._id.toString(),
+              //   name: item?.name,
+              //   picture: item?.picture,
+              //   price: item?.price,
+              //   category: item?.category?.name,
+              //   color: item?.color,
+              //   amount: item?.amount,
+              //   quantity: item?.quantity,
+              // }}
+              data={JSON.stringify(item)}
             />
           </div>
         </div>

@@ -13,11 +13,19 @@ export async function POST(req) {
 
   let file = formData.get("file");
   try {
+    // let url;
+    // if (file?.size) {
+    //   let { secure_url, public_id } = await uploadOnCloudinary(
+    //     file,
+    //     "category",
+    //   );
+    //   url = { secure_url, public_id };
+    // }
     let url;
     if (file?.size) {
       let { secure_url, public_id } = await uploadOnCloudinary(
         file,
-        "category",
+        "videotest",
       );
       url = { secure_url, public_id };
     }

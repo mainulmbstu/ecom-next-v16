@@ -4,7 +4,9 @@ import React from "react";
 import { useAuth } from "../context";
 import toast from "react-hot-toast";
 
-const AddToCartBTN = ({ item }) => {
+const AddToCartBTN = ({ data }) => {
+  let item = data ? JSON.parse(data) : {};
+
   let { cart, setCart } = useAuth();
   return (
     <div>

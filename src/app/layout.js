@@ -8,6 +8,7 @@ import Footer from "@/lib/components/Footer";
 import NestedCategory from "@/lib/components/NestedCategory";
 import Offline from "@/lib/components/Offline";
 import { Suspense } from "react";
+import NextTopLoader from "nextjs-toploader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,17 @@ export default function RootLayout({ children }) {
           suppressHydrationWarning={true}
           className={`${geistSans.variable} ${geistMono.variable} min-h-screen`}
         >
+          <NextTopLoader
+            color="red"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={true}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+          />
           <ThemeProvider defaultTheme="system">
             <Toaster
               position="top-right"
