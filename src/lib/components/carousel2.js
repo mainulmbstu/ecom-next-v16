@@ -14,10 +14,6 @@ const Carousel2 = ({ slides, autoPlay = false, interval = 3000 }) => {
               <p className="legend">Legend {index + 1}</p>
             </div>
           ))}
-          <div className="">
-            <video controls autoPlay={true} src="/00video.mp4"></video>
-            <p className="legend">Legend 1</p>
-          </div>
         </Carousel>
       </div>
     </div>
