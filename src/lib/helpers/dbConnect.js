@@ -4,10 +4,10 @@ import mongoose, { connection } from "mongoose";
 const URI = process.env.MONGO_ATLAS;
 
 export default async function dbConnect() {
-  // if (connection.readyState === 1) {
-  //   console.log("Already connected to database");
-  //   return;
-  // }
+  if (connection.readyState === 1) {
+    console.log("Already connected to database");
+    return;
+  }
   try {
     let db = await mongoose.connect(URI, {
       dbName: "ecomnext",
