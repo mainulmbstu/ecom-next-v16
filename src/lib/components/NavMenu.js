@@ -107,7 +107,7 @@ const NavMenu = () => {
                   className=" relative cursor-pointer  border-b border-b-zinc-50 hover:inset-shadow-sm  py-2 md:py-0 hover:inset-shadow-indigo-300 transition-all"
                 >
                   <span></span>
-                  <span className=" flex justify-center gap-2">
+                  <span  className={`flex justify-center gap-2 ${path.startsWith("/dashboard") ? " text-blue-700 underline" : ""}`}>
                     <Image
                       priority={true}
                       width={400}
