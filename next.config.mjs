@@ -10,7 +10,7 @@ const nextConfig = {
     // serverComponentsHmrCache: false,
     // defaults to true
     serverActions: {
-      bodySizeLimit: "2mb",
+      bodySizeLimit: "10mb",
       // allowedOrigins: ["my-proxy.com", "*.my-proxy.com"],
     },
   },

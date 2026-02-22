@@ -166,7 +166,7 @@ const CreateProductModal = () => {
                 </div>
                 <div className="mt-3">
                   <label className="block" htmlFor="name">
-                    Select Product Image (optional)
+                    Select Product Image (optional), 3mb maximum
                   </label>
                   <input
                     onChange={(e) => {

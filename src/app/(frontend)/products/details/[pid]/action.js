@@ -13,11 +13,16 @@ import { getTokenData } from "@/lib/helpers/getTokenData";
 import { ProductModel } from "@/lib/models/productModel";
 import { RatingModel } from "@/lib/models/RatingModel";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
+import { CategoryModel } from "@/lib/models/categoryModdel";
 
 export const detailsAction = async (pid) => {
   try {
     await dbConnect();
-    const item = await ProductModel.findById(pid).populate("category", "name");
+    const item = await ProductModel.findById(pid).populate(
+      "category",
+      "name",
+      CategoryModel,
+    );
     // item.rating = item.rating.toFixed(1);
     return { details: item };
   } catch (error) {

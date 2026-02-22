@@ -1,4 +1,5 @@
-// export const dynamic = "force-dynamic";
+// export const dynamic = "force-static";
+// export const dynamicParams = true;
 
 import React, { Suspense } from "react";
 import { detailsAction, likeAction, likeStatusAction } from "./action";
@@ -7,7 +8,6 @@ import getBase64 from "@/lib/helpers/plaiceholder";
 import { GrLike } from "react-icons/gr";
 import Form from "next/form";
 import SubmitButton from "@/lib/components/SubmitButton";
-// import CommentModalNormal from "./commentModalNormal";
 import PriceFormat from "@/lib/components/PriceFormat";
 import { MdStar } from "react-icons/md";
 import ImagePage from "./ImagePage";
@@ -16,6 +16,11 @@ import CommentData from "./commentData";
 import SimilarItems from "./SimilarItems";
 import RatingModal from "./RatingModal";
 
+// export async function generateStaticParams() {
+//   return [{ pid: "__placeholder__" }];
+//   // return [{ pid: "682d6f4585553eb793014457" }];
+// }
+// not work
 export const generateMetadata = async ({ searchParams }) => {
   let { name, description } = await searchParams;
   return {
