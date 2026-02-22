@@ -134,7 +134,7 @@ const RegistrationForm = () => {
           </div>
           <div className="mt-3">
             <label className="block" htmlFor="name">
-              Select Profile Image
+              Select Profile Image, , 3mb maximum
             </label>
             <input
               onChange={(e) => {

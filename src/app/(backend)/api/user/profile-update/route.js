@@ -31,6 +31,12 @@ export async function POST(req) {
     }
 
     if (file?.size) {
+      if (file?.size > 3 * 1024 * 1000) {
+        return {
+          success: false,
+          message: `File too large, maximum 3 mb`,
+        };
+      }
       userExist.picture?.public_id &&
         (await deleteImageOnCloudinary(userExist.picture?.public_id));
       let { secure_url, public_id } = await uploadOnCloudinary(file, "profile");

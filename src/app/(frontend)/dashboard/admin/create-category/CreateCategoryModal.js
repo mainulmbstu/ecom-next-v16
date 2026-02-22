@@ -107,7 +107,7 @@ const CreateCategoryModal = () => {
                 </div>
                 <div className="mt-3">
                   <label className="block" htmlFor="name">
-                    Select Category Image (optional)
+                    Select Category Image (optional), 3mb maximum
                   </label>
                   <input
                     onChange={(e) => {
