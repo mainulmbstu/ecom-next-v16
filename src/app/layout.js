@@ -27,6 +27,20 @@ export const metadata = {
     // absolute:""
   },
   description: "An E-commerce website",
+ icons: {
+		icon: [
+			{
+				media: "(prefers-color-scheme:light)",
+				url: "/check.png",
+				href: "/check.png",
+			},
+			{
+				media: "(prefers-color-scheme:dark)",
+				url: "/dummy.jpeg",
+				href: "/dummy.jpeg",
+			},
+		],
+	},
 };
 
 export default function RootLayout({ children }) {
@@ -34,11 +48,11 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
-        <link
+        {/* <link
           rel="icon"
           type="image/svg+xml"
           href="https://res.cloudinary.com/dgj1icpu7/image/upload/v1731421057/ks1yrpyy3iy2rzpp2m4c.jpg"
-        />
+        /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <AuthProvider>
@@ -57,7 +71,7 @@ export default function RootLayout({ children }) {
             speed={200}
             shadow="0 0 10px #2299DD,0 0 5px #2299DD"
           />
-          <ThemeProvider defaultTheme="system">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster
               position="top-right"
               toastOptions={{
@@ -86,7 +100,7 @@ export default function RootLayout({ children }) {
             </Suspense>
             <Suspense fallback={<h2>Loading</h2>}></Suspense>
             <Offline />
-            <div className="pt-16  flex  flex-col min-h-screen">
+            <div className="pt-16  flex  flex-col min-h-screen dark:text-white dark:bg-black">
               <NestedCategory />
               <div>{children}</div>
               <div className=" mt-auto">{<Footer />}</div>

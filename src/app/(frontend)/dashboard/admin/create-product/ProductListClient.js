@@ -172,7 +172,7 @@ const ProductListClient = ({ value }) => {
                         className=""
                         type="checkbox"
                         name={item?._id}
-                        id={item._id}
+                        id={item?._id}
                         checked={item?.isChecked || false}
                       />
                     </td>

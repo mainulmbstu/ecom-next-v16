@@ -14,8 +14,8 @@ const Home12 = async ({ searchParams, promise }) => {
 
   let data = await allProductAction(keyword, page, perPage);
   // let postList = JSON.parse(data?.postList) ?? [];
-  let entries = !data?.message ? JSON.parse(data?.list) : [];
-  let offerList = !data?.message ? JSON.parse(data?.offerList) : [];
+  let entries = data?.success && JSON.parse(data?.list);
+  let offerList = data?.success && JSON.parse(data?.offerList);
   // let [mmmm] = await Promise.all([promise]);
   // let mmm = await promise.then((d) => d);
   // console.log(JSON.parse(mmm?.offerList));
@@ -25,7 +25,7 @@ const Home12 = async ({ searchParams, promise }) => {
       <div className={!offerList?.length || keyword ? "hidden" : ""}>
         <h4 className="ps-2">Special Offer ({offerList?.length})</h4>
         <div className=" grid md:grid-cols-4 gap-6">
-          {offerList?.length ? (
+          {offerList ? (
             offerList.map((item) => (
               <motion.div
                 key={item._id}
@@ -66,7 +66,7 @@ const Home12 = async ({ searchParams, promise }) => {
       <hr />
       <h4>Total product found {data?.total} </h4>
       <div className=" grid md:grid-cols-4 gap-6">
-        {entries?.length ? (
+        {entries ? (
           entries.map((item) => (
             <motion.div
               key={item._id}

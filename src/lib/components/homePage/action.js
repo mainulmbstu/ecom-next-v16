@@ -49,6 +49,7 @@ export const allProductAction = async (keyword, page = 1, perPage) => {
       .limit(perPage)
       .sort({ createdAt: -1 });
     return {
+      success: true,
       offerList: JSON.stringify(offerList),
       list: JSON.stringify(list),
       total: total?.length,

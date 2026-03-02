@@ -33,16 +33,16 @@ const NavMenu = () => {
   }
 
   return (
-    <div className="fixed top-0 w-full z-10 shadow-lg flex  justify-between md:items-center p-4  bg-base-300">
+    <div className="fixed top-0 w-full z-10 shadow-lg flex  justify-between md:items-center p-4  bg-base-500 dark:text-white">
       <div className="">
         <Link href="/">logo</Link>
       </div>
       <div
         className={`h-6  transition-all  duration-500 ${
-          isMenuOpen ? "h-60 flex-1" : ""
+          isMenuOpen ? "h-fit flex-1 bg-base-300" : ""
         }`}
       >
-        <nav className="relative h-12">
+        <nav className="relative h-fit uppercase">
           <ul
             className={`${
               isMenuOpen
@@ -107,7 +107,9 @@ const NavMenu = () => {
                   className=" relative cursor-pointer  border-b border-b-zinc-50 hover:inset-shadow-sm  py-2 md:py-0 hover:inset-shadow-indigo-300 transition-all"
                 >
                   <span></span>
-                  <span  className={`flex justify-center gap-2 ${path.startsWith("/dashboard") ? " text-blue-700 underline" : ""}`}>
+                  <span
+                    className={`flex justify-center gap-2 ${path.startsWith("/dashboard") ? " text-blue-700 underline" : ""}`}
+                  >
                     <Image
                       priority={true}
                       width={400}

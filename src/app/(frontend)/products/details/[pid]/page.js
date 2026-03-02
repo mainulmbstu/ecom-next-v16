@@ -21,11 +21,19 @@ import RatingModal from "./RatingModal";
 //   // return [{ pid: "682d6f4585553eb793014457" }];
 // }
 // not work
-export const generateMetadata = async ({ searchParams }) => {
-  let { name, description } = await searchParams;
+// export const generateMetadata = async ({ searchParams }) => {
+//   let { name, description } = await searchParams;
+//   return {
+//     title: name,
+//     description: description,
+//   };
+// };
+export const generateMetadata = async ({ params }) => {
+  let { pid } = await params;
+  let { details } = await detailsAction(pid);
   return {
-    title: name,
-    description: description,
+    title: details?.name,
+    description: details?.description,
   };
 };
 

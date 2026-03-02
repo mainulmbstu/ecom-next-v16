@@ -4,12 +4,13 @@ import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import { ContactModel, ContactReplyModel } from "@/lib/models/ContactModel";
-import { cacheTag, revalidatePath, updateTag } from "next/cache";
+import { cacheTag, revalidatePath, updateTag, cacheLife } from "next/cache";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
 
 //===========================================================
 export const getAllAction = async (keyword, page = 1, perPage) => {
   "use cache";
+  cacheLife("days");
   cacheTag("contacts");
   let skip = (page - 1) * perPage;
   let editKey = keyword === "unread" ? "" : keyword;

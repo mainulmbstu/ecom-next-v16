@@ -31,10 +31,10 @@ export async function POST(req) {
       url = [];
       for (let file of files) {
         if (file?.size > 3 * 1024 * 1000) {
-          return {
-            success: false,
-            message: `File too large, maximum 3 mb`,
-          };
+             return Response.json({
+          success: false,
+          message: `File too large, maximum 3 mb`,
+        })
         }
         let { secure_url, public_id } = await uploadOnCloudinary(
           file,
@@ -62,12 +62,7 @@ export async function POST(req) {
     if (url) product.picture = url;
 
     await product.save();
-    revalidateTag("product-list", { expire: 0 });
-    // for immediate update {expire:0}, 'max' for update after refresh or next visit.
-    // revalidatePath("/dashboard/admin/create-product", "page");
-    // layout means 'path/*'
-    // revalidatePath("/post/category/[category]", 'page');  // // page means 'exact path'
-
+    
     return Response.json({
       success: true,
       message: `Product  created successfully `,
@@ -75,6 +70,13 @@ export async function POST(req) {
   } catch (error) {
     console.log(error);
     return Response.json({ message: await getErrorMessage(error) });
+  } finally {
+    revalidateTag("product-list", { expire: 0 });
+    // for immediate update {expire:0}, 'max' for update after refresh or next visit.
+    // revalidatePath("/dashboard/admin/create-product", "page");
+    // layout means 'path/*'
+    // revalidatePath("/post/category/[category]", 'page');  // // page means 'exact path'
+    
   }
 }
 //=============================
