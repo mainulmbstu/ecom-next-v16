@@ -44,7 +44,7 @@ const DeleteModal = ({ value }) => {
       >
         {loading ? "Deleting" : "Delete"}
       </button>
-      <dialog ref={ref} id="my_modal_1" className="modal modal justify-end items-start mt-20 md:items-center md:justify-center">
+      <dialog ref={ref} id="my_modal_1" className="modal justify-end items-start mt-20 md:items-center md:justify-center">
         <div className="modal-box max-w-full w-100">
           <h3 className="font-bold text-lg">Delete confirmation</h3>
           <p className="py-4">{value?.message}</p>
