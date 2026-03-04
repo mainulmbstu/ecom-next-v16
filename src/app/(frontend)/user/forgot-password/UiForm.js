@@ -29,8 +29,8 @@ const UiForm = () => {
         router.push("/user/login");
       }
     } else {
-      // Swal.fire("Error", data?.message, "error");
-      toast.error(data?.message);
+      Swal.fire("Error", data?.message, "error");
+      // toast.error(data?.message);
     }
   };
 
@@ -42,69 +42,74 @@ const UiForm = () => {
       </div>
       <div className="w-9/10 grid place-items-center">
         <h2>Reset Password Form</h2>
-        <Form
-          action={clientAction}
-          className=" p-4 w-full md:w-4/5 lg:w-3/5 card"
-        >
-          {/* <Image src='/login.svg' width={100} height={200} alt="" /> */}
-          <div className="mt-3">
-            <label className="block" htmlFor="email">
-              Email
-            </label>
-            <input
-              className="input"
-              defaultValue={email}
-              type="email"
-              id="email"
-              name="email"
-              required
-            />
-          </div>
-          <div className={OTP ? "" : "hidden"}>
-            <div className="mt-3">
-              <label className="block" htmlFor="inputOtp">
-                Input OTP
-              </label>
-              <input
-                className="input"
-                type={"text"}
-                id="inputOtp"
-                name="inputOtp"
-              />
-              {/* <p className=" text-red-500" aria-live="polite">
+      <Form
+					action={clientAction}
+					className=" p-4 w-full md:w-4/5 lg:w-3/5 card bg-base-300 dark:text-white placeholder:text-white"
+				>
+					{/* <Image src='/login.svg' width={100} height={200} alt="" /> */}
+					<div className="mt-3">
+						<label className="block" htmlFor="email">
+							Email
+						</label>
+						<input
+							className="input"
+							defaultValue={email}
+							type="email"
+							id="email"
+							name="email"
+							required
+							placeholder="Enter email"
+						/>
+					</div>
+					<div className={OTP ? "" : "hidden"}>
+						<div className="mt-3">
+							<label className="block" htmlFor="inputOtp">
+								Input OTP
+							</label>
+							<input
+								className="input"
+								type={"text"}
+								id="inputOtp"
+								name="inputOtp"
+								placeholder="Enter OTP"
+							/>
+							{/* <p className=" text-red-500" aria-live="polite">
                   {state?.message}
                 </p> */}
-            </div>
-            <div className="mt-3 relative">
-              <label className="block" htmlFor="password">
-                password
-              </label>
-              <input
-                className="input"
-                type={showpass ? "text" : "password"}
-                id="password"
-                name="password"
-              />
-              {/* <p className=" text-red-500" aria-live="polite">
+						</div>
+						<div className="mt-3 relative">
+							<label className="block" htmlFor="password">
+								password
+							</label>
+							<input
+								className="input"
+								type={showpass ? "text" : "password"}
+								id="password"
+								name="password"
+								placeholder="Enter password"
+								
+
+							/>
+							{/* <p className=" text-red-500" aria-live="polite">
                   {state?.message}
                 </p> */}
-              <Link
-                href={"#"}
-                className=" cursor-pointer absolute right-2 top-8"
-                onClick={() => setShowPass((prev) => !prev)}
-              >
-                {showpass ? (
-                  <FaEyeSlash className="text-2xl" />
-                ) : (
-                  <FaEye className=" text-2xl" />
-                )}
-              </Link>
-            </div>
-          </div>
-          <div className="mt-3">
-            <SubmitButton title={"Submit"} />
-          </div>
-        </Form>
+							<Link
+								href={"#"}
+								className=" cursor-pointer absolute right-2 top-8"
+								onClick={() => setShowPass((prev) => !prev)}
+							>
+								{showpass ? (
+									<FaEyeSlash className="text-2xl" />
+								) : (
+									<FaEye className=" text-2xl" />
+								)}
+							</Link>
+						</div>
+					</div>
+					<div className="mt-3">
+						<SubmitButton title={"Submit"} />
+					</div>
+				</Form>
       </div>
     </div>
   );
