@@ -4,11 +4,11 @@ import { UserModel } from "@/lib/models/userModel";
 import bcrypt from "bcryptjs";
 import mailer from "@/lib/helpers/nodeMailer";
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
 import {
   deleteImageOnCloudinary,
   uploadOnCloudinary,
 } from "@/lib/helpers/cloudinary";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req) {
   // await new Promise(resolve => {
@@ -50,16 +50,16 @@ export async function POST(req) {
     (await cookies()).delete("token");
     (await cookies()).delete("userInfo");
     await userExist.save();
-    revalidatePath("/", "layout");
+    revalidateTag('user-list', 'max')
     // console.log(userExist);
     let credential = {
       email,
       subject: "Profile Update ",
       body: `<h2>Hi ${userExist?.name},</h2>
-      <h3>Your profile has been Updated successfully.
+      <h3>Your profile  in ${process.env.BASE_URL} has been Updated successfully.</h3>
       Thanks for staying with us`,
     };
-    mailer(credential);
+   await mailer(credential);
 
     return Response.json({
       success: true,

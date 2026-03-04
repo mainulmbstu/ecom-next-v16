@@ -6,7 +6,8 @@ import { UserModel } from "@/lib/models/userModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mailer from "@/lib/helpers/nodeMailer";
-import { uploadOnCloudinary } from "@/lib/helpers/cloudinary";
+import { deleteImageOnCloudinary, uploadOnCloudinary } from "@/lib/helpers/cloudinary";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req) {
   // await new Promise(resolve => {
@@ -24,11 +25,20 @@ export async function POST(req) {
   }
   //for image
   let file = formData.get("file");
+  let expireHour = 1
+  // in hour
   try {
     await dbConnect();
     const userExist = await UserModel.findOne({ email });
     if (userExist) {
-      return Response.json({ message: "User already exist" });
+      if (new Date() > userExist?.verifyTokenExpire) {
+        await UserModel.findOneAndDelete({ email })
+            userExist.picture?.public_id &&
+              (await deleteImageOnCloudinary(userExist.picture?.public_id));
+      } else {
+        
+        return Response.json({ message: "User already exist" });
+      }
     }
     const phoneExist = await UserModel.findOne({ phone });
     if (phoneExist) {
@@ -57,7 +67,7 @@ export async function POST(req) {
       address,
       password: hashedPass,
       role: allUser ? "user" : "admin",
-      verifyTokenExpire: Date.now() + 3600000,
+      verifyTokenExpire: Date.now() + expireHour * 3600000,
       picture: url && url,
     });
     let verifyToken = jwt.sign({ id: newUser._id }, process.env.JWT_KEY);
@@ -65,13 +75,13 @@ export async function POST(req) {
       email,
       subject: "Registration verification",
       body: `<h2>Hi ${name},</h2>
-      <h3>You have been registered successfully. Your ID is ${newUser._id}. </h3>
-      <p>Click <a href="${process.env.BASE_URL}/user/verify-email?verifyToken=${verifyToken}">Here</a> to verify your email or copy and paste the link below to your browser <br> ${process.env.BASE_URL}/user/verify-email?verifyToken=${verifyToken}
+      <h3>You have been registered successfully in ${process.env.BASE_URL} . Your ID is ${newUser._id}. </h3>
+      <p>Click <a href="${process.env.BASE_URL}/user/verify-email?verifyToken=${verifyToken}">Here</a> to verify your email or copy and paste the link below to your browser <p>Link validity: ${expireHour} hour</p> ${process.env.BASE_URL}/user/verify-email?verifyToken=${verifyToken}
       </p>
-      <p>Link validity: 1 hour</p>
+      
       Thanks for staying with us`,
     };
-    mailer(credential);
+    await mailer(credential);
     // console.log(verifyToken);
 
     return Response.json({
@@ -83,5 +93,7 @@ export async function POST(req) {
     // if (error.message === "NEXT_REDIRECT") throw error;
     console.log(error);
     return Response.json({ message: await getErrorMessage(error) });
-  }
+  }finally {
+		revalidateTag("user-list", { expires: 0 });
+	}
 }

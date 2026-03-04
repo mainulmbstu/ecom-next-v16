@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { UserModel } from "@/lib/models/userModel";
 import Link from "next/link";
-import { revalidatePath } from "next/cache";
 
 export const metadata = {
   title: "Verify email",
@@ -20,16 +19,18 @@ const VerifyEmail = async ({ searchParams }) => {
     await dbConnect();
     const user = await UserModel.findById(tokenData?.id);
     if (user) {
+       if (new Date() > user?.verifyTokenExpire) {
+            message =
+        "email verification failed, may be due to token validity expired, please register again";
+            } else {
       user.isVerified = true;
       if (user.verifyTokenExpire) user.verifyTokenExpire = undefined;
       await user.save();
       message = "email verified successfully";
       success = true;
-      revalidatePath("/dashboard", "layout");
-    } else {
-      message =
-        "email verification failed, may be due to token validity expired, please register again";
+     
     }
+          } 
   } catch (error) {
     console.log(error);
     message = error?.message?.toString();
