@@ -40,7 +40,7 @@ const DeleteModal = ({ value }) => {
         disabled={loading}
         className="btn btn-link text-red-600 "
         onClick={() => ref.current.showModal()}
-        // onClick={() => document.getElementById("my_modal_1").showModal()}
+      // onClick={() => document.getElementById("my_modal_1").showModal()}
       >
         {loading ? "Deleting" : "Delete"}
       </button>
