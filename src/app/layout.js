@@ -27,20 +27,20 @@ export const metadata = {
     // absolute:""
   },
   description: "An E-commerce website",
- icons: {
-		icon: [
-			{
-				media: "(prefers-color-scheme:light)",
-				url: "/check.png",
-				href: "/check.png",
-			},
-			{
-				media: "(prefers-color-scheme:dark)",
-				url: "/dummy.jpeg",
-				href: "/dummy.jpeg",
-			},
-		],
-	},
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme:light)",
+        url: "/check.png",
+        href: "/check.png",
+      },
+      {
+        media: "(prefers-color-scheme:dark)",
+        url: "/dummy.jpeg",
+        href: "/dummy.jpeg",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -102,7 +102,7 @@ export default function RootLayout({ children }) {
             <Offline />
             <div className="pt-16  flex  flex-col min-h-screen dark:text-white dark:bg-black">
               <NestedCategory />
-              <div>{children}</div>
+              <div className="">{children}</div>
               <div className=" mt-auto">{<Footer />}</div>
             </div>
           </ThemeProvider>

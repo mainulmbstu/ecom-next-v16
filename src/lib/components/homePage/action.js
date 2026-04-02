@@ -25,7 +25,7 @@ export const allProductAction = async (keyword, page = 1, perPage) => {
       .populate("category", "name", CategoryModel)
       .limit(limit)
       .sort({ createdAt: -1 });
-    let offerIds = offerList?.length && offerList.map((item) => item._id);
+    let offerIds = offerList?.length ? offerList.map((item) => item._id) : [];
 
     const total = await ProductModel.find({
       _id: { $nin: keyword ? [] : offerIds },

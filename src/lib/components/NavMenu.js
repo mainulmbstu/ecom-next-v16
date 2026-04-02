@@ -33,22 +33,20 @@ const NavMenu = () => {
   }
 
   return (
-    <div className="fixed top-0 w-full z-10 shadow-lg flex  justify-between md:items-center p-4  bg-base-500 dark:text-white">
+    <div className={`fixed top-0 w-full shadow-lg flex  justify-between md:items-center p-4  bg-base-300 dark:text-white z-50`}>
       <div className="">
         <Link href="/">logo</Link>
       </div>
       <div
-        className={`h-6  transition-all  duration-500 ${
-          isMenuOpen ? "h-fit flex-1 bg-base-300" : ""
-        }`}
+        className={`h-6  transition-all  duration-500 ${isMenuOpen ? "h-fit flex-1 bg-base-300" : ""
+          }`}
       >
-        <nav className="relative h-fit uppercase">
+        <nav className="relative h-6 uppercase">
           <ul
-            className={`${
-              isMenuOpen
-                ? "flex flex-col scale-y-100 pt-12 text-center transition-all  duration-500"
-                : "scale-y-0"
-            } md:flex md:gap-6 md:scale-y-100`}
+            className={`${isMenuOpen
+              ? "flex flex-col scale-y-100 pt-12 text-center transition-all  duration-500"
+              : "scale-y-0"
+              } md:flex md:gap-6 md:scale-y-100 bg-base-300`}
           >
             <li className=" border-b border-b-zinc-50 hover:inset-shadow-sm  py-2 md:py-0 hover:inset-shadow-indigo-300 transition-all">
               <Link
@@ -128,9 +126,8 @@ const NavMenu = () => {
                     />{" "}
                   </span>
                   <ul
-                    className={`absolute top-full z-20  md:right-0 bg-base-300 w-full md:w-fit whitespace-nowrap origin-top duration-300 ${
-                      drop2 ? "scale-y-100" : "scale-y-0"
-                    }`}
+                    className={`absolute top-full z-20  md:right-0 bg-base-300 w-full md:w-fit whitespace-nowrap origin-top duration-300 ${drop2 ? "scale-y-100" : "scale-y-0"
+                      }`}
                   >
                     <li>
                       <Link
