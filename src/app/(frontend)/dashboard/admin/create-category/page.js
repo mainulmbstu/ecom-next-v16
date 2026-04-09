@@ -1,6 +1,6 @@
 import React from "react";
-import CreateCategoryModal from "./CreateCategoryModal";
 import CategoryList from "./CategoryList";
+import CategoryModal from "./CategoryModal";
 export const metadata = {
   title: "Category",
   description: "Category page",
@@ -8,7 +8,7 @@ export const metadata = {
 const Page = ({ searchParams }) => {
   return (
     <div className="pt-3">
-      <CreateCategoryModal />
+      <CategoryModal title="Create Category" design="btn-primary" />
       <CategoryList searchParams={searchParams} />
     </div>
   );

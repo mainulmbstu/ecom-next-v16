@@ -42,7 +42,7 @@ export const CartPage = () => {
   }, []);
 
   // console.log(refList[0]?.id);
-
+  //==========================================================
   let cartItemHandle = (checked, checkedItem) => {
     let all = [...selectedCart];
     if (checked) {
@@ -52,26 +52,32 @@ export const CartPage = () => {
       let one =
         refList?.length &&
         refList.find((item) => item?.id === checkedItem?._id);
-      one.value = "";
+      if (one) {
+        one.value = "";
+      }
     }
     setSelectedCart(all);
   };
-
-  let colorHandle = (id, e) => {
+  //================================================
+  let colorHandle = (id, color) => {
     let findObj =
       selectedCart.length && selectedCart.find((item) => item._id === id);
     if (!findObj) {
       alert("Please select the item first");
-      let one = refList?.length && refList.find((item) => item?.id === id);
-      return (one.value = "");
+      let one = refList?.length && refList?.find((item) => item?.id === id);
+      if (one) one.value = "";
+      return;
     }
     let tempObj = { ...findObj };
-    tempObj.color = [e.target.value];
-    let tempArr2 = selectedCart.filter((item) => item._id !== id);
-    tempArr2.push(tempObj);
+    let sortedColor = tempObj?.color
+      ?.slice()
+      .sort((a, b) => (b === color) - (a === color));
+    tempObj.color = sortedColor;
+    let tempArr2 = selectedCart?.filter((item) => item._id !== id);
+    tempArr2?.push(tempObj);
     setSelectedCart(tempArr2);
   };
-
+  //==================================================================
   let amountHandle = (id, d) => {
     let isSelected =
       selectedCart.length && selectedCart.find((item) => item._id === id);
@@ -86,7 +92,7 @@ export const CartPage = () => {
     tempArr[ind].amount += d;
     setSelectedCart([...tempArr]);
   };
-
+  //========================================================
   let totalFrac =
     selectedCart?.length &&
     selectedCart?.reduce((previous, current) => {
@@ -172,6 +178,8 @@ export const CartPage = () => {
         <div className="md:col-span-8 mt-0">
           {cart?.length &&
             cart.map((item, i) => {
+              let isSelected = selectedCart?.find((p) => p._id === item?._id);
+              item = isSelected ? isSelected : item;
               return (
                 <div
                   key={i}
@@ -200,7 +208,8 @@ export const CartPage = () => {
                         <Image
                           priority={true}
                           src={
-                            item?.picture && `${item?.picture[0]?.secure_url}`
+                            item?.picture &&
+                            `${item?.picture.at(0)?.secure_url}`
                           }
                           className="h-50 w-auto"
                           height={190}
@@ -213,8 +222,10 @@ export const CartPage = () => {
                   <div className=" md:col-span-7 ps-3">
                     <div className="flex flex-col">
                       <div>
-                        <h5>
-                          Name: {item?.name}, Price:{" "}
+                        <h6>Name: {item?.name}</h6>
+                        <p>
+                          {" "}
+                          Price:
                           {
                             <PriceFormat
                               price={
@@ -222,9 +233,9 @@ export const CartPage = () => {
                               }
                             />
                           }
-                        </h5>
+                        </p>
                         <p className="m-0">Category: {item?.category?.name} </p>
-                        <p
+                        {/* <p
                           className={
                             item?.color?.length ? "m-0 py-2 w-50" : "hidden"
                           }
@@ -244,19 +255,47 @@ export const CartPage = () => {
                                 </option>
                               ))}
                           </select>
-                        </p>
+                        </p>*/}
+                        <div
+                          className={
+                            item?.color?.length
+                              ? "m-0 py-2 flex gap-4 flex-wrap"
+                              : ""
+                          }
+                        >
+                          <p>Color: </p>
+                          {item?.color
+                            ?.slice()
+                            .sort()
+                            .map((single, i) => (
+                              <button
+                                key={i}
+                                ref={ref1}
+                                type="submit"
+                                className={`py-1 px-2 border rounded-md cursor-pointer  ${item?.color?.at(0) === single ? "border-pink-600" : "border-slate-300"}`}
+                                onClick={() => {
+                                  colorHandle(item._id, single);
+                                }}
+                              >
+                                {single}
+                              </button>
+                            ))}
+                        </div>
                         <div>
+                          <span>Quntity: </span>
                           <button
+                            type="submit"
                             onClick={() => amountHandle(item._id, -1)}
-                            className=" px-3 me-3 btn btn-secondary"
+                            className=" px-3 me-3 btn btn-circle"
                             disabled={item?.amount === 1}
                           >
                             -
                           </button>
                           <span>{item?.amount} </span>
                           <button
+                            type="submit"
                             onClick={() => amountHandle(item?._id, 1)}
-                            className=" px-3 mx-3 btn btn-secondary"
+                            className=" px-3 mx-3 btn btn-circle"
                             disabled={item?.amount === item?.quantity}
                           >
                             +
@@ -282,8 +321,9 @@ export const CartPage = () => {
                       </div>
                       <div className=" mt-auto">
                         <button
+                          type="submit"
                           onClick={() => removeCartItem(item._id)}
-                          className="btn btn-secondary mb-2"
+                          className="btn btn-link mb-2 text-red-500"
                         >
                           Remove
                         </button>
@@ -295,19 +335,20 @@ export const CartPage = () => {
             })}
         </div>
         <div className="md:col-span-4 text-center">
-          <h4>Cart Summary</h4>
+          <h5>Cart Summary</h5>
           <p>Total || Checkout || Payment</p>
           <hr />
           <h2>Total: {<PriceFormat price={total} />}</h2>
           <hr />
           {userInfo?.name ? (
             <>
-              <h4>Current Address</h4>
-              <h5>{userInfo?.address} </h5>
+              <h6>Current Address</h6>
+              <p>{userInfo?.address} </p>
               <button
+                type="submit"
                 onClick={() =>
                   router.push(
-                    userInfo?.role == "admin"
+                    userInfo?.role === "admin"
                       ? "/dashboard/admin/profile"
                       : "/dashboard/user/profile",
                   )
@@ -320,6 +361,7 @@ export const CartPage = () => {
           ) : (
             <div>
               <button
+                type="submit"
                 onClick={() => router.push(`/user/login?lastPath=${path}`)}
                 className="btn btn-primary"
               >
@@ -328,40 +370,41 @@ export const CartPage = () => {
             </div>
           )}
           <div className="">
-            <div className="flex w-30">
+            <div className="flex ms-20 space-x-3  mt-3">
               <input
-                className=""
+                className=" size-5"
                 onChange={() => setGateway("bkash")}
                 type="radio"
+                id="Bkash"
                 name="same"
                 // checked={user.gender === "Male"}
               />
-              Bkash
+              <label htmlFor="Bkash"> Bkash</label>
             </div>
-            <div className="flex w-26 mt-3">
+            <div className="flex ms-20 space-x-3  mt-3">
               <input
-                className=""
+                className=" size-5"
                 onChange={() => setGateway("ssl")}
                 type="radio"
+                id="ssl"
                 name="same"
                 // checked={user.gender === "Male"}
               />
-              SSL
+              <label htmlFor="ssl"> SSL</label>
             </div>
           </div>
-          {userInfo && cart?.length && gateway == "ssl" ? (
+          {userInfo && cart?.length && gateway === "ssl" ? (
             <div className="my-4 w-full">
               <Form action={checkoutSSL} className="w-full">
                 <div className="mt-3">
                   <SubmitButton
                     title={"Check out (SSL)"}
                     design={"btn-success w-full"}
-                    disable="true"
                   />
                 </div>
               </Form>
             </div>
-          ) : userInfo && cart?.length && gateway == "bkash" ? (
+          ) : userInfo && cart?.length && gateway === "bkash" ? (
             <div className="my-4 w-full">
               <Form action={checkoutBkash} className="w-full">
                 <div className="mt-3">

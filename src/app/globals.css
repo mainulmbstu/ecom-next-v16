@@ -33,92 +33,14 @@ body {
 @plugin "daisyui";
 /* @plugin "tailwindcss-animate"; */
 
-@theme {
-  --text-tiny: 0.625rem;
-  --text-tiny--line-height: 1.5rem;
-  --text-tiny--letter-spacing: 0.125rem;
-  --text-tiny--font-weight: 500;
-}
-@theme {
-  --test-400: #ffad00;
-  --font-roboto: "Roboto", sans-serif;
-  --font-inter: "Inter", sans-serif;
-}
-
-.bg-test {
-  background-color: var(--test-400);
-}
-@utility black-theme {
-  background-color: rgb(0, 0, 0);
-  color: #ffffff;
-}
-/* working */
-@utility card {
-  background-color: #e6e6e6;
-  /* background-color: var(--color-gray); */
-  border-radius: var(--rounded-lg);
-  padding: 10px;
-  box-shadow: var(--shadow-xl);
-  color: #0a0a0a;
-}
-/* customize class */
-@layer components {
-  .card1 {
-    background: #000;
-  }
-}
-
-/* customize base element */
-@layer base {
-  h1 {
-    /* font-size: var(--text-5xl); */
-    font-size: 2.5em;
-    font-weight: bold;
-  }
-  h2 {
-    /* @apply font-bold text-4xl */
-    font-size: 2em;
-    font-weight: bold;
-  }
-  h3 {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  h4 {
-    font-size: 1.33em;
-    font-weight: bold;
-  }
-  h5 {
-    font-size: 1.17em;
-    font-weight: bold;
-  }
-  h6 {
-    font-size: 1em;
-    font-weight: bold;
-  }
-  /* a {
-    color: var(--color-blue-600);
-    text-decoration-line: underline;
-  } */
-  hr {
-    margin: 12px 0;
-  }
-  input,
-  textarea,
-  select {
-    width: 100%;
-    background-color: white;
-  }
-}
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 [data-theme="dark"] {
-  --background: black;
-  --foreground: white;
+    --background: black;
+    --foreground: white;
 }
 
 /* custom theme app e use na korle  */
@@ -132,25 +54,218 @@ body {
 } */
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-input:focus {
-  outline-width: 0;
-  border-color: #df5d5d;
+@utility black-theme {
+    color: var(--color-slate-500);
+    background-color: black;
+}
+
+@theme {
+    --text-tiny: 0.625rem;
+    --text-tiny--line-height: 1.5rem;
+    --text-tiny--letter-spacing: 0.125rem;
+    --text-tiny--font-weight: 500;
+}
+@theme {
+    --test-400: #ffad00;
+    --font-roboto: "Roboto", sans-serif;
+    --font-inter: "Inter", sans-serif;
+}
+
+.bg-test {
+    background-color: var(--test-400);
+}
+
+/* working */
+@utility card {
+    background-color: #e6e6e6;
+    /* background-color: var(--color-gray); */
+    border-radius: var(--rounded-lg);
+    padding: 10px;
+    box-shadow: var(--shadow-xl);
+    color: #0a0a0a;
+}
+/* customize class */
+@layer components {
+    .card1 {
+        background: #000;
+    }
+}
+
+/* customize base element */
+@layer base {
+    h1 {
+        /* font-size: var(--text-5xl); */
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+    h2 {
+        /* @apply font-bold text-4xl */
+        font-size: 2em;
+        font-weight: bold;
+    }
+    h3 {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    h4 {
+        font-size: 1.33em;
+        font-weight: bold;
+    }
+    h5 {
+        font-size: 1.17em;
+        font-weight: bold;
+    }
+    h6 {
+        font-size: 1em;
+        font-weight: bold;
+    }
+    /* a {
+    color: var(--color-blue-600);
+    text-decoration-line: underline;
+  } */
+    hr {
+        margin: 12px 0;
+        color: var(--color-slate-500);
+    }
 }
 
 th {
-  font-weight: bolder;
-  background-color: aquamarine;
+    font-weight: 800;
+    background-color: var(--color-slate-300);
 }
-/* 
+/*
 * {
   scrollbar-gutter: stable;
 } */
 
 .size-font {
-  font-size: clamp(8px, 1vw, 100px);
+    font-size: clamp(8px, 1vw, 100px);
+}
+
+@utility btn-000 {
+    /*background-color: var(--color-gray-200);*/
+    padding: 8px 13px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* .btn:hover {
+  transition: all 200ms ease-in;
+  background-color: var(--color-gray-300);
+} */
+
+@utility btn-black {
+    background-color: var(--color-neutral-900);
+    color: var(--color-slate-300);
+}
+
+.btn-black:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-neutral-700);
+}
+
+@utility btn-red {
+    background-color: var(--color-red-500);
+}
+
+.btn-red:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-red-600);
+}
+
+@utility btn-blue {
+    background-color: var(--color-blue-500);
+}
+
+.btn-blue:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-blue-600);
+}
+
+@utility btn-green {
+    background-color: var(--color-green-600);
+}
+
+.btn-green:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-green-700);
+}
+
+@utility btn-yellow {
+    background-color: var(--color-yellow-500);
+}
+
+.btn-yellow:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-yellow-600);
+}
+
+@utility btn-pink {
+    background-color: var(--color-pink-500);
+}
+
+.btn-pink:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-pink-600);
+}
+
+@utility btn-violet {
+    background-color: var(--color-violet-500);
+}
+
+.btn-violet:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-violet-600);
+}
+
+@utility btn-indigo {
+    background-color: var(--color-indigo-800);
+    color: var(--color-slate-300);
+}
+
+.btn-indigo:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-indigo-600);
+}
+
+@utility btn-search {
+    background-color: var(--color-base-300);
+}
+
+.btn-search:hover {
+    transition: all 200ms ease-in;
+    background-color: var(--color-gray-300);
+}
+
+@utility btn-link {
+    text-decoration-line: underline;
+    color: var(--color-red-600);
+    padding: 8px 13px;
+    cursor: pointer;
+}
+
+@utility btn-circle {
+    border-radius: 100%;
+}
+
+@utility btn-outline {
+    border: 1px black solid;
+}
+
+.btn-000:active {
+    background-color: var(--color-gray-400);
+}
+
+@utility input-000 {
+    border: 1px black solid;
+    padding: 7px;
+    width: 100%;
+    border-radius: 5px;
+    border-color: var(--color-zinc-300);
+    background-color: var(--color-base-100);
 }

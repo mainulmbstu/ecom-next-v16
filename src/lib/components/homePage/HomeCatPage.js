@@ -8,7 +8,7 @@ const HomeCatPage = () => {
   let { catNested } = useAuth();
 
   return (
-    <div className="flex my-2">
+    <div className="hidden md:flex my-2 md:flex-wrap">
       {catNested?.length &&
         catNested.map((item) => (
           <div key={item._id} className=" px-2 ">

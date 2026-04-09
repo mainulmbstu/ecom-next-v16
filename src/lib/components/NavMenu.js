@@ -33,20 +33,24 @@ const NavMenu = () => {
   }
 
   return (
-    <div className={`fixed top-0 w-full shadow-lg flex  justify-between md:items-center p-4  bg-base-300 dark:text-white z-50`}>
+    <div
+      className={`fixed top-0 w-full shadow-lg flex  justify-between md:items-center p-4  bg-base-300 dark:text-slate-500 z-400`}
+    >
       <div className="">
         <Link href="/">logo</Link>
       </div>
       <div
-        className={`h-6  transition-all  duration-500 ${isMenuOpen ? "h-fit flex-1 bg-base-300" : ""
-          }`}
+        className={`h-6  transition-all  duration-500 ${
+          isMenuOpen ? "h-fit flex-1 bg-base-300" : ""
+        }`}
       >
         <nav className="relative h-6 uppercase">
           <ul
-            className={`${isMenuOpen
-              ? "flex flex-col scale-y-100 pt-12 text-center transition-all  duration-500"
-              : "scale-y-0"
-              } md:flex md:gap-6 md:scale-y-100 bg-base-300`}
+            className={`${
+              isMenuOpen
+                ? " absolute top-10 -left-5 w-80 flex flex-col scale-y-100 pt-6 text-center transition-all  duration-500"
+                : "scale-y-0"
+            } md:flex md:gap-6 md:scale-y-100 bg-base-300`}
           >
             <li className=" border-b border-b-zinc-50 hover:inset-shadow-sm  py-2 md:py-0 hover:inset-shadow-indigo-300 transition-all">
               <Link
@@ -99,7 +103,7 @@ const NavMenu = () => {
             </li>
 
             {userInfo ? (
-              <>
+              <div>
                 <li
                   onClick={() => setdrop2(!drop2)}
                   className=" relative cursor-pointer  border-b border-b-zinc-50 hover:inset-shadow-sm  py-2 md:py-0 hover:inset-shadow-indigo-300 transition-all"
@@ -126,8 +130,9 @@ const NavMenu = () => {
                     />{" "}
                   </span>
                   <ul
-                    className={`absolute top-full z-20  md:right-0 bg-base-300 w-full md:w-fit whitespace-nowrap origin-top duration-300 ${drop2 ? "scale-y-100" : "scale-y-0"
-                      }`}
+                    className={`absolute top-full z-20  md:right-0 bg-base-300 w-full md:w-fit whitespace-nowrap origin-top duration-300 ${
+                      drop2 ? "scale-y-100" : "scale-y-0"
+                    }`}
                   >
                     <li>
                       <Link
@@ -148,6 +153,7 @@ const NavMenu = () => {
                     </li>
                     <li>
                       <button
+                        type="button"
                         onClick={() => {
                           Cookies.remove("token");
                           setUserInfo(null);
@@ -163,7 +169,7 @@ const NavMenu = () => {
                     </li>
                   </ul>
                 </li>
-              </>
+              </div>
             ) : (
               <>
                 <li className=" border-b border-b-zinc-50 hover:inset-shadow-sm  py-2 md:py-0 hover:inset-shadow-indigo-300 transition-all">
@@ -195,6 +201,7 @@ const NavMenu = () => {
       </div>
       <div className="me-3 text-lg min-w-20">
         <button
+          type="submit"
           className=" cursor-pointer px-3"
           onClick={() => setTheme(theme == "light" ? "dark" : "light")}
         >
@@ -208,13 +215,16 @@ const NavMenu = () => {
         </Link>
       </div>
       <div className="md:hidden cursor-pointer">
-        <span onClick={() => setisMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? (
-            <CgCloseR className=" hover:scale-125 transition-all text-2xl " />
-          ) : (
-            <FaBars className=" hover:scale-125 transition-all text-2xl " />
-          )}
-        </span>
+        <button type="button" onClick={() => setisMenuOpen(!isMenuOpen)}>
+          {" "}
+          <span>
+            {isMenuOpen ? (
+              <CgCloseR className=" hover:scale-125 transition-all text-2xl " />
+            ) : (
+              <FaBars className=" hover:scale-125 transition-all text-2xl " />
+            )}
+          </span>
+        </button>
       </div>
     </div>
   );

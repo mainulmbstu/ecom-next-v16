@@ -27,7 +27,7 @@ const Users = async ({ searchParams }) => {
       next: { tags: ["user-list", "max"] },
     },
   );
-  let {userList, total} = await res.json();
+  let { userList, total } = await res.json();
   // let { data } = await axios.get(`https://jsonplaceholder.typicode.com/posts`);
   let entries = userList;
   return (
@@ -63,7 +63,7 @@ const Users = async ({ searchParams }) => {
               <th>Email</th>
               <th>Mobile No.</th>
               <th>Address</th>
-              <th>Role</th>
+              <th>User Role</th>
               <th>Join Date</th>
               <th>Action</th>
             </tr>

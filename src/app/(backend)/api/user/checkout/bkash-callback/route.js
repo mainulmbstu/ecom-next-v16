@@ -39,13 +39,13 @@ export async function GET(req, res) {
         "payment.trxn_id": result?.trxID,
         "payment.bkashNo": result?.customerMsisdn,
       },
-      { new: true }
+      { new: true },
     );
     if (updated.isModified) {
       for (let v of updated.products) {
         let product = await ProductModel.findById(v._id);
         product.quantity = product.quantity - v.amount;
-        product.save();
+        await product.save();
       }
     }
   }

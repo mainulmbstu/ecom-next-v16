@@ -11,7 +11,7 @@ export const metadata = {
 export default function AdminLayout({ children }) {
   return (
     <div className=" grid md:grid-cols-12 gap-2">
-      <div className="col-span-12 md:col-span-3 card">
+      <div className="col-span-12 md:col-span-3 ">
         <AdminMenu />
       </div>
       <div className="col-span-12 md:col-span-9">{children}</div>

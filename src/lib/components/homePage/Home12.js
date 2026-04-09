@@ -23,7 +23,9 @@ const Home12 = async ({ searchParams, promise }) => {
     <div className="p-2">
       <hr />
       <div className={!offerList?.length || keyword ? "hidden" : ""}>
-        <h4 className="ps-2">Special Offer ({offerList?.length})</h4>
+        <h4 className="ps-2 bg-base-300">
+          Special Offer ({offerList?.length})
+        </h4>
         <div className=" grid md:grid-cols-4 gap-6">
           {offerList ? (
             offerList.map((item) => (

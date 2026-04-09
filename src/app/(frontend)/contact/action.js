@@ -5,7 +5,7 @@ import { getCookieValue } from "@/lib/helpers/getCookieValue";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import { ContactModel } from "@/lib/models/ContactModel";
-import { cacheLife, revalidatePath, updateTag } from "next/cache";
+import { cacheLife, cacheTag, revalidatePath, updateTag } from "next/cache";
 
 //===========================================================
 export const contactAction = async (formData) => {
@@ -16,7 +16,7 @@ export const contactAction = async (formData) => {
     await dbConnect();
     await ContactModel.create({ name, email, message });
     // revalidatePath("/", "layout");
-    updateTag("contacts");
+    updateTag("contact-list");
     return {
       success: true,
       message: `message has been sent successfully`,
@@ -29,6 +29,7 @@ export const contactAction = async (formData) => {
 //===========================================================
 export const getMessageAction = async (page = 1, perPage, userInfo) => {
   "use cache";
+  cacheTag("contact-list");
   cacheLife("days");
   let skip = (page - 1) * perPage;
   try {

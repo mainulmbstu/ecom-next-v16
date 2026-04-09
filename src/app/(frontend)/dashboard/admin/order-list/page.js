@@ -1,4 +1,3 @@
-import moment from "moment";
 import Pagination from "@/lib/components/pagination";
 import Form from "next/form";
 import Image from "next/image";
@@ -11,6 +10,7 @@ import ClientPage from "./clientPage";
 import InfoModal from "./InfoModal";
 import RefundModal from "./RefundModal";
 import SubmitButton from "@/lib/components/SubmitButton";
+import DateSSR2 from "@/lib/components/DateSSR2";
 
 export const metadata = {
   title: "Order List",
@@ -18,9 +18,9 @@ export const metadata = {
 };
 const Orders = async ({ searchParams }) => {
   let spms = await searchParams;
-  let keyword = (await spms["keyword"]) ?? "";
-  let page = Number((await spms["page"]) ?? "1");
-  let perPage = Number((await spms["perPage"]) ?? "12");
+  let keyword = (await spms?.keyword) ?? "";
+  let page = Number((await spms?.page) ?? "1");
+  let perPage = Number((await spms?.perPage) ?? "12");
   // let start=(Number(page)-1)*Number(perPage)
 
   // let userList = await userListAction(keyword);
@@ -101,9 +101,7 @@ const Orders = async ({ searchParams }) => {
                       <td>{item?.products?.length} </td>
                       <td>{<PriceFormat price={item.total} />} </td>
                       <td>
-                        {moment(item?.createdAt).format(
-                          "DD-MM-YY hh:mm a",
-                        )}{" "}
+                        <DateSSR2 date={item?.createdAt} time={true} />
                       </td>
                       <td>
                         <ClientPage item={item} />

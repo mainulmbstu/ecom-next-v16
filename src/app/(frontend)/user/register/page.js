@@ -1,5 +1,4 @@
-import React from "react";
-import RegistrationForm from "./RegistrationForm";
+import Profile from "@/lib/components/Profile";
 
 export const metadata = {
   title: "Register",
@@ -9,7 +8,7 @@ export const metadata = {
 const Register = () => {
   return (
     <div className="">
-      <RegistrationForm />
+      <Profile />
     </div>
   );
 };

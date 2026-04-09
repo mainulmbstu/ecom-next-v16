@@ -44,7 +44,7 @@ const AdminMenu = () => {
   ];
 
   return (
-    <div className="card p-2">
+    <div className="card p-2 my-3">
       <Link
         className={
           path === "/dashboard/admin"

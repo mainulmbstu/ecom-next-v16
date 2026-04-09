@@ -15,14 +15,60 @@ export const allProductAction = async (keyword, page = 1, perPage) => {
   let limit = page * perPage;
   try {
     await dbConnect();
-    // let author = await UserModel.find({
-    //   name: { $regex: keyword, $options: "i" },
-    // });
-    // let authIdArr = author?.length && (await author.map((item) => item._id));
+    // for seach in in poulated item
+
+    // const offerList = await ProductModel.aggregate([
+    //   {
+    //     $lookup: {
+    //       from: "categories",
+    //       localField: "category",
+    //       foreignField: "_id",
+    //       as: "pop",
+    //       pipeline: [
+    //         {
+    //           $project: {
+    //             // Specify the fields you want
+    //             name: 1,
+    //           },
+    //         },
+    //       ],
+    //     },
+    //   },
+    //   {
+    //     $project: {
+    //       category: 0, //hide category
+    //     },
+    //   },
+    //   { $unwind: "$pop" },
+    //   // Flatten the array to filter individual objects
+    //   // { $match: { "pop.name": { $regex: keyword, $options: "i" } } },
+    //   {
+    //     $match: {
+    //       $or: [
+    //         { quantity: { $gt: 3 } },
+    //         { "pop.name": { $regex: keyword, $options: "i" } },
+    //       ],
+    //     },
+    //   },
+    // ])
+    //   .limit(limit)
+    //   .sort({ createdAt: -1 });
     const offerList = await ProductModel.find({
       offer: { $gt: 0 },
     })
       .populate("category", "name", CategoryModel)
+      // .populate({
+      //   path: "category",
+      //   select: "name user",
+      //   model: CategoryModel, //optional
+      //   populate: {
+      //     path: "user",
+      //     model: UserModel, //optional
+      //     select: "name",
+      //    match:{role:'admin'}  // poulate if only admin
+      //
+      //   },
+      // })
       .limit(limit)
       .sort({ createdAt: -1 });
     let offerIds = offerList?.length ? offerList.map((item) => item._id) : [];

@@ -1,3 +1,4 @@
+import { createNestedCategory } from "@/lib/helpers/createNestedCategory";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { CategoryModel } from "@/lib/models/categoryModdel";
@@ -22,7 +23,7 @@ export async function GET(req) {
 
     const items = await CategoryModel.find({});
 
-    let nestedItems = await createNestedItems(items);
+    let nestedItems = await createNestedCategory(items);
     return Response.json({
       nestedCategory: nestedItems,
       categoryList,
@@ -33,28 +34,3 @@ export async function GET(req) {
     return Response.json({ message: await getErrorMessage(error) });
   }
 }
-
-let createNestedItems = async (items, parentId = null) => {
-  let itemList = [];
-  let filteredItem;
-  if (parentId == null) {
-    filteredItem = await items.filter((item) => item.parentId == undefined);
-  } else {
-    filteredItem = await items.filter((item) => item.parentId == parentId);
-  }
-  for (let v of filteredItem) {
-    await itemList.push({
-      _id: v._id,
-      name: v.name,
-      slug: v.slug,
-      parentId: v.parentId,
-      picture: v.picture,
-      user: v.user,
-      createdAt: v.createdAt,
-      updatedAt: v.updatedAt,
-      children: await createNestedItems(items, v._id),
-    });
-  }
-  // console.log(commentsList);
-  return itemList;
-};

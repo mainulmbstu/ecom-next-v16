@@ -34,7 +34,7 @@ export const editAction = async (id, formData) => {
       for (let file of files) {
         let { secure_url, public_id } = await uploadOnCloudinary(
           file,
-          "ecomNextProduct",
+          "ecomNext",
         );
         url = [...url, { secure_url, public_id }];
       }

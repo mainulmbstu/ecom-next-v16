@@ -78,7 +78,7 @@ const Page2 = () => {
 
       <hr />
       <div>
-        <Form action={() => clientAction("today")} className="w-64">
+        <Form action={() => clientAction("today")} className="w-full">
           {/* <div className="hidden">
             <input
               defaultValue={startDate}
@@ -99,13 +99,13 @@ const Page2 = () => {
       <div className="md:grid grid-cols-2 gap-2">
         <div className=" p-2  border mt-2">
           <div>
-            <Form action={clientAction} className="w-64">
+            <Form action={clientAction} className="">
               <label htmlFor="sdate" className=" font-bold">
                 Start Date
                 <input
                   defaultValue={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="input"
+                  className=" input-000"
                   type="datetime-local"
                   id="sdate"
                   name="sdate"
@@ -116,7 +116,7 @@ const Page2 = () => {
                 <input
                   defaultValue={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="input"
+                  className="input-000"
                   type="datetime-local"
                   id="edate"
                   name="edate"

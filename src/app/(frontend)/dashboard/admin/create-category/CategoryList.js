@@ -1,18 +1,18 @@
-import moment from "moment";
 import Pagination from "@/lib/components/pagination";
 import Form from "next/form";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteModal from "@/lib/components/DeleteModal";
 import { deleteAction } from "./action";
-import EditModal from "./EditModal";
 import SubmitButton from "@/lib/components/SubmitButton";
+import CategoryModal from "./CategoryModal";
+import DateSSR2 from "@/lib/components/DateSSR2";
 
 const CategoryList = async ({ searchParams }) => {
   let spms = await searchParams;
-  let keyword = (await spms["keyword"]) ?? "";
-  let page = Number((await spms["page"]) ?? "1");
-  let perPage = Number((await spms["perPage"]) ?? "12");
+  let keyword = (await spms?.keyword) ?? "";
+  let page = Number((await spms?.page) ?? "1");
+  let perPage = Number((await spms?.perPage) ?? "12");
 
   let res = await fetch(
     `${process.env.BASE_URL}/api/admin/category-list?keyword=${keyword}&page=${page}&perPage=${perPage}`,
@@ -75,20 +75,10 @@ const CategoryList = async ({ searchParams }) => {
                   </td>
 
                   <td>
-                    {moment(new Date(item.createdAt)).format("DD-MM-YYYY")}
+                    <DateSSR2 date={item.createdAt} />
                   </td>
                   <td>
-                    <EditModal
-                      value={{
-                        id: item._id.toString(),
-                        name: item.name,
-                        parentId: item.parentId,
-                        picture: item?.picture?.secure_url,
-                        parentName: entries.find(
-                          (cat) => cat._id == item.parentId,
-                        )?.name,
-                      }}
-                    />
+                    <CategoryModal editItem={JSON.stringify(item)} />
                   </td>
 
                   <td>
@@ -112,7 +102,7 @@ const CategoryList = async ({ searchParams }) => {
       </div>
       <div className=" mt-3 ">
         <Pagination
-          total={data?.total}
+          total={data?.total || 1}
           page={page}
           perPage={perPage}
           spms1="keyword"

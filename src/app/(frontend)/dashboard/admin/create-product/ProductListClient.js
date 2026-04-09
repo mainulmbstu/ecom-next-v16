@@ -4,7 +4,6 @@ import Form from "next/form";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import EditModal from "./EditModal";
 import DeleteModal from "@/lib/components/DeleteModal";
 import { deleteAction, offerAction } from "./action";
 import Pagination from "@/lib/components/pagination";
@@ -12,6 +11,7 @@ import { useAuth } from "@/lib/components/context";
 import SubmitButton from "@/lib/components/SubmitButton";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import ProductModal from "./ProductModal";
 
 const ProductListClient = ({ value }) => {
   let { keyword, category, page, perPage, data } = value;
@@ -31,7 +31,7 @@ const ProductListClient = ({ value }) => {
       setProducts(tempArr);
     } else {
       let tempArr = products?.map((item) =>
-        item?._id === name ? { ...item, isChecked: checked } : item
+        item?._id === name ? { ...item, isChecked: checked } : item,
       );
       setProducts(tempArr);
     }
@@ -45,7 +45,7 @@ const ProductListClient = ({ value }) => {
       return Swal.fire(
         "Error",
         "Select product and input offer percentage",
-        "error"
+        "error",
       );
     }
     let data = await offerAction(selectIdArr, formData);
@@ -199,19 +199,7 @@ const ProductListClient = ({ value }) => {
                     </td>
 
                     <td>
-                      <EditModal
-                        value={{
-                          id: item._id.toString(),
-                          name: item.name,
-                          category: item.category?.name,
-                          picture: item?.picture[0]?.secure_url,
-                          price: item.price,
-                          offer: item.offer,
-                          quantity: item.quantity,
-                          description: item.description,
-                          color: item.color.toString(),
-                        }}
-                      />
+                      <ProductModal editItem={JSON.stringify(item)} />
                     </td>
 
                     <td>
@@ -235,7 +223,7 @@ const ProductListClient = ({ value }) => {
         </div>
         <div className=" mt-3 ">
           <Pagination
-            total={data?.total}
+            total={data?.total || 1}
             page={page}
             perPage={perPage}
             spms1="keyword"

@@ -13,7 +13,7 @@ const SubCat = ({ slug }) => {
       ? catNested
       : catItem && catPlain.filter((item) => item.parentId === catItem._id);
   return (
-    <div className="flex my-2">
+    <div className="flex my-2 flex-wrap ">
       {subCat?.length ? (
         subCat.map((item) => (
           <div key={item._id} className=" px-2 ">

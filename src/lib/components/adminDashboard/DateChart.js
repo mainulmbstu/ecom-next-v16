@@ -8,18 +8,16 @@ import { useEffect, useState } from "react";
 
 const DateChart = ({ dateTotalProds }) => {
   let dateTotalProdsObj = {};
-  dateTotalProds.length &&
-    dateTotalProds.map((item) => {
-      let date = moment(new Date(item.createdAt)).format("DD-MM-YYYY");
-      dateTotalProdsObj[date] = (dateTotalProdsObj[date] || 0) + item.total;
-    });
-
   let ordersObj = {};
-  dateTotalProds.length &&
-    dateTotalProds.map((item) => {
-      let date = moment(new Date(item.createdAt)).format("DD-MM-YYYY");
+
+  if (dateTotalProds.length) {
+    for (let item of dateTotalProds) {
+      let date = moment(new Date(item.createdAt)).format("yyyy-MM-DD-dd");
+      dateTotalProdsObj[date] = (dateTotalProdsObj[date] || 0) + item.total;
+
       ordersObj[date] = (ordersObj[date] || 0) + 1;
-    });
+    }
+  }
 
   const [state, setstate] = useState("");
 

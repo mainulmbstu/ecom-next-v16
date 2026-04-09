@@ -5,6 +5,7 @@ import { getMessageAction } from "./action";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
 import { Suspense } from "react";
+import DateSSR from "@/lib/components/DateSSR";
 
 export const metadata = {
   title: "Contact",
@@ -39,31 +40,32 @@ const Contact = async ({ searchParams }) => {
                 }`}
               >
                 <p>
-                  <b>You:</b> ({moment(item?.createdAt).fromNow()},
-                  {moment(item?.createdAt).format("DD-MM-YY hh:mm a")})
+                  <b>You:</b> ({moment(item?.createdAt).fromNow()})
+                  <p>
+                    {" "}
+                    <DateSSR date={item?.createdAt} />
+                  </p>
                 </p>
                 <p>Message: {item.message} </p>
-                <p>
-                  Time: ({moment(item?.createdAt).fromNow()},
-                  {moment(item?.createdAt).format("DD-MM-YY hh:mm a")})
-                </p>
 
                 <hr className=" w-25" />
-                {item?.replies &&
-                  item?.replies?.reverse().map((rep, i, arr) => {
-                    return (
-                      <div key={i}>
-                        <p className=" font-bold">
-                          Reply-{arr?.length - i}: {rep.msg}
-                        </p>
-                        <p className="">Replied by: {rep.userName}</p>
+                {item?.replies?.reverse().map((rep, i, arr) => {
+                  return (
+                    <div key={i} className="mb-3">
+                      <p className=" font-bold">
+                        Reply-{arr?.length - i}: {rep.msg}
+                      </p>
+                      <p className="">Replied by: {rep.userName}</p>
+                      <p>
+                        Time: {moment(rep?.date).fromNow()}
                         <p>
-                          Time: {moment(rep?.date).fromNow()},
-                          {moment(rep?.date).format("DD-MM-YY hh:mm a")}
+                          {" "}
+                          <DateSSR date={item?.createdAt} />
                         </p>
-                      </div>
-                    );
-                  })}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             );
           })}

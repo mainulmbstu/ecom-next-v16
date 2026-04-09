@@ -26,6 +26,7 @@ const ReplyModal = ({ name, cid, title = "Submit", design = "btn-link" }) => {
     <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
+        type="submit"
         disabled={loading}
         className={`btn ${design}`}
         onClick={() => ref.current.showModal()}
@@ -33,13 +34,13 @@ const ReplyModal = ({ name, cid, title = "Submit", design = "btn-link" }) => {
       >
         {loading ? "Submitting" : title}
       </button>
-      <dialog ref={ref} id="my_modal_1" className="modal">
-        <div className="modal-box max-w-full w-100">
+      <dialog ref={ref} id="my_modal_1" className="modal ">
+        <div className="modal-box">
           <div className="">
             <h3 className="text-lg font-bold">Reply to {name} </h3>
             <Form
               action={clientAction}
-              className=" p-4  bg-slate-300 shadow-lg shadow-blue-300 card"
+              className=" p-4  bg-slate-300 shadow-lg shadow-blue-300"
             >
               <div className="mt-3">
                 <label className="block" htmlFor="description">
@@ -47,7 +48,7 @@ const ReplyModal = ({ name, cid, title = "Submit", design = "btn-link" }) => {
                 </label>
                 <textarea
                   rows="4"
-                  className="input"
+                  className="border border-gray-300 p-1"
                   type="text"
                   id="reply"
                   name="reply"
@@ -62,7 +63,10 @@ const ReplyModal = ({ name, cid, title = "Submit", design = "btn-link" }) => {
           </div>
           <div className="modal-action">
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                type="submit"
+                className="btn btn-sm btn-circle btn-error absolute right-2 top-2"
+              >
                 ✕
               </button>
               {/* if there is a button in form, it will close the modal */}

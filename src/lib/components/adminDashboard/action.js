@@ -26,14 +26,14 @@ export const totalAction = async (startDate, endDate) => {
     //==========================
     // total product list
     let list = [];
-    orders.map((item) => {
+    orders.forEach((item) => {
       for (let v of item.products) {
         list.push(v);
       }
     });
     //===== top 5 products
     let result = {};
-    list.map((item) => {
+    list.forEach((item) => {
       result[item.name] = (result[item.name] || 0) + item.price;
     });
     let resultArr = [];

@@ -5,7 +5,7 @@ import SubmitButton from "@/lib/components/SubmitButton";
 import { Axios } from "@/lib/helpers/AxiosInstance";
 import Form from "next/form";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { CldVideoPlayer } from "next-cloudinary";
@@ -35,7 +35,7 @@ const AboutPage = () => {
   return (
     <div>
       <ProgressBar progress={progress} color={"bg-blue-400"} />
-      <div className="p-3 w-96">
+      <div className="p-3 w-full">
         <Form
           action={clientAction}
           className=" p-4  bg-slate-300 shadow-lg shadow-blue-300 card"
@@ -77,7 +77,16 @@ const AboutPage = () => {
           src="https://res.cloudinary.com/dgj1icpu7/video/upload/v1702428300/00Video_wjiekc.mp4"
         /> */}
       </div>
-      <video controls src="/00Video.mp4"></video>
+      <video controls>
+        <source src="/00Video.mp4" type="video/mp4" />
+        <track
+          src="fgsubtitles_en.vtt"
+          kind="subtitles"
+          srcLang="en"
+          label="English"
+          default
+        />
+      </video>
     </div>
   );
 };

@@ -51,7 +51,7 @@ const LoginForm = () => {
               Email
             </label>
             <input
-              className="input"
+              className="border border-gray-300 p-1"
               type="email"
               id="email"
               name="email"
@@ -63,7 +63,7 @@ const LoginForm = () => {
               password
             </label>
             <input
-              className="input"
+              className="border border-gray-300 p-1"
               type={showpass ? "text" : "password"}
               id="password"
               name="password"
@@ -72,9 +72,9 @@ const LoginForm = () => {
             {/* <p className=" text-red-500" aria-live="polite">
                 {state?.message}
               </p> */}
-            <Link
-              href={"#"}
-              className=" cursor-pointer absolute right-2 top-8"
+            <button
+              type="button"
+              className="cursor-pointer absolute right-2 top-8"
               onClick={() => setShowPass((prev) => !prev)}
             >
               {showpass ? (
@@ -82,12 +82,12 @@ const LoginForm = () => {
               ) : (
                 <FaEye className=" text-2xl" />
               )}
-            </Link>
+            </button>
           </div>
           <div className="mt-3">
             <SubmitButton
               title={"Sign In"}
-              design={"btn-neutral bg-green-500 animate-pulse cursor-pointer"}
+              design={"btn-neutral w-full animate-pulse"}
             />
           </div>
           <div className="mt-3 text-end">

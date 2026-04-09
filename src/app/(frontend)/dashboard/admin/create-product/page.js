@@ -1,6 +1,6 @@
 import React from "react";
-import CreateProductModal from "./CreateProductModal";
 import ProductList from "./ProductList";
+import ProductModal from "./ProductModal";
 export const metadata = {
   title: "Admin Product",
   description: "Admin Product page",
@@ -8,7 +8,7 @@ export const metadata = {
 const Page = ({ searchParams }) => {
   return (
     <div className="pt-3">
-      <CreateProductModal />
+      <ProductModal title="Create Product" design="btn-primary" />
       <ProductList searchParams={searchParams} />
     </div>
   );

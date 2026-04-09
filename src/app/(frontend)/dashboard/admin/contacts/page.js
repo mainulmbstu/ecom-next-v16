@@ -5,6 +5,7 @@ import Form from "next/form";
 import SubmitButton from "@/lib/components/SubmitButton";
 import ReplyModal from "./ReplyModal";
 import { getAllAction } from "./action";
+import DateSSR from "@/lib/components/DateSSR";
 
 export const metadata = {
   title: "Contact",
@@ -13,9 +14,9 @@ export const metadata = {
 
 const Contact = async ({ searchParams }) => {
   let spms = await searchParams;
-  let keyword = (await spms["keyword"]) ?? "";
-  let page = Number((await spms["page"]) ?? "1");
-  let perPage = Number((await spms["perPage"]) ?? "12");
+  let keyword = (await spms?.keyword) ?? "";
+  let page = Number((await spms?.page) ?? "1");
+  let perPage = Number((await spms?.perPage) ?? "12");
   // let userInfo = await getTokenData(await getCookieValue("token"));
 
   let data = await getAllAction(keyword, page, perPage);
@@ -74,7 +75,7 @@ const Contact = async ({ searchParams }) => {
       </div>
       <div>
         {contacts?.length &&
-          contacts.map((item, i) => {
+          contacts?.map((item, i) => {
             return (
               <div
                 key={item._id}
@@ -84,8 +85,9 @@ const Contact = async ({ searchParams }) => {
               >
                 <h5>
                   Name: {item.name} ({moment(item?.createdAt).fromNow()},
-                  {moment(item?.createdAt).format("DD-MM-YY hh:mm a")})
                 </h5>
+                <DateSSR date={item?.createdAt} />
+
                 <p>email: {item.email} </p>
                 <p>Message: {item.message} </p>
                 <ReplyModal
@@ -96,7 +98,7 @@ const Contact = async ({ searchParams }) => {
                 />
                 <hr className=" w-25" />
                 <h5> Replies of this message: {item?.replies?.length}</h5>
-                {item?.replies &&
+                {item?.replies?.length &&
                   item?.replies?.reverse().map((rep, i, arr) => {
                     return (
                       <div key={i} className="mb-2">
@@ -106,7 +108,7 @@ const Contact = async ({ searchParams }) => {
                         <p className="">Replied by: {rep.userName}</p>
                         <p>
                           Time: {moment(rep?.date).fromNow()} ,
-                          {moment(rep?.date).format("DD-MM-YY hh:mm a")})
+                          <DateSSR date={rep?.date} />
                         </p>
                         <hr className=" outline-dashed w-40" />
                       </div>

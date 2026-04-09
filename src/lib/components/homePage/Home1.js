@@ -23,24 +23,23 @@ const Home1 = async ({ searchParams }) => {
     <div className="p-2">
       <div className="my-3">
         <Form action={"/"}>
-          <div className="join">
+          <div className="flex">
             <div className="">
               <input
                 defaultValue={keyword}
                 name="keyword"
                 type="search"
-                className="input input-bordered join-item"
+                className=" input-000"
                 placeholder="name or description"
               />
             </div>
             <div className="">
-              <button className="btn join-item">Search</button>
+              <button className=" btn-000  btn-search">Search</button>
             </div>
           </div>
         </Form>
       </div>
       <HomeCatPage />
-      <hr />
 
       <Suspense fallback=<Skeleton />>
         <Home12 searchParams={searchParams} promise={data} />

@@ -3,7 +3,6 @@
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { getTokenData } from "@/lib/helpers/getTokenData";
 import SSLCommerzPayment from "sslcommerz-lts";
-import fetch from "node-fetch";
 import { getCookieValue } from "@/lib/helpers/getCookieValue";
 
 //===========================================================

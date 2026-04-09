@@ -100,10 +100,10 @@ export default function RootLayout({ children }) {
             </Suspense>
             <Suspense fallback={<h2>Loading</h2>}></Suspense>
             <Offline />
-            <div className="pt-16  flex  flex-col min-h-screen dark:text-white dark:bg-black">
+            <div className="pt-16  dark:text-slate-500 dark:bg-black">
               <NestedCategory />
               <div className="">{children}</div>
-              <div className=" mt-auto">{<Footer />}</div>
+              <div className="">{<Footer />}</div>
             </div>
           </ThemeProvider>
         </body>

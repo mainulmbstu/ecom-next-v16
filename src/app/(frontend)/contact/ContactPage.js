@@ -22,9 +22,10 @@ const ContactPage = ({ promise }) => {
     }
   };
   return (
-    <div className="grid grid-cols-12">
+    <div className="grid md:grid-cols-12">
       <div className="md:col-span-8">
         <iframe
+          title="nourish"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16941.195449050145!2d90.49198314750565!3d24.191606533985944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x37567906d26718f7%3A0xc2b28acee7accb9!2sNourish%20Poultry%20%26%20Hatchery%20Ltd.!5e0!3m2!1sen!2sbd!4v1728467477481!5m2!1sen!2sbd"
           width={"100%"}
           height={350}
@@ -34,13 +35,13 @@ const ContactPage = ({ promise }) => {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
-      <div className="md:col-span-4">
-        <div className="px-4">
-          <h2 className=" text-center">Contact us</h2>
-          <div className=" flex justify-center">
-            <Form action={clientAction} className=" w-100">
+      <div className="md:col-span-4 my-2 ">
+        <div className="md:px-4">
+          <h4 className=" text-center">Contact us</h4>
+          <div className=" flex justify-center ">
+            <Form action={clientAction} className=" ">
               <input
-                className=" mb-3 input"
+                className=" mb-3 input-000"
                 type="text"
                 name="name"
                 defaultValue={userInfo?.name}
@@ -48,7 +49,7 @@ const ContactPage = ({ promise }) => {
                 required
               />
               <input
-                className=" mb-3 input"
+                className=" mb-3 input-000"
                 type="email"
                 name="email"
                 defaultValue={userInfo?.email}
@@ -56,7 +57,7 @@ const ContactPage = ({ promise }) => {
                 required
               />
               <textarea
-                className=" mb-3 input"
+                className=" mb-3 input-000"
                 rows="4"
                 type="text"
                 name="message"

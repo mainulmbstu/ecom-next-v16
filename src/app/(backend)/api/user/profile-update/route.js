@@ -50,7 +50,6 @@ export async function POST(req) {
     (await cookies()).delete("token");
     (await cookies()).delete("userInfo");
     await userExist.save();
-    revalidateTag('user-list', 'max')
     // console.log(userExist);
     let credential = {
       email,
@@ -59,7 +58,7 @@ export async function POST(req) {
       <h3>Your profile  in ${process.env.BASE_URL} has been Updated successfully.</h3>
       Thanks for staying with us`,
     };
-   await mailer(credential);
+    await mailer(credential);
 
     return Response.json({
       success: true,

@@ -16,20 +16,23 @@
   },
   "linter": {
     "enabled": true,
-     "rules": {
+    "rules": {
       "recommended": true,
       "correctness": {
         "noUndeclaredVariables": "error",
-        "noUndeclaredDependencies": "error"
+        "noUndeclaredDependencies": "error",
+        "useExhaustiveDependencies": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "off",
         "noUnassignedVariables": "info"
       },
       "a11y": {
-        "useButtonType": "info"
+        "useButtonType": "info",
+        "useKeyWithClickEvents": "off",
+        "useMediaCaption": "off"
       },
-        "style": {
+      "style": {
         "useConst": "off"
       }
     },
@@ -38,7 +41,7 @@
       "react": "recommended"
     }
   },
-    "javascript": {
+  "javascript": {
     "formatter": {
       "quoteStyle": "double"
     }
@@ -46,7 +49,7 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "off"
       }
     }
   }

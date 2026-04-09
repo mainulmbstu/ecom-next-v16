@@ -11,7 +11,7 @@ import { getCookieValue } from "@/lib/helpers/getCookieValue";
 export const getAllAction = async (keyword, page = 1, perPage) => {
   "use cache";
   cacheLife("days");
-  cacheTag("contacts");
+  cacheTag("contact-list");
   let skip = (page - 1) * perPage;
   let editKey = keyword === "unread" ? "" : keyword;
   try {
@@ -59,7 +59,7 @@ export const replyAction = async (cid, formData) => {
     ];
     await findmsg.save();
     // revalidatePath("/", "layout");
-    updateTag("contacts");
+    updateTag("contact-list");
     return { success: true, message: "Replied successfully" };
   } catch (error) {
     console.log(error);
