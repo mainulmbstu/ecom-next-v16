@@ -71,7 +71,7 @@ const CategoryModal = ({
       <dialog ref={ref} id="my_modal_1" className="modal mt-15 w-screen ">
         <div className="modal-box">
           <div className="">
-            <h3 className="text-lg font-bold">{title}</h3>
+            <h3 className="">{title}</h3>
             <div className="mb-4 ms-2">
               <div className="">
                 <Image
@@ -91,7 +91,7 @@ const CategoryModal = ({
             </div>
             <Form
               action={clientAction}
-              className=" p-4  bg-base-100 shadow-lg shadow-blue-300"
+              className=" p-4  bg-base-300 shadow-lg shadow-blue-300"
             >
               <div className="mt-3">
                 <label className="block" htmlFor="name">

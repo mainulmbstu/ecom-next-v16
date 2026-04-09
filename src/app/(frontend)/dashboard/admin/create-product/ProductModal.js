@@ -63,36 +63,34 @@ const ProductModal = ({
       >
         {loading ? "Submitting" : title}
       </button>
-      <dialog
-        ref={ref}
-        id="my_modal_1"
-        className="modal w-screen items-start mt-30 "
-      >
-        <div className="modal-box">
+      <dialog ref={ref} id="my_modal_1" className="modal w-screen  mt-30 ">
+        <div className="modal-box ">
           <div className=" relative mb-25">
-            <h3 className="text-lg font-bold">{title}</h3>
-            <div className=" ms-2 pb-1">
-              <Image
-                src={
-                  picture
-                    ? URL.createObjectURL(picture)
-                    : value
-                      ? value?.picture?.at(0)?.secure_url
-                      : blogBanner
-                }
-                alt="image"
-                className=" h-50 w-auto object-contain mx-auto"
-                height={100}
-                width={100}
-              />
+            <h3 className="">{title}</h3>
+            <div>
+              <div className=" ms-2 pb-1">
+                <Image
+                  src={
+                    picture
+                      ? URL.createObjectURL(picture)
+                      : value
+                        ? value?.picture?.at(0)?.secure_url
+                        : blogBanner
+                  }
+                  alt="image"
+                  className=" h-50 w-auto object-contain mx-auto"
+                  height={100}
+                  width={100}
+                />
+              </div>
             </div>
             <Form
               action={clientAction}
-              className=" p-4  bg-base-300 shadow-lg shadow-blue-300 card"
+              className=" p-4  bg-base-300 shadow-lg shadow-blue-300"
             >
               <div className="mt-3">
                 <label className="block" htmlFor="name">
-                  Select Image
+                  Select Imageggg
                 </label>
                 <input
                   onChange={(e) => {
