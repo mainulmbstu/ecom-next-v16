@@ -40,7 +40,7 @@ const ReplyModal = ({ name, cid, title = "Submit", design = "btn-link" }) => {
             <h3 className="text-lg font-bold">Reply to {name} </h3>
             <Form
               action={clientAction}
-              className=" p-4  bg-slate-300 shadow-lg shadow-blue-300"
+              className=" p-4  bg-base-300 shadow-lg shadow-blue-300"
             >
               <div className="mt-3">
                 <label className="block" htmlFor="description">
@@ -48,7 +48,7 @@ const ReplyModal = ({ name, cid, title = "Submit", design = "btn-link" }) => {
                 </label>
                 <textarea
                   rows="4"
-                  className="border border-gray-300 p-1"
+                  className="input-000"
                   type="text"
                   id="reply"
                   name="reply"

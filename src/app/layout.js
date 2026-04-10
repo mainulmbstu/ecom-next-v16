@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
           />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster
-              position="top-right"
+              position="top-left"
               toastOptions={{
                 className: "",
                 duration: 5000,

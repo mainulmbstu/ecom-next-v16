@@ -1,5 +1,6 @@
 "use client";
-import React, { useRef, useState } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { useAuth } from "@/lib/components/context";
@@ -11,19 +12,27 @@ import { Axios } from "@/lib/helpers/AxiosInstance";
 import { useRouter } from "next/navigation";
 import ProgressBar from "@/lib/components/ProgressBar";
 
-const ProductModal = ({
+const Modal = ({
   editItem,
   title = "Edit",
   design = "btn-link text-blue-600",
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   let value = editItem && JSON.parse(editItem);
-  let ref = useRef();
   let [loading, setLoading] = useState(false);
   let [picture, setPicture] = useState("");
   const [progress, setProgress] = useState(0);
   let { catPlain } = useAuth();
   let router = useRouter();
+  const inputRef = useRef(null);
   // console.log(value);
+  useEffect(() => {
+    if (isOpen) {
+      // Focus the input when the modal opens
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
   let clientAction = async (formData) => {
     formData.append("id", value?._id || "");
     try {
@@ -38,11 +47,12 @@ const ProductModal = ({
       });
       if (data?.success) {
         toast.success(data?.message);
-        Swal.fire("Success", data?.message, "success");
+        alert(data?.message);
+        // Swal.fire("Success", data?.message, "success");
         router.refresh("/dashboard/admin/create-product");
         setProgress(0);
       } else {
-        Swal.fire("Error", data?.message, "error");
+        // Swal.fire("Error", data?.message, "error");
         toast.error(data?.message);
       }
     } catch (err) {
@@ -52,46 +62,43 @@ const ProductModal = ({
     }
   };
   return (
-    <div className="z-10">
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
+    <div className="">
       <button
         type="button"
         disabled={loading}
         className={`btn ${design} `}
-        onClick={() => ref.current.showModal()}
-        // onClick={() => document.getElementById("my_modal_1").showModal()}
+        onClick={() => setIsOpen(true)}
       >
         {loading ? "Submitting" : title}
       </button>
-      <dialog
-        ref={ref}
-        id="my_modal_1"
-        className="modal items-start justify-start md:justify-center md:items-center mt-30 "
+      {/* modal*/}
+      <div
+        className={`bg-gray-700/80  w-screen h-screen fixed top-0 left-0 grid  justify-start  md:justify-center items-start md:items-center z-999 overflow-scroll  ${
+          isOpen ? " " : "scale-0"
+        }`}
       >
-        <div className="modal-box ">
-          <div className=" relative mb-25">
-            <h3 className="">{title}</h3>
-            <div>
-              <div className=" ms-2 pb-1">
-                <Image
-                  src={
-                    picture
-                      ? URL.createObjectURL(picture)
-                      : value
-                        ? value?.picture?.at(0)?.secure_url
-                        : blogBanner
-                  }
-                  alt="image"
-                  className=" h-50 w-auto object-contain mx-auto"
-                  height={100}
-                  width={100}
-                />
-              </div>
+        {/* modal box*/}
+        <div
+          className={`w-screen max-w-md transition-all duration-300  shadow-sm shadow-sky-300 p-3 bg-base-100 relative   ${isOpen ? " opacity-100 " : " opacity-0"}`}
+        >
+          <h4>{title}</h4>
+          <div className=" p-2  bg-base-300">
+            <div className=" ms-2 pb-1">
+              <Image
+                src={
+                  picture
+                    ? URL.createObjectURL(picture)
+                    : value
+                      ? value?.picture?.at(0)?.secure_url
+                      : blogBanner
+                }
+                alt="image"
+                className=" h-50 w-auto object-contain mx-auto"
+                height={100}
+                width={100}
+              />
             </div>
-            <Form
-              action={clientAction}
-              className=" p-4  bg-base-300 shadow-lg shadow-blue-300"
-            >
+            <Form action={clientAction} className="">
               <div className="mt-3">
                 <label className="block" htmlFor="name">
                   Select Image
@@ -112,6 +119,7 @@ const ProductModal = ({
                   Product Name
                 </label>
                 <input
+                  ref={inputRef}
                   defaultValue={value?.name}
                   className="input-000"
                   type="text"
@@ -211,33 +219,32 @@ const ProductModal = ({
                   placeholder="Enter product description"
                 />
               </div>
-              <div className="mt-3">
+              <div className="mt-3 relative">
                 <ProgressBar progress={progress} color={"bg-blue-400"} />
                 <SubmitButton title={"Submit"} design={"btn-accent"} />
-              </div>
-            </Form>
-            <div className="modal-action">
-              <form method="dialog">
                 <button
-                  type="submit"
-                  className="btn btn-sm btn-circle btn-error absolute right-2 top-2"
-                >
-                  ✕
-                </button>
-                {/* if there is a button in form, it will close the modal */}
-                <button
-                  type="submit"
-                  className="btn btn-error absolute right-2 bottom-9"
+                  type="button"
+                  className="btn btn-error absolute right-0"
+                  onClick={() => setIsOpen(false)}
                 >
                   Close
                 </button>
-              </form>
+              </div>
+            </Form>
+            <div className="my-2">
+              <button
+                type="button"
+                className="btn btn-xs btn-error rounded-full absolute top-1 right-4"
+                onClick={() => setIsOpen(false)}
+              >
+                X
+              </button>
             </div>
           </div>
         </div>
-      </dialog>
+      </div>
     </div>
   );
 };
 
-export default ProductModal;
+export default Modal;
