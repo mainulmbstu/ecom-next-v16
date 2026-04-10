@@ -237,7 +237,7 @@ const Modal = ({
                 className="btn btn-xs btn-error rounded-full absolute top-1 right-4"
                 onClick={() => setIsOpen(false)}
               >
-                X
+                x
               </button>
             </div>
           </div>
