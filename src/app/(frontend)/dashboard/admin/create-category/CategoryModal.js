@@ -74,7 +74,7 @@ const CategoryModal = ({
       </button>
       {/* modal*/}
       <div
-        className={`bg-gray-700/80  w-screen h-screen fixed top-0 left-0 grid  justify-start  md:justify-center items-start md:items-center z-999 overflow-scroll  ${
+        className={`bg-gray-700/80 w-screen  h-screen  fixed top-0 left-0 grid  justify-start  md:justify-center items-start md:items-center z-999 overflow-scroll  ${
           isOpen ? " " : "scale-0"
         }`}
       >
@@ -82,7 +82,9 @@ const CategoryModal = ({
         <div
           className={`w-screen max-w-md transition-all duration-1000  shadow-sm shadow-sky-300 p-3 bg-base-100 relative   ${isOpen ? " opacity-100 " : " opacity-0"}`}
         >
-          <h4>{title}</h4>
+          <button ref={inputRef} type="button" className="text-2xl">
+            {title}
+          </button>
           <div className=" p-2  bg-base-300">
             <div className=" ms-2 pb-1">
               <Image
@@ -105,7 +107,6 @@ const CategoryModal = ({
                   Select Image
                 </label>
                 <input
-                  ref={inputRef}
                   onChange={(e) => {
                     setPicture(e.target.files[0]);
                   }}
