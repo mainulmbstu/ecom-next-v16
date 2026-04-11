@@ -12,7 +12,6 @@ import SubmitButton from "@/lib/components/SubmitButton";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import ProductModal from "./ProductModal";
-import Modal from "./Modal";
 
 const ProductListClient = ({ value }) => {
   let { keyword, category, page, perPage, data } = value;
@@ -201,9 +200,6 @@ const ProductListClient = ({ value }) => {
 
                     <td>
                       <ProductModal editItem={JSON.stringify(item)} />
-                    </td>
-                    <td>
-                      <Modal editItem={JSON.stringify(item)} />
                     </td>
 
                     <td>

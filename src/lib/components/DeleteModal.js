@@ -4,6 +4,7 @@ import { useAuth } from "./context";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { swalModal } from "../helpers/swalModal";
 
 const DeleteModal = ({ value }) => {
   let ref = useRef();
@@ -15,16 +16,18 @@ const DeleteModal = ({ value }) => {
   let deleteFunc = async () => {
     try {
       if (userInfo?._id === value?.id) {
-        return Swal.fire("Error", "You cannot delete yourself", "error");
+        swalModal("You cannot delete yourself", "error");
+        return;
       }
       setLoading(true);
       let data = await value.action(value?.id);
       if (data?.success) {
         catPlainFunc();
-        toast.success(data?.message);
+        // toast.success(data?.message);
+        swalModal(data?.message);
         value?.redirect && router.push(value?.redirect);
       } else {
-        Swal.fire("Error", data?.message, "error");
+        swalModal(data?.message, "error");
       }
     } catch (error) {
       toast.error(error?.message);
@@ -37,24 +40,36 @@ const DeleteModal = ({ value }) => {
     <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
+        type="button"
         disabled={loading}
         className="btn btn-link text-red-600 "
         onClick={() => ref.current.showModal()}
-      // onClick={() => document.getElementById("my_modal_1").showModal()}
+        // onClick={() => document.getElementById("my_modal_1").showModal()}
       >
         {loading ? "Deleting" : "Delete"}
       </button>
-      <dialog ref={ref} id="my_modal_1" className="modal justify-end items-start mt-20 md:items-center md:justify-center">
-        <div className="modal-box max-w-full w-100">
+      <dialog
+        ref={ref}
+        id="my_modal_1"
+        className="modal justify-end items-start mt-20 md:items-center md:justify-center"
+      >
+        <div className="modal-box max-w-full w-screen md:w-100">
           <h3 className="font-bold text-lg">Delete confirmation</h3>
           <p className="py-4">{value?.message}</p>
           <div className="modal-action">
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                type="submit"
+                className="btn btn-sm btn-circle btn-error absolute right-2 top-2"
+              >
                 ✕
               </button>
               {/* if there is a button in form, it will close the modal */}
-              <button onClick={deleteFunc} type="submit" className="btn">
+              <button
+                onClick={deleteFunc}
+                type="submit"
+                className="btn btn-success"
+              >
                 yes
               </button>
             </form>

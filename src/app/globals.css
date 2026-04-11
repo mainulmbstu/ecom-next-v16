@@ -269,11 +269,16 @@ th {
     border-color: var(--color-zinc-300);
     background-color: var(--color-base-100);
 }
-/*.swal2-container {
-    z-index: 10000000 !important;
-}*/
-/*.swal2-popup {
-    grid-column: 2;
-    grid-row: 2;
-    place-self: start start;
+
+.swalmodal {
+    max-width: 500px;
+    /*margin-left: auto !important;*/
+    /*margin: 0 auto auto 0;*/
+}
+
+/*
+@media screen and (min-width: 761px) {
+    .swalmodal {
+        width: 23% !important;
+    }
 }*/
