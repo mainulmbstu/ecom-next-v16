@@ -1,0 +1,20 @@
+import UserMenu from "./UserMenu";
+
+export const metadata = {
+  title: {
+    default: "User dashboard",
+    template: "%s | User dashboard | Blog",
+    // absolute:""
+  },
+  description: "A blog website",
+};
+export default function UserLayout({ children }) {
+  return (
+    <div className=" grid md:grid-cols-12 gap-2">
+      <div className=" md:col-span-3">
+        <UserMenu />
+      </div>
+      <div className=" md:col-span-9">{children}</div>
+    </div>
+  );
+}

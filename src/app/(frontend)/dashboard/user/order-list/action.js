@@ -11,7 +11,7 @@ import { UserModel } from "@/lib/models/userModel";
 export const orderAction = async (keyword, page = 1, perPage) => {
   let skip = (page - 1) * perPage;
   // let limit = page * perPage;
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   try {
     await dbConnect();
     const total = await OrderModel.find({

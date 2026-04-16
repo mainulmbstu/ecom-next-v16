@@ -54,7 +54,7 @@ export const similarItemsAction = async (pid) => {
 };
 //===========================
 export const likeStatusAction = async (pid) => {
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
 
   try {
     await dbConnect();
@@ -70,13 +70,13 @@ export const likeStatusAction = async (pid) => {
 };
 //================================
 export const likeAction = async (pid) => {
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   try {
     if (!userInfo) {
-      return { message: "User is not authenticated" };
+      throw new Error("User is not authenticated");
     }
     if (!pid) {
-      return { message: "pid is required" };
+      throw new Error("pid is required");
     }
     await dbConnect();
 
@@ -98,15 +98,16 @@ export const likeAction = async (pid) => {
 };
 
 //=====================================
-export const commentAction = async (pid, comment) => {
-  let userInfo = await getTokenData(await getCookieValue("token"));
-
+export const commentAction = async (pid, formData) => {
+  let comment = formData.get("review");
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
+  console.log(comment);
   try {
     if (!userInfo) {
-      return { message: "User is not authenticated" };
+      throw new Error("User is not authenticated");
     }
     if (!pid) {
-      return { message: "pid is required" };
+      throw new Error("pid is required");
     }
     await dbConnect();
     let comm = new CommentModel();
@@ -128,14 +129,14 @@ export const commentAction = async (pid, comment) => {
 
 //=====================================
 export const ratingAction = async (pid, rating) => {
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
 
   try {
     if (!userInfo) {
-      return { message: "User is not authenticated" };
+      throw new Error("User is not authenticated");
     }
     if (!pid) {
-      return { message: "pid is required" };
+      throw new Error("pid is required");
     }
     await dbConnect();
     await RatingModel.create({

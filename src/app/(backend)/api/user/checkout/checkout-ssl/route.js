@@ -16,7 +16,7 @@ export async function POST(req) {
   const { cart, total } = frontData;
   let trxn_id = Date.now();
   let baseurl = process.env.BASE_URL;
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   const data = {
     total_amount: total,
     currency: "BDT",
@@ -88,7 +88,7 @@ export async function POST(req) {
     //   console.log("Redirecting to: ", GatewayPageURL);
     // });
     // console.log(sslcz);
-    return NextResponse.json(apiResponse);
+    return Response.json(apiResponse);
     // return Response.json({ sslcz, data });
   } catch (error) {
     // if u use redirect in try block

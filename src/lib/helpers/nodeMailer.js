@@ -1,9 +1,8 @@
 import nodemailer from "nodemailer";
 // const nodemailer = require("nodemailer");
 
-const mailer = async ( credential) => {
-
-  const transporter = await nodemailer.createTransport({
+const mailer = async (credential) => {
+  const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: process.env.EMAIL,
@@ -22,10 +21,8 @@ const mailer = async ( credential) => {
     html: `<b>${credential?.body}</b>`, // html body
     attachments: credential?.attachments && credential?.attachments,
   };
-    let info = await transporter.sendMail(message);
-    
+  let info = await transporter.sendMail(message);
 };
 
-export default mailer
+export default mailer;
 // module.exports=mailer
-

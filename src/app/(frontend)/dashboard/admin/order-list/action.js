@@ -65,9 +65,12 @@ export const bkashSearch = async (trxn_id) => {
   }
 };
 //=====================================
-export const bkashRefund = async (value) => {
+export const bkashRefund = async (editItem) => {
+  let value = editItem && JSON.parse(editItem);
+  let paymentID = value?.payment?.payment_id;
+  let trxID = value?.payment?.trxn_id;
+  let amount = value?.total;
   try {
-    const { paymentID, trxID, amount } = value;
     const refundDetails = {
       paymentID,
       trxID,
@@ -93,6 +96,23 @@ export const bkashRefund = async (value) => {
     return {
       success: false,
       message: `BDT ${amount} refund failed`,
+    };
+  } catch (error) {
+    console.log(error);
+    return { message: await getErrorMessage(error) };
+  }
+};
+//=========================================
+export const deleteAction = async (id = "") => {
+  try {
+    await dbConnect();
+    const itemExist = await OrderModel.findByIdAndDelete(id);
+    // revalidatePath("/", "layout");
+    updateTag("order-list");
+
+    return {
+      message: `${itemExist?._id} order has been deleted successfully`,
+      success: true,
     };
   } catch (error) {
     console.log(error);

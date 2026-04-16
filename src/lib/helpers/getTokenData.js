@@ -4,12 +4,12 @@ import jwt from "jsonwebtoken";
 export const getTokenData = async (token) => {
   try {
     if (!token) {
-      return null;
+      return { userInfo: "" };
     }
     let decoded = jwt.verify(token, process.env.JWT_KEY);
-    return decoded?.userInfo;
+    return decoded || { userInfo: "" };
   } catch (error) {
     console.log("getTokenData error", error.message);
-    return null;
+    return { userInfo: "" };
   }
 };

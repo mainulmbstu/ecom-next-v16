@@ -17,7 +17,7 @@ export async function POST(req) {
   let name = formData.get("name");
   let parentId = formData.get("parentId") || null;
   let file = formData.get("file");
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   try {
     if (!id) {
       if (!name) {

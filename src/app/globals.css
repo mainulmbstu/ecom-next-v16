@@ -30,7 +30,7 @@ body {
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @import "tailwindcss";
-@plugin "daisyui";
+/*@plugin "daisyui";*/
 /* @plugin "tailwindcss-animate"; */
 
 :root {
@@ -133,11 +133,11 @@ body {
         color: var(--color-slate-500);
     }
 }
-
+/*
 th {
     font-weight: 800;
-    background-color: var(--color-slate-300);
-}
+    background-color: var(--color-base-300);
+}*/
 /*
 * {
   scrollbar-gutter: stable;
@@ -147,7 +147,7 @@ th {
     font-size: clamp(8px, 1vw, 100px);
 }
 
-@utility btn-000 {
+@utility btn {
     /*background-color: var(--color-gray-200);*/
     padding: 8px 13px;
     cursor: pointer;
@@ -169,11 +169,11 @@ th {
     background-color: var(--color-neutral-700);
 }
 
-@utility btn-red {
+@utility btn-error {
     background-color: var(--color-red-500);
 }
 
-.btn-red:hover {
+.btn-error:hover {
     transition: all 200ms ease-in;
     background-color: var(--color-red-600);
 }
@@ -187,20 +187,20 @@ th {
     background-color: var(--color-blue-600);
 }
 
-@utility btn-green {
+@utility btn-success {
     background-color: var(--color-green-600);
 }
 
-.btn-green:hover {
+.btn-success:hover {
     transition: all 200ms ease-in;
     background-color: var(--color-green-700);
 }
 
-@utility btn-yellow {
+@utility btn-warning {
     background-color: var(--color-yellow-500);
 }
 
-.btn-yellow:hover {
+.btn-warning:hover {
     transition: all 200ms ease-in;
     background-color: var(--color-yellow-600);
 }
@@ -211,11 +211,12 @@ th {
 
 .btn-pink:hover {
     transition: all 200ms ease-in;
-    background-color: var(--color-pink-600);
+    background-color: var(--color-pink-700);
 }
 
 @utility btn-violet {
-    background-color: var(--color-violet-500);
+    background-color: var(--color-violet-700);
+    color: var(--color-slate-300);
 }
 
 .btn-violet:hover {
@@ -223,18 +224,22 @@ th {
     background-color: var(--color-violet-600);
 }
 
-@utility btn-indigo {
-    background-color: var(--color-indigo-800);
+@utility btn-primary {
+    background-color: var(--color-indigo-700);
     color: var(--color-slate-300);
 }
 
-.btn-indigo:hover {
+.btn-primary:hover {
     transition: all 200ms ease-in;
     background-color: var(--color-indigo-600);
 }
 
 @utility btn-search {
-    background-color: var(--color-base-300);
+    background-color: var(--color-zinc-300);
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--color-neutral-900)
+            /* oklch(82.8% 0.189 84.429) */;
+    }
 }
 
 .btn-search:hover {
@@ -250,24 +255,19 @@ th {
 }
 
 @utility btn-circle {
-    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    padding: 2px !important;
+    border-radius: 100% !important;
+    background-color: var(--color-gray-200);
 }
 
 @utility btn-outline {
     border: 1px black solid;
 }
 
-.btn-000:active {
+.btn:active {
     background-color: var(--color-gray-400);
-}
-
-@utility input-000 {
-    border: 1px black solid;
-    padding: 7px;
-    width: 100%;
-    border-radius: 5px;
-    border-color: var(--color-zinc-300);
-    background-color: var(--color-base-100);
 }
 
 .swalmodal {
@@ -282,3 +282,44 @@ th {
         width: 23% !important;
     }
 }*/
+
+@utility bg-base-400 {
+    background-color: var(--color-zinc-500);
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--color-neutral-950)
+            /* oklch(82.8% 0.189 84.429) */;
+    }
+}
+@utility bg-base-300 {
+    background-color: var(--color-zinc-300);
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--color-neutral-950)
+            /* oklch(82.8% 0.189 84.429) */;
+    }
+}
+@utility bg-base-200 {
+    background-color: var(--color-zinc-200);
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--color-neutral-900)
+            /* oklch(82.8% 0.189 84.429) */;
+    }
+}
+@utility bg-base-100 {
+    background-color: var(--color-slate-100);
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--color-neutral-800)
+            /* oklch(82.8% 0.189 84.429) */;
+    }
+}
+@utility input-000 {
+    border: 1px black solid;
+    padding: 7px;
+    width: 100%;
+    border-radius: 5px;
+    border-color: var(--color-zinc-300);
+    background-color: var(--color-slate-100);
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--color-neutral-800)
+            /* oklch(82.8% 0.189 84.429) */;
+    }
+}

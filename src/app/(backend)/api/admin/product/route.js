@@ -16,7 +16,7 @@ import { createNestedCategory } from "@/lib/helpers/createNestedCategory";
 export async function POST(req) {
   let formData = await req.formData();
 
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   let id = formData.get("id");
   let name = formData.get("name");
   let category = formData.get("category");
@@ -112,6 +112,8 @@ export async function POST(req) {
     }
   } catch (error) {
     console.log(error);
+    // if u use redirect in try block
+    // if (error.message === "NEXT_REDIRECT") throw error;
     return Response.json({ message: await getErrorMessage(error) });
   } finally {
     revalidateTag("product-list", { expire: 0 });

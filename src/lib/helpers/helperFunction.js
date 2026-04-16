@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models/userModel";
 import dbConnect from "./dbConnect";

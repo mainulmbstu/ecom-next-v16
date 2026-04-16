@@ -42,7 +42,7 @@ export const getAllAction = async (keyword, page = 1, perPage) => {
 //=====================================
 export const replyAction = async (cid, formData) => {
   let reply = formData.get("reply");
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   try {
     await dbConnect();
     let findmsg = await ContactModel.findById(cid);

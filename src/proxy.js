@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { getTokenData } from "./lib/helpers/getTokenData";
-import jwt from "jsonwebtoken";
-import { useAuth } from "./lib/components/context";
 
 export async function proxy(request) {
   let token = request.cookies.get("token")?.value; // get cookies
-  let userInfo = await getTokenData(token);
+  let { userInfo } = await getTokenData(token);
+
   // var userInfo = jwt.verify(token, process.env.JWT_KEY);
   // console.log(process.env.JWT_KEY);
   let path = request.nextUrl.pathname;

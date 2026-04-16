@@ -2,9 +2,13 @@ import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { ProductModel } from "@/lib/models/productModel";
 import { CategoryModel } from "@/lib/models/categoryModdel";
+import { cacheLife, cacheTag } from "next/cache";
 
 //=============================
 export async function GET(req) {
+  // "use cache";
+  // cacheLife("days");
+  // cacheTag("product-list");
   let keyword = req.nextUrl.searchParams.get("keyword");
   let page = req.nextUrl.searchParams.get("page");
   let perPage = req.nextUrl.searchParams.get("perPage");

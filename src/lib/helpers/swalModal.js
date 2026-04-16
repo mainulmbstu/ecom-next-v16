@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const swalModal = async (message = "Successsful", icon = "success") => {
+export const swalModal = (message = "Successsful", icon = "success") => {
   return Swal.fire({
     icon: icon, // warning, info, question, error
     text: message,

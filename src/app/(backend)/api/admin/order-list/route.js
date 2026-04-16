@@ -2,7 +2,7 @@ import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { OrderModel } from "@/lib/models/OrderModel";
 import { UserModel } from "@/lib/models/userModel";
-import { cacheLife, cacheTag } from "next/cache";
+import { cacheLife, cacheTag, revalidateTag } from "next/cache";
 
 export async function GET(req) {
   // "use cache:private";
@@ -12,7 +12,6 @@ export async function GET(req) {
   let page = req.nextUrl.searchParams.get("page");
   let perPage = req.nextUrl.searchParams.get("perPage");
   let skip = (page - 1) * perPage;
-  console.log(5555555555);
   try {
     await dbConnect();
     await OrderModel.deleteMany({ "payment.status": false });

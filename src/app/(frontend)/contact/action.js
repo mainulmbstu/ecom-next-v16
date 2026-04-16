@@ -1,9 +1,7 @@
 "use server";
 
 import dbConnect from "@/lib/helpers/dbConnect";
-import { getCookieValue } from "@/lib/helpers/getCookieValue";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
-import { getTokenData } from "@/lib/helpers/getTokenData";
 import { ContactModel } from "@/lib/models/ContactModel";
 import { cacheLife, cacheTag, revalidatePath, updateTag } from "next/cache";
 
@@ -33,7 +31,7 @@ export const getMessageAction = async (page = 1, perPage, userInfo) => {
   cacheLife("days");
   let skip = (page - 1) * perPage;
   try {
-    // let userInfo = await getTokenData(await getCookieValue("token"));
+    // let {userInfo} = await getTokenData(await getCookieValue("token"));
     await dbConnect();
     const total = await ContactModel.find({ email: userInfo?.email });
     const list = await ContactModel.find({ email: userInfo?.email })

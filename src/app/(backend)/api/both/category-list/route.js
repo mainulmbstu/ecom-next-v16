@@ -2,6 +2,7 @@ import { createNestedCategory } from "@/lib/helpers/createNestedCategory";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { CategoryModel } from "@/lib/models/categoryModdel";
+import { revalidatePath } from "next/cache";
 
 export async function GET(req) {
   let keyword = req.nextUrl.searchParams.get("keyword") || "";
@@ -32,5 +33,7 @@ export async function GET(req) {
   } catch (error) {
     console.log(error);
     return Response.json({ message: await getErrorMessage(error) });
+  } finally {
+    revalidatePath("/", "layout");
   }
 }

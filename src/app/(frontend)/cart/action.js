@@ -10,7 +10,7 @@ export const checkoutAction = async (formData) => {
   // let name = formData.get("name");
   let trxn_id = Date.now();
   let baseurl = process.env.BASE_URL;
-  let userInfo = await getTokenData(await getCookieValue("token"));
+  let { userInfo } = await getTokenData(await getCookieValue("token"));
   const data = {
     total_amount: 10,
     currency: "BDT",
