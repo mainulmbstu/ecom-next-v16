@@ -133,11 +133,6 @@ const NavMenu = () => {
                     <li>
                       <Link
                         onClick={menuClose}
-                        // className={
-                        //   path.startsWith(`/dashboard`)
-                        //     ? "bg-blue-300  w-full inline-block p-2 hover:bg-zinc-400 underline"
-                        //     : "w-full inline-block p-2 hover:bg-zinc-300"
-                        // }
                         className={`w-full inline-block p-2 hover:bg-zinc-400 ${path.startsWith(`/dashboard`) ? "bg-blue-300" : ""} `}
                         href={
                           userInfo?.role === "admin"
