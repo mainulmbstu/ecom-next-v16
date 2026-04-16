@@ -45,7 +45,7 @@ const ImagePage = ({ picture }) => {
             alt="image"
             width={2000}
             height={2000}
-            src={img || (picture?.length && picture[0]?.secure_url)}
+            src={img || picture?.at(0)?.secure_url}
           />{" "}
         </figure>
       </div>
