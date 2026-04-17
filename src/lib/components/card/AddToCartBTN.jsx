@@ -24,7 +24,7 @@ const AddToCartBTN = ({ data }) => {
           // toast.success(`${item?.name} added to Cart`);
           swalModal(`${item?.name} added to Cart`);
         }}
-        className="btn btn-blue mt-auto mb-1"
+        className="btn btn-blue mt-auto"
       >
         Add to cart
       </button>

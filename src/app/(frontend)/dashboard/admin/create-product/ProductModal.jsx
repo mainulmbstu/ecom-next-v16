@@ -101,7 +101,7 @@ const ProductModal = ({
                 width={100}
               />
             </div>
-            <Form action={clientAction} className="">
+            <Form action={clientAction} className="text-start">
               <div className="mt-3">
                 <label className="block" htmlFor="name">
                   Select Image

@@ -13,7 +13,6 @@ const About = async () => {
   return (
     <div>
       <AboutPage />
-      <Skeleton />
     </div>
   );
 };

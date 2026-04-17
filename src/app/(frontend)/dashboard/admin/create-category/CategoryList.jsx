@@ -59,7 +59,7 @@ const CategoryList = async ({ searchParams }) => {
           <tbody className="bg-base-100">
             {entries?.length ? (
               entries?.map((item) => (
-                <tr key={item?._id} className="hover:bg-zinc-300 text-end">
+                <tr key={item?._id} className="hover:bg-zinc-300 text-center">
                   <td>{item.name}</td>
                   <td>
                     <Link href={item.picture?.secure_url} target="_blank">
