@@ -64,8 +64,6 @@ const CategoryModal = ({
       setLoading(false);
     }
   };
-  let parent =
-    catPlain?.length && catPlain?.find((item) => item._id === value?.parentId);
 
   return (
     <div className="">
@@ -145,8 +143,8 @@ const CategoryModal = ({
                   name="parentId"
                   className="input-000"
                 >
-                  <option value={value?.parentId || ""}>
-                    {parent?.name || "It is top category"}
+                  <option value={value?.parentId?._id || ""}>
+                    {value?.parentId?.name || "It is top category"}
                   </option>
                   <option className={!value?.parentId ? "hidden" : ""} value="">
                     {"Make it top category"}

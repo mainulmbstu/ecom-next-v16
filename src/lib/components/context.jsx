@@ -2,9 +2,10 @@
 
 import { createContext, use, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { Axios } from "../helpers/AxiosInstance";
-import { getTokenData } from "../helpers/getTokenData";
+import { Axios } from "@/lib/helpers/AxiosInstance";
+import { getTokenData } from "@/lib/helpers/getTokenData";
 import { useRouter } from "next/navigation";
+import { swalModal } from "@/lib/helpers/swalModal";
 
 export const AuthContext = createContext();
 
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
     setUserInfo(null);
     setToken(null);
     router.refresh("/");
+    swalModal("You have been logged out");
   };
   //=================================
   let autoLogout = () => {

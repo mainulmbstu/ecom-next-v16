@@ -4,17 +4,17 @@ import fs from "fs";
 import path from "path";
 
 // Configuration
-cloudinary.config({
-  cloud_name: "dgj1icpu7",
-  api_key: "192926895148929",
-  api_secret: "TT4K81WU5_4uFTrNLh1Kl2hIBWs", // Click 'View API Keys' above to copy your API secret
-});
 // cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-//  // Click 'View API Keys' above to copy your API secret
+//   cloud_name: "dgj1icpu7",
+//   api_key: "192926895148929",
+//   api_secret: "TT4K81WU5_4uFTrNLh1Kl2hIBWs", // Click 'View API Keys' above to copy your API secret
 // });
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  // Click 'View API Keys' above to copy your API secret
+});
 
 // Upload an image
 

@@ -146,7 +146,7 @@ const ProductModal = ({
                     {value?.category?.name || "Select Category"}
                   </option>
                   {catPlain?.length &&
-                    catPlain.map((item) => (
+                    catPlain?.map((item) => (
                       <option key={item?.name} value={item?._id}>
                         {item?.name}
                       </option>

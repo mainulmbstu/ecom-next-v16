@@ -141,7 +141,7 @@ export async function GET(req) {
       });
     } else {
       let category = await CategoryModel.find({});
-      let categoryList = await createNestedCategory(category); // function below
+      let categoryList = await createNestedCategory(category);
 
       let filtered = categoryList?.filter((parent) => parent?.slug === catSlug);
       keyCat = getPlainCatList(filtered);

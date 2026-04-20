@@ -7,38 +7,40 @@ import { blurDataURL } from "@/lib/helpers/blurData";
 
 const SubCat = ({ slug }) => {
   let { catPlain, catNested } = useAuth();
-  let catItem =
-    catPlain?.length && catPlain?.find((item) => item.slug === slug);
+  let catItem = catPlain?.length && catPlain.find((item) => item.slug === slug);
 
   let subCat =
     slug === "all-categories"
       ? catNested
-      : catItem && catPlain?.filter((item) => item.parentId === catItem._id);
+      : catItem && catPlain.filter((item) => item.parentId === catItem._id);
   return (
-    <div className="flex my-2 flex-wrap ">
-      {subCat?.length ? (
-        subCat?.map((item) => (
-          <div key={item._id} className=" px-2 ">
-            <div className="p-2">
-              <Link href={`/products/category/${item?.slug}`} className="">
-                <Image
-                  src={item?.picture?.secure_url}
-                  blurDataURL={blurDataURL()}
-                  placeholder="blur"
-                  priority={true}
-                  className="w-32 min-h-20 h-15 m-auto object-contain"
-                  width={200}
-                  height={100}
-                  alt=""
-                />
-                <p className=" text-center">{item?.name} </p>
-              </Link>
+    <div className={subCat?.length ? "" : "hidden"}>
+      <h4 className=" uppercase">{slug}</h4>
+      <div className="grid grid-cols-2 my-2 md:flex md:flex-wrap ">
+        {subCat?.length ? (
+          subCat.map((item) => (
+            <div key={item._id} className=" px-2 ">
+              <div className="p-2">
+                <Link href={`/products/category/${item?.slug}`} className="">
+                  <Image
+                    src={item?.picture?.secure_url}
+                    blurDataURL={blurDataURL()}
+                    placeholder="blur"
+                    priority={true}
+                    className="w-32 min-h-20 h-15 m-auto object-contain"
+                    width={200}
+                    height={100}
+                    alt=""
+                  />
+                  <p className=" text-center">{item?.name} </p>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))
-      ) : (
-        <></>
-      )}
+          ))
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };

@@ -41,7 +41,6 @@
     "@biomejs/biome": "2.2.0",
     "@tailwindcss/postcss": "^4",
     "babel-plugin-react-compiler": "1.0.0",
-    "daisyui": "^5.5.19",
     "tailwindcss": "^4"
   }
 }

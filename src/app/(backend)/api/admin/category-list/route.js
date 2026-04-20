@@ -17,6 +17,7 @@ export async function GET(req) {
     const categoryList = await CategoryModel.find({
       $or: [{ name: { $regex: keyword, $options: "i" } }],
     })
+      .populate("parentId", "name", CategoryModel)
       .skip(skip)
       .limit(perPage)
       .sort({ createdAt: -1 });
