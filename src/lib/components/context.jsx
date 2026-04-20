@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     setUserInfo(null);
     setToken(null);
     router.refresh("/");
-    swalModal("You have been logged out");
+    swalModal("You have been logged out", "success", false);
   };
   //=================================
   let autoLogout = () => {

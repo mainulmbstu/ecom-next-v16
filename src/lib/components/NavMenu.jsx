@@ -10,12 +10,19 @@ import { useAuth } from "./context";
 import Image from "next/image";
 import { FaMoon } from "react-icons/fa";
 import { GoSun } from "react-icons/go";
+import { useIdleTimer } from "react-idle-timer";
 
 const NavMenu = () => {
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [drop2, setdrop2] = useState(false);
   const [mounted, setMounted] = useState(false);
   let { userInfo, logout, cart } = useAuth();
+  // idle logout
+  useIdleTimer({
+    timeout: 15 * 60 * 1000, // 15 minutes
+    onIdle: () => userInfo && logout(),
+    debounce: 500,
+  });
 
   useEffect(() => {
     setMounted(true);
