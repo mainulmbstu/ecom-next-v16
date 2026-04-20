@@ -3,9 +3,9 @@ import Swal from "sweetalert2";
 export const swalModal = (
   message = "Successsful",
   icon = "success",
-  timer = 3000,
+  timer = icon === "error" ? false : 3000,
 ) => {
-  console.log(timer);
+  let eTimer = icon === "error" ? false : timer;
   return Swal.fire({
     icon: icon, // warning, info, question, error
     text: message,
