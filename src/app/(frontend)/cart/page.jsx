@@ -6,9 +6,9 @@ import { Axios } from "@/lib/helpers/AxiosInstance";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { checkoutAction } from "./action";
 import SubmitButton from "@/lib/components/SubmitButton";
 import Form from "next/form";
+import { sslInitiatePayment } from "../action-payment/initiate-payment";
 
 export const CartPage = () => {
   let { userInfo, cart, setCart } = useAuth();
@@ -147,13 +147,16 @@ export const CartPage = () => {
       if (!selectedCart.length)
         return alert("No item has been selected for check out");
       setLoading(true);
-      let { data } = await Axios.post(`/api/user/checkout/checkout-ssl`, {
-        cart: selectedCart,
-        total,
-      });
+      let data = await sslInitiatePayment(total);
+      // let { data } = await Axios.post(`/api/user/checkout/checkout-ssl`, {
+      //   cart: selectedCart,
+      //   total,
+      // });
 
       console.log(data);
-      // router.push(data?.sslcz?.baseURL);
+      if (data?.status === "SUCCESS") {
+        router.push(data?.GatewayPageURL);
+      }
     } catch (error) {
       console.log(error);
     } finally {
