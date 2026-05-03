@@ -4,8 +4,8 @@ import { handleIpn } from "@/app/(frontend)/action-payment/sslcommerz/ipn";
 
 // ─── Route config ─────────────────────────────────────────────────────────
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+// export const runtime = "nodejs";
+// export const dynamic = "force-dynamic";
 
 // ─── In-memory idempotency guard ──────────────────────────────────────────
 // NOTE: resets on cold start — for multi-instance deployments back this
