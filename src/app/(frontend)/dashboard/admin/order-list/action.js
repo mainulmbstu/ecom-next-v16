@@ -3,6 +3,7 @@
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { OrderModel } from "@/lib/models/OrderModel";
+import { ProductModel } from "@/lib/models/productModel";
 import { revalidatePath, updateTag } from "next/cache";
 const {
   createPayment,
@@ -70,22 +71,29 @@ export const bkashRefund = async (editItem) => {
   let paymentID = value?.payment?.payment_id;
   let trxID = value?.payment?.trxn_id;
   let amount = value?.total;
+  const refundDetails = {
+    paymentID,
+    trxID,
+    amount,
+  };
   try {
-    const refundDetails = {
-      paymentID,
-      trxID,
-      amount,
-    };
     const result = await refundTransaction(bkashConfig, refundDetails);
     if (result?.statusCode === "0000") {
       await dbConnect();
-      await OrderModel.findOneAndUpdate(
+      let updated = await OrderModel.findOneAndUpdate(
         { "payment.trxn_id": trxID },
-        { "payment.refund": "refunded" },
-        { new: true },
+        { "payment.status": "refunded" },
+        { returnDocument: "after" },
       );
-      // revalidatePath("/dashboard/admin/order-list");
-      updateTag("order-list");
+
+      if (updated.isModified) {
+        for (let v of updated.products) {
+          let product = await ProductModel.findById(v._id);
+          product.quantity = product.quantity + v.amount;
+          await product.save();
+        }
+      }
+
       return {
         success: true,
         message: `BDT ${amount} has been refunded successfully`,
@@ -100,8 +108,12 @@ export const bkashRefund = async (editItem) => {
   } catch (error) {
     console.log(error);
     return { message: await getErrorMessage(error) };
+  } finally {
+    updateTag("order-list");
+    updateTag("product-list");
   }
 };
+
 //=========================================
 export const deleteAction = async (id = "") => {
   try {

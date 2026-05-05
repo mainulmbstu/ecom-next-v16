@@ -14,9 +14,13 @@ const orderSchema = new mongoose.Schema(
       payment_method: { type: Object },
       ssl_trxn_details: { type: Object },
       trxn_id: { type: String },
-      refund: { type: String },
       bkashNo: { type: String },
-      status: { type: Boolean, default: false },
+      status: {
+        type: String,
+        default: "FAILED",
+        // enum: ["Paid", "Processing", "shipped", "delivered", "cancelled"],
+      },
+      refund_ref_id: { type: String },
     },
 
     user: {
@@ -29,7 +33,7 @@ const orderSchema = new mongoose.Schema(
       enum: ["Not Process", "Processing", "shipped", "delivered", "cancelled"],
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const OrderModel =

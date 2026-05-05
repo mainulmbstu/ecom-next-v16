@@ -38,11 +38,11 @@ export async function GET(req, res) {
       let updated = await OrderModel.findOneAndUpdate(
         { "payment.payment_id": paymentID },
         {
-          "payment.status": true,
+          "payment.status": "PAID",
           "payment.trxn_id": result?.trxID,
           "payment.bkashNo": result?.customerMsisdn,
         },
-        { new: true },
+        { returnDocument: "after" },
       );
       if (updated.isModified) {
         for (let v of updated.products) {
@@ -59,14 +59,16 @@ export async function GET(req, res) {
       };
     // You may use here WebSocket, server-sent events, or other methods to notify your client
     if (response?.statusCode === "0000") {
-      redirect(`/products/payment/success?paymentID=${paymentID}`);
+      redirect(`/payment/success?tran_id=${result?.trxID}`);
     } else {
       await OrderModel.findOneAndDelete({
         "payment.payment_id": paymentID,
       });
-      redirect(`/products/payment/fail?paymentID=${paymentID}`);
+      redirect(`/payment/fail?tran_id=${result?.trxID || ""}`);
     }
   } catch (error) {
+    // if u use redirect in try block
+    if (error.message === "NEXT_REDIRECT") throw error;
     console.log(error);
     if (error.message === "NEXT_REDIRECT") throw error;
     return Response.json({ message: await getErrorMessage(error) });

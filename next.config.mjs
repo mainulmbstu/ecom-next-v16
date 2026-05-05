@@ -1,10 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
+  // async rewrites() {
+  //    return [
+  //      {
+  //        source: '/api/external/:path*',
+  //        destination: 'https://external-service.com*', // The real API URL
+  //      },
+  //    ];
+  //  },
   reactCompiler: true,
   // eslint: {
   //   dirs: ["app", "lib"], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   // },
+  allowedDevOrigins: ["reprise-spied-retold.ngrok-free.dev"],
   cacheComponents: true,
   experimental: {
     // serverComponentsHmrCache: false,

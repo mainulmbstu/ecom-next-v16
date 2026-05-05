@@ -6,6 +6,7 @@ import Form from "next/form";
 import SubmitButton from "@/lib/components/SubmitButton";
 import { swalModal } from "@/lib/helpers/swalModal";
 import { bkashRefund } from "./action";
+import { SSLInitiateRefund } from "@/app/(frontend)/cart/action-payment/sslcommerz/refunds";
 
 const RefundModal = ({
   editItem,
@@ -29,7 +30,10 @@ const RefundModal = ({
   let clientAction = async () => {
     try {
       setLoading(true);
-      let data = await bkashRefund(editItem);
+      let data = value?.payment?.payment_id
+        ? await bkashRefund(editItem)
+        : await SSLInitiateRefund(editItem);
+
       if (data?.success) {
         setpaymentInfo(data?.result);
         swalModal(data?.message);
@@ -60,7 +64,7 @@ const RefundModal = ({
     <div className="">
       <button
         type="button"
-        disabled={loading || value?.payment?.refund}
+        disabled={loading || value?.payment?.status === "refunded"}
         className={`btn disabled:text-gray-400 ${design} `}
         onClick={() => setIsOpen(true)}
       >
@@ -80,14 +84,20 @@ const RefundModal = ({
             {title}
           </div>
           <h6 className={paymentInfo ? "hidden" : ""}>
-            Refund BDT {value?.total} to BkashNo {value?.payment?.bkashNo}?
+            {value?.payment?.bkashNo
+              ? `Refund BDT ${value?.total} to BkashNo ${value?.payment?.bkashNo}`
+              : `Refund BDT ${value?.total} to the respective account`}
           </h6>
           <div className=" p-2  bg-base-300">
             <div className="text-start"> {info()}</div>
             <Form action={clientAction} className="">
               <div className="mt-3 relative">
                 <div className="flex">
-                  <SubmitButton title={"Submit"} design={"btn-primary"} />
+                  <SubmitButton
+                    title={"Submit"}
+                    design={"btn-primary"}
+                    disable={value?.payment?.status === "refunded"}
+                  />
                 </div>
               </div>
             </Form>

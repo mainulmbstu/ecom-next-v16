@@ -1,25 +1,32 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import Form from "next/form";
 import SubmitButton from "@/lib/components/SubmitButton";
 import { swalModal } from "@/lib/helpers/swalModal";
 import { bkashQuery, bkashSearch } from "./action";
+import { SSLQueryTransactionByTranId } from "@/app/(frontend)/cart/action-payment/sslcommerz/queries";
+import { SSLQueryRefundStatus } from "@/app/(frontend)/cart/action-payment/sslcommerz/refunds";
 
 const InfoModal = ({
   editItem,
   title = "Edit",
   design = "btn-link text-blue-600",
 }) => {
-  let payAction = title === "Search" ? bkashSearch : bkashQuery;
+  let payAction =
+    title === "Search" ? bkashSearch : title === "Query" ? bkashQuery : "";
+  let SSLAction =
+    title === "Refund Info"
+      ? SSLQueryRefundStatus
+      : SSLQueryTransactionByTranId;
+
   let value = editItem && JSON.parse(editItem);
   const [isOpen, setIsOpen] = useState(false);
   let [loading, setLoading] = useState(false);
   let [paymentInfo, setpaymentInfo] = useState("");
 
   const inputRef = useRef(null);
-
+  // console.log(value);
   useEffect(() => {
     if (isOpen) {
       // Focus the input when the modal opens
@@ -30,11 +37,14 @@ const InfoModal = ({
   let clientAction = async () => {
     try {
       setLoading(true);
-      let data = await payAction(
-        title === "Search"
-          ? value?.payment?.trxn_id
-          : value?.payment?.payment_id,
-      );
+      let data = value?.payment?.payment_id
+        ? await payAction(
+            title === "Search"
+              ? value?.payment?.trxn_id
+              : value?.payment?.payment_id,
+          )
+        : await SSLAction(editItem);
+
       if (data?.success) {
         setpaymentInfo(data?.result);
       } else {

@@ -18,11 +18,11 @@ const NavMenu = () => {
   const [mounted, setMounted] = useState(false);
   let { userInfo, logout, cart } = useAuth();
   // idle logout
-  useIdleTimer({
-    timeout: 15 * 60 * 1000, // 15 minutes
-    onIdle: () => userInfo && logout(),
-    debounce: 500,
-  });
+  // useIdleTimer({
+  //   timeout: 15 * 60 * 1000, // 15 minutes
+  //   onIdle: () => userInfo && logout(),
+  //   debounce: 500,
+  // });
 
   useEffect(() => {
     setMounted(true);

@@ -8,13 +8,14 @@ export async function GET(req) {
   // "use cache:private";
   // cacheLife("days");
   // cacheTag("order-list");
+
   let keyword = req.nextUrl.searchParams.get("keyword");
   let page = req.nextUrl.searchParams.get("page");
   let perPage = req.nextUrl.searchParams.get("perPage");
   let skip = (page - 1) * perPage;
   try {
     await dbConnect();
-    await OrderModel.deleteMany({ "payment.status": false });
+    // await OrderModel.deleteMany({ "payment.status": "FAILED" });
     const searchUser = await UserModel.find(
       {
         $or: [
@@ -27,14 +28,14 @@ export async function GET(req) {
     const total = await OrderModel.find({
       $or: [
         { status: { $regex: keyword, $options: "i" } },
-        { user: searchUser[0]?._id },
+        { user: searchUser?.at(0)?._id },
       ],
     });
 
     const orderList = await OrderModel.find({
       $or: [
         { status: { $regex: keyword, $options: "i" } },
-        { user: searchUser[0]?._id },
+        { user: searchUser?.at(0)?._id },
       ],
     })
       .populate("user", { password: 0 }, UserModel)

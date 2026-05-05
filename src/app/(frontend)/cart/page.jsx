@@ -8,7 +8,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import SubmitButton from "@/lib/components/SubmitButton";
 import Form from "next/form";
-import { sslInitiatePayment } from "../action-payment/initiate-payment";
+import { sslInitiatePayment } from "./action-payment/initiate-payment";
+import { swalModal } from "@/lib/helpers/swalModal";
 
 export const CartPage = () => {
   let { userInfo, cart, setCart } = useAuth();
@@ -147,15 +148,20 @@ export const CartPage = () => {
       if (!selectedCart.length)
         return alert("No item has been selected for check out");
       setLoading(true);
-      let data = await sslInitiatePayment(total);
+      let data = await sslInitiatePayment(JSON.stringify(selectedCart), total);
       // let { data } = await Axios.post(`/api/user/checkout/checkout-ssl`, {
       //   cart: selectedCart,
       //   total,
       // });
 
-      console.log(data);
+      // console.log(data);
       if (data?.status === "SUCCESS") {
         router.push(data?.GatewayPageURL);
+      } else {
+        swalModal(
+          data?.message ?? "Payment gateway unreachable. Please try again.",
+          "error",
+        );
       }
     } catch (error) {
       console.log(error);
@@ -214,7 +220,7 @@ export const CartPage = () => {
                             item?.picture &&
                             `${item?.picture.at(0)?.secure_url}`
                           }
-                          className="h-50 w-auto"
+                          className="h-50 w-auto object-contain"
                           height={190}
                           width={190}
                           alt="image"

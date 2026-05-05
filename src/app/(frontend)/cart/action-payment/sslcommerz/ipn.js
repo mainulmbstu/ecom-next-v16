@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { validatePayment } from "./payments";
 import { rateLimit } from "./rate-limit";
+import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 
 // ──────────────────────────────────────────────────────────────────────────────
 
@@ -57,48 +58,46 @@ export function verifyIpnSignature(payload, storePasswd) {
   return true;
 }
 //=======================================
-export async function handleIpn(
-  payload,
-  storeId,
-  storePasswd,
-  env = "sandbox",
-  request,
-) {
-  if (request && (await rateLimit(request))) {
-    return { valid: false, data: null, reason: "Too many requests" };
+export async function handleIpn(payload, storeId, storePasswd, request) {
+  try {
+    if (request && (await rateLimit(request))) {
+      return { valid: false, data: null, reason: "Too many requests" };
+    }
+
+    if (payload.status !== "VALID") {
+      return {
+        valid: false,
+        data: null,
+        reason: `Transaction status is ${payload.status}`,
+      };
+    }
+
+    const signatureOk = verifyIpnSignature(payload, storePasswd);
+
+    console.log("IPN signature verification:", signatureOk);
+
+    if (!signatureOk) {
+      return { valid: false, data: null, reason: "IPN signature mismatch" };
+    }
+
+    const data = await validatePayment(
+      payload.val_id,
+      storeId,
+      storePasswd,
+      request,
+    );
+
+    if (data.status !== "VALID" && data.status !== "VALIDATED") {
+      return {
+        valid: false,
+        data,
+        reason: `Validation API returned status: ${data.status}`,
+      };
+    }
+
+    return { valid: true, data };
+  } catch (error) {
+    console.log(error);
+    return { message: await getErrorMessage(error) };
   }
-
-  if (payload.status !== "VALID") {
-    return {
-      valid: false,
-      data: null,
-      reason: `Transaction status is ${payload.status}`,
-    };
-  }
-
-  const signatureOk = verifyIpnSignature(payload, storePasswd);
-
-  console.log("IPN signature verification:", signatureOk);
-
-  if (!signatureOk) {
-    return { valid: false, data: null, reason: "IPN signature mismatch" };
-  }
-
-  const data = await validatePayment(
-    payload.val_id,
-    storeId,
-    storePasswd,
-    env,
-    request,
-  );
-
-  if (data.status !== "VALID" && data.status !== "VALIDATED") {
-    return {
-      valid: false,
-      data,
-      reason: `Validation API returned status: ${data.status}`,
-    };
-  }
-
-  return { valid: true, data };
 }

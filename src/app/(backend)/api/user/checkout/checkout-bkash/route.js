@@ -26,7 +26,7 @@ export async function POST(req) {
 
   try {
     await dbConnect();
-    let tempId = Date.now();
+    let tempId = `trxn_${Date.now()}_${Math.floor(Math.random() * 8000) + 1000}`;
     let order = {
       products: cart,
       total,

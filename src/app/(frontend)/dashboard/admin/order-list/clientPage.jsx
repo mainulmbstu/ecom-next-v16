@@ -33,12 +33,7 @@ const ClientPage = ({ item }) => {
         onClick={() => {
           printAddress();
         }}
-        className={
-          item?.payment?.refund === "refunded"
-            ? "text-gray-400"
-            : "btn btn-link text-blue-600"
-        }
-        disabled={item?.payment?.refund === "refunded"}
+        className={"btn btn-link text-blue-600"}
       >
         Print
       </button>

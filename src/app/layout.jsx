@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
             </Suspense>
             <Suspense fallback={<h2>Loading</h2>}></Suspense>
             <Offline />
-            <div className="pt-22  dark:text-slate-300 dark:bg-black">
+            <div className="pt-25  dark:text-slate-300 dark:bg-black">
               <NestedCategory />
               <div className="">{children}</div>
               <div className="">{<Footer />}</div>

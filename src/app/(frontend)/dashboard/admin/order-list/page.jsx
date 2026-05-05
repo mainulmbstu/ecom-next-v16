@@ -11,7 +11,6 @@ import InfoModal from "./InfoModal";
 import RefundModal from "./RefundModal";
 import SubmitButton from "@/lib/components/SubmitButton";
 import DateSSR2 from "@/lib/components/DateSSR2";
-import blurimg from "@/assets/blurr.webp";
 import { blurDataURL } from "@/lib/helpers/blurData";
 
 export const metadata = {
@@ -20,6 +19,7 @@ export const metadata = {
 };
 const Orders = async ({ searchParams }) => {
   let spms = await searchParams;
+
   let keyword = (await spms?.keyword) ?? "";
   let page = Number((await spms?.page) ?? "1");
   let perPage = Number((await spms?.perPage) ?? "12");
@@ -90,13 +90,7 @@ const Orders = async ({ searchParams }) => {
                       <td>{item?.user?.email} </td>
                       <td>{item?.user?.phone} </td>
                       <td>{item?.user?.address} </td>
-                      <td>
-                        {item?.payment?.refund === "refunded"
-                          ? "Refunded"
-                          : item?.payment?.status === true
-                            ? "Success"
-                            : "Failed"}
-                      </td>
+                      <td>{item?.payment?.status}</td>
                       <td>{item?.payment?.payment_id ? "Bkash" : "SSL"} </td>
                       <td>{item?.products?.length} </td>
                       <td>{<PriceFormat price={item.total} />} </td>
@@ -110,7 +104,7 @@ const Orders = async ({ searchParams }) => {
                       <td>
                         <InfoModal
                           editItem={JSON.stringify(item)}
-                          title="query"
+                          title="Query"
                         />
                       </td>
                       <td>
@@ -121,10 +115,25 @@ const Orders = async ({ searchParams }) => {
                       </td>
 
                       <td>
-                        <RefundModal
+                        {item.payment?.status === "refunded" ? (
+                          <InfoModal
+                            editItem={JSON.stringify(item)}
+                            title="Refund Info"
+                          />
+                        ) : (
+                          <RefundModal
+                            editItem={JSON.stringify(item)}
+                            title="Refund"
+                          />
+                        )}
+                        {/* <RefundModal
                           editItem={JSON.stringify(item)}
-                          title={item.payment?.refund ? "Refunded" : "Refund"}
-                        />
+                          title={
+                            item.payment?.status === "refunded"
+                              ? "Refunded"
+                              : "Refund"
+                          }
+                        />*/}
                       </td>
                       {/* <td>
                         <RefundModal
