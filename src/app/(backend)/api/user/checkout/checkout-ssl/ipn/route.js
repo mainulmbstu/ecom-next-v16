@@ -304,6 +304,6 @@ export async function POST(req) {
 
 // ─── GET handler ──────────────────────────────────────────────────────────
 
-export async function GET() {
-  return badRequest("Method not allowed", 405);
-}
+// export async function GET() {
+//   return badRequest("Method not allowed", 405);
+// }
