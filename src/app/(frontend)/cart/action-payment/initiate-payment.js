@@ -38,7 +38,7 @@ export const sslInitiatePayment = async (selectedCart, total) => {
       currency: "BDT",
       tran_id: tranId,
 
-      success_url: `${baseurl}/payment/success?tran_id=${tranId}`,
+      success_url: `https://ecom-next-v16.vercel.app/payment/success?tran_id=${tranId}`,
       fail_url: `${baseurl}/payment/fail?tran_id=${tranId}`,
       cancel_url: `${baseurl}/payment/cancel?tran_id=${tranId}`,
       ipn_url: `${baseurl}/api/user/checkout/checkout-ssl/ipn`,
