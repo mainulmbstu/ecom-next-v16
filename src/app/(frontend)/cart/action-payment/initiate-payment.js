@@ -40,8 +40,9 @@ export const sslInitiatePayment = async (selectedCart, total) => {
 
       success_url: `${baseurl}/payment/success?tran_id=${tranId}`,
       fail_url: `${baseurl}/payment/fail?tran_id=${tranId}`,
-      cancel_url: `${baseurl}/payment/cancel?tran_id=${tranId}`,
-      // ipn_url: `${baseurl}/api/user/checkout/checkout-ssl/ipn`,
+      cancel_url: `${baseurl}`,
+      // cancel_url: `${baseurl}/payment/cancel?tran_id=${tranId}`,
+      ipn_url: `${baseurl}/api/user/checkout/checkout-ssl/ipn`,
 
       product_name: cart?.map((item) => item.name).toString(),
       product_category: "general",
