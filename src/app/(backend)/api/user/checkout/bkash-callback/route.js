@@ -5,7 +5,7 @@ import { ProductModel } from "@/lib/models/productModel";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 const {
-  createPayment,
+  // createPayment,
   executePayment,
   queryPayment,
   searchTransaction,
