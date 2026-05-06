@@ -4,6 +4,7 @@ import { handleIpn } from "@/app/(frontend)/cart/action-payment/sslcommerz/ipn";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { OrderModel } from "@/lib/models/OrderModel";
+import { redirect } from "next/navigation";
 
 // ─── Route config ─────────────────────────────────────────────────────────
 
@@ -285,18 +286,20 @@ export async function POST(req) {
     // ── Write to database ────────────────────────────────────────────────────
 
     const dbResult = await onValidatedPayment(ipnResult.data, payload);
-
     if (!dbResult?.ok) {
       // Allow SSLCommerz to retry on genuine errors
       processedValIds.delete(payload.val_id);
       return badRequest(dbResult.reason ?? "DB update failed");
     }
-
+    // console.log(ipnResult.data, 555555555, payload);
+    // redirect(`/payment/fail?tran_id=${"result?.trxID" || ""}`);
     return Response.json(
       { ok: true, message: "IPN accepted" },
       { status: 200, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
+    // if u use redirect in try block
+    if (error.message === "NEXT_REDIRECT") throw error;
     console.log(error);
     return { message: await getErrorMessage(error) };
   }
