@@ -299,7 +299,7 @@ export async function POST(req) {
     );
   } catch (error) {
     // if u use redirect in try block
-    if (error.message === "NEXT_REDIRECT") throw error;
+    // if (error.message === "NEXT_REDIRECT") throw error;
     console.log(error);
     return { message: await getErrorMessage(error) };
   }
