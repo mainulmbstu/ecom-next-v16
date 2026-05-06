@@ -38,7 +38,7 @@ function getClientIp(req) {
 
 function isClientIpAllowed(req) {
   // const allowlistRaw = process.env.SSLCOMMERZ_IPN_ALLOWLIST.trim();
-  const allowlistRaw = "103.26.139.87,103.26.139.81,103.26.139.148";
+  const allowlistRaw = "";
   if (!allowlistRaw) return true;
 
   const allowedIps = allowlistRaw
