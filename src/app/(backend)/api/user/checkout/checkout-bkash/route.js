@@ -13,7 +13,7 @@ const {
 
 export async function POST(req) {
   let data = await req.json();
-  const { cart, total, callbackURL } = data;
+  const { cart, total, charge, callbackURL } = data;
   let { userInfo } = await getTokenData(await getCookieValue("token"));
 
   const bkashConfig = {
@@ -29,7 +29,8 @@ export async function POST(req) {
     let tempId = `trxn_${Date.now()}_${Math.floor(Math.random() * 8000) + 1000}`;
     let order = {
       products: cart,
-      total,
+      total: total + charge,
+      charge,
       payment: {
         payment_id: tempId,
       },
@@ -39,7 +40,7 @@ export async function POST(req) {
     let orderSaved = await OrderModel.findOne({ "payment.payment_id": tempId });
 
     const paymentDetails = {
-      amount: total || 1, // your product price
+      amount: total+charge || 1, // your product price
       callbackURL: process.env.BASE_URL + callbackURL, // your callback route
       orderID: orderSaved?._id || "Order_101", // your orderID
       reference: orderSaved?.total || "1", // your reference

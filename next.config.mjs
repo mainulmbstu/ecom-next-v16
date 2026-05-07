@@ -13,11 +13,7 @@ const nextConfig = {
   // eslint: {
   //   dirs: ["app", "lib"], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   // },
-  allowedDevOrigins: [
-    "reprise-spied-retold.ngrok-free.dev",
-    "https://ecom-next-v16.vercel.app",
-    "https://sandbox.sslcommerz.com",
-  ],
+  allowedDevOrigins: ["reprise-spied-retold.ngrok-free.dev"],
   cacheComponents: true,
   experimental: {
     // serverComponentsHmrCache: false,

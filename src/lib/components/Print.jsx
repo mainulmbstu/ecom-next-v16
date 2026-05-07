@@ -46,6 +46,7 @@ const Print = ({ printItem }, ref) => {
               <th scope="col">#</th>
               <th scope="col">Product Name</th>
               <th scope="col">Color</th>
+              <th scope="col">Size</th>
               <th scope="col">Unit Price</th>
               <th scope="col">Quantity</th>
               <th scope="col">Sub-Total</th>
@@ -59,6 +60,7 @@ const Print = ({ printItem }, ref) => {
                   <td>{i + 1}</td>
                   <td>{item.name}</td>
                   <td>{item.color?.at(0) ?? "N/A"}</td>
+                  <td>{item.size?.at(0) ?? "N/A"}</td>
                   <td>
                     {
                       <PriceFormat
@@ -86,8 +88,18 @@ const Print = ({ printItem }, ref) => {
             )}
           </tbody>
         </table>
+        <hr />
+        <div className="flex  justify-end pe-5">
+          <p>
+            Total product price:{" "}
+            {<PriceFormat price={printItem.total - printItem.charge} />}
+          </p>
+        </div>
+        <div className="flex  justify-end pe-5">
+          <p>Delivery charge: {<PriceFormat price={printItem.charge} />}</p>
+        </div>
         <div className="flex justify-end pe-5">
-          <h4>Total Price: {<PriceFormat price={printItem.total} />}</h4>
+          <h4>Grand Total: {<PriceFormat price={printItem.total} />}</h4>
         </div>
       </div>
     </div>

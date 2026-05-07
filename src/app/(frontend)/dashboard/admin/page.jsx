@@ -1,5 +1,5 @@
-import Page2 from "@/lib/components/adminDashboard/page2";
-import React from "react";
+import AdminDashboardPage from "@/lib/components/adminDashboard/AdminDashboard";
+
 export const metadata = {
   title: "Admin Dashboard",
   description: "Admin Dashboard page",
@@ -7,7 +7,7 @@ export const metadata = {
 const AdminDashboard = () => {
   return (
     <div>
-      <Page2 />
+      <AdminDashboardPage />
     </div>
   );
 };

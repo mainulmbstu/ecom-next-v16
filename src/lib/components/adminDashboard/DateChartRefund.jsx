@@ -6,15 +6,15 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 import moment from "moment";
 import { useEffect, useState } from "react";
 
-const DateChart = ({ dateTotalProds }) => {
-  let dateTotalProdsObj = {};
+const DateChartRefund = ({ dateTotalProdsRefund }) => {
+  let dateTotalProdsRefundObj = {};
   let ordersObj = {};
 
-  if (dateTotalProds.length) {
-    for (let item of dateTotalProds) {
+  if (dateTotalProdsRefund?.length) {
+    for (let item of dateTotalProdsRefund) {
       let date = moment(new Date(item.createdAt)).format("yyyy-MM-DD-dd");
-      dateTotalProdsObj[date] =
-        (dateTotalProdsObj[date] || 0) + item.total - item.charge;
+      dateTotalProdsRefundObj[date] =
+        (dateTotalProdsRefundObj[date] || 0) + item.total - item.charge;
 
       ordersObj[date] = (ordersObj[date] || 0) + 1;
     }
@@ -47,7 +47,7 @@ const DateChart = ({ dateTotalProds }) => {
               color: "green",
             },
           },
-          categories: Object.keys(dateTotalProdsObj),
+          categories: Object.keys(dateTotalProdsRefundObj),
         },
         // yaxis: {
         //   title: { text: "Total Sale in $" },
@@ -63,7 +63,7 @@ const DateChart = ({ dateTotalProds }) => {
       series1: [
         {
           name: "Total Sale",
-          data: Object.values(dateTotalProdsObj),
+          data: Object.values(dateTotalProdsRefundObj),
           // color:"#546E7A",
         },
       ],
@@ -75,13 +75,13 @@ const DateChart = ({ dateTotalProds }) => {
         },
       ],
     });
-  }, [dateTotalProds]);
+  }, [dateTotalProdsRefund]);
   return (
     <div>
       {" "}
       <div>
         <div>
-          <h4>Total Sale statistics by date</h4>
+          <h4>Total refund statistics by date</h4>
           {state && state?.series1 && (
             <Chart
               options={state?.options}
@@ -93,7 +93,7 @@ const DateChart = ({ dateTotalProds }) => {
           )}
         </div>
         <div>
-          <h4>Total successful orders by date</h4>
+          <h4>Total refund orders by date</h4>
           {state && state?.series2 && (
             <Chart
               options={state?.options}
@@ -109,4 +109,4 @@ const DateChart = ({ dateTotalProds }) => {
   );
 };
 
-export default DateChart;
+export default DateChartRefund;

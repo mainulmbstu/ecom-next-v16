@@ -4,6 +4,7 @@ import { handleIpn } from "@/app/(frontend)/cart/action-payment/sslcommerz/ipn";
 import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 import { OrderModel } from "@/lib/models/OrderModel";
+import { ProductModel } from "@/lib/models/productModel";
 import { redirect } from "next/navigation";
 
 // ─── Route config ─────────────────────────────────────────────────────────
@@ -117,7 +118,7 @@ async function onValidatedPayment(data, rawPayload) {
   try {
     let id = data.value_a;
     await dbConnect();
-    await OrderModel.findByIdAndUpdate(
+    let updated = await OrderModel.findByIdAndUpdate(
       id,
       {
         "payment.status":
@@ -128,6 +129,13 @@ async function onValidatedPayment(data, rawPayload) {
         returnDocument: "after",
       },
     );
+    if (updated.isModified) {
+      for (let v of updated.products) {
+        let product = await ProductModel.findById(v._id);
+        product.quantity = product.quantity - v.amount;
+        await product.save();
+      }
+    }
     // if (!order) {
     //   console.error(`[IPN] Order not found for tran_id: ${data.tran_id}`);
     //   return { ok: false, reason: "Order not found" };

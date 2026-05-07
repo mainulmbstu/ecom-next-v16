@@ -16,7 +16,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { swalModal } from "@/lib/helpers/swalModal";
 
-const LoginForm = () => {
+const LoginForm = ({ children }) => {
   let { setToken, setUserInfo } = useAuth();
   let router = useRouter();
   const [showpass, setShowPass] = useState(false);
@@ -43,6 +43,7 @@ const LoginForm = () => {
       </div>
       <div className="w-9/10 grid place-items-center">
         <h2>Login Form</h2>
+
         <Form
           action={clientAction}
           className=" p-4 w-full md:w-4/5 lg:w-3/5 bg-base-300 max-w-100 "
@@ -94,6 +95,7 @@ const LoginForm = () => {
               design={"btn-black w-full animate-pulse"}
             />
           </div>
+
           <div className="mt-3 text-end">
             <Link
               href={"/user/forgot-password"}
@@ -109,6 +111,9 @@ const LoginForm = () => {
             </Link>
           </p>
         </Form>
+        <div className="w-full md:w-4/5 lg:w-3/5 bg-base-300 max-w-100">
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const Status = ({ status, id }) => {
   let { userInfo } = useAuth();
   let [loading, setLoading] = useState(false);
   //   let [value, setValue] = useState('');
-  let roleHandle = async (value, id) => {
+  let statusHandle = async (value, id) => {
     try {
       if (userInfo?._id === id) {
         return swalModal("You cannot update yourself", "error");
@@ -19,17 +19,19 @@ const Status = ({ status, id }) => {
       let data = await StatusAction(value, id);
       setLoading(false);
       if (data?.success) {
-        toast.success(data?.message);
+        swalModal(data?.message);
+        // toast.success(data?.message);
       }
     } catch (error) {
-      toast.error(error?.message);
+      swalModal(error?.message, "error");
+      // toast.error(error?.message);
       console.log(error);
     }
   };
   return (
     <div>
       <select
-        onChange={(e) => roleHandle(e.target.value, id)}
+        onChange={(e) => statusHandle(e.target.value, id)}
         defaultValue={status}
         name="role"
         className="input-000 w-30"

@@ -8,7 +8,7 @@ import dbConnect from "@/lib/helpers/dbConnect";
 import { getErrorMessage } from "@/lib/helpers/getErrorMessage";
 
 // ── 5. Call SSLCommerz session API ───────────────────────────────────────
-export const sslInitiatePayment = async (selectedCart, total) => {
+export const sslInitiatePayment = async (selectedCart, total, charge) => {
   let cart = JSON.parse(selectedCart);
   let baseurl = process.env.BASE_URL;
   const request = new Request(baseurl);
@@ -21,7 +21,8 @@ export const sslInitiatePayment = async (selectedCart, total) => {
     await dbConnect();
     let orderData = {
       products: cart,
-      total,
+      total: total + charge,
+      charge,
       payment: {
         trxn_id: tranId,
       },
@@ -34,7 +35,7 @@ export const sslInitiatePayment = async (selectedCart, total) => {
       store_id: process.env.STORE_ID,
       store_passwd: process.env.STORE_PASS,
 
-      total_amount: total,
+      total_amount: total + charge,
       currency: "BDT",
       tran_id: tranId,
 

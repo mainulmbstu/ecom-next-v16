@@ -68,8 +68,7 @@ export async function GET(req, res) {
     }
   } catch (error) {
     // if u use redirect in try block
-    if (error.message === "NEXT_REDIRECT") throw error;
-    console.log(error);
+
     if (error.message === "NEXT_REDIRECT") throw error;
     return Response.json({ message: await getErrorMessage(error) });
   } finally {

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const PaymentStatus = async ({ params }) => {
   let { paymentStatus } = await params;
-  if (paymentStatus === "cancelled") {
+  if (paymentStatus === "cancel") {
     return (
       <div className=" text-center mt-5 bg-red-500  mx-auto p-4 text-white">
         <h2> Sorry payment cancelled</h2>

@@ -9,8 +9,9 @@ import { Axios } from "@/lib/helpers/AxiosInstance";
 import Swal from "sweetalert2";
 import TopSellingChart from "./TopSellingChart";
 import DateChart from "./DateChart";
+import DateChartRefund from "./DateChartRefund";
 
-const Page2 = () => {
+const AdminDashboardPage = () => {
   let [endDate, setEndDate] = useState(new Date());
   let stDate = new Date(new Date(endDate) - 30 * 24 * 3600000);
   let [startDate, setStartDate] = useState(new Date(stDate));
@@ -18,6 +19,7 @@ const Page2 = () => {
   let [totalSaleToday, setTotalSaleToday] = useState("");
   let [topProds, setTopProds] = useState([]);
   let [dateTotalProds, setDateTotalProds] = useState([]);
+  let [dateTotalProdsRefund, setDateTotalProdsRefund] = useState([]);
   let [timeDiff, setTimeDiff] = useState({ days: "", hrs: "", mins: "" });
   const [head, setHead] = useState(false);
 
@@ -45,6 +47,7 @@ const Page2 = () => {
       setTotalSaleToday(data?.totalSaleToday);
       setTopProds(data?.topProds);
       setDateTotalProds(data?.dateTotalProds);
+      setDateTotalProdsRefund(data?.dateTotalProdsRefund);
       // Swal.fire("Success", data?.message, "success");
       //   toast.success(data?.message);
     } else {
@@ -91,7 +94,7 @@ const Page2 = () => {
           <div className="mt-3">
             <SubmitButton
               title={"Click to get today's Data"}
-              design={"btn-neutral"}
+              design={"btn-black"}
             />
           </div>
         </Form>
@@ -124,7 +127,7 @@ const Page2 = () => {
               </label>
 
               <div className="mt-3">
-                <SubmitButton title={"Submit"} design={"btn-accent"} />
+                <SubmitButton title={"Submit"} design={"btn-primary"} />
               </div>
             </Form>
           </div>
@@ -143,9 +146,12 @@ const Page2 = () => {
         <div className="col-span-2 border">
           <DateChart dateTotalProds={dateTotalProds} />
         </div>
+        <div className="col-span-2 border">
+          <DateChartRefund dateTotalProdsRefund={dateTotalProdsRefund} />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Page2;
+export default AdminDashboardPage;

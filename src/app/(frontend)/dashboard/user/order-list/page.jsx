@@ -58,7 +58,8 @@ const Orders = async ({ searchParams }) => {
                     <th scope="col">Payment</th>
                     <th scope="col">Method</th>
                     <th scope="col">Item</th>
-                    <th scope="col">Total Price</th>
+                    <th scope="col">Total Paid</th>
+                    <th scope="col">Delivey charge</th>
                     <th scope="col">Order Date</th>
                   </tr>
                 </thead>
@@ -67,16 +68,11 @@ const Orders = async ({ searchParams }) => {
                     <tr key={item?._id} className="bg-zinc-100 text-center">
                       <td>{item?.status} </td>
                       <td>{item?.user?.email} </td>
-                      <td>
-                        {item?.payment?.refund === "refunded"
-                          ? "Refunded"
-                          : item?.payment?.status === true
-                            ? "Success"
-                            : "Failed"}
-                      </td>
+                      <td> {item?.payment?.status}</td>
                       <td>{item?.payment?.payment_id ? "Bkash" : "SSL"} </td>
                       <td>{item?.products?.length} </td>
                       <td>{<PriceFormat price={item.total} />} </td>
+                      <td>{<PriceFormat price={item.charge} />} </td>
                       <td>
                         <DateSSR2 date={item?.createdAt} time={true} />
                       </td>

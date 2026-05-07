@@ -10,12 +10,14 @@ import SubmitButton from "@/lib/components/SubmitButton";
 import Form from "next/form";
 import { sslInitiatePayment } from "./action-payment/initiate-payment";
 import { swalModal } from "@/lib/helpers/swalModal";
+import { deliveryArea } from "@/lib/helpers/constants";
 
 export const CartPage = () => {
   let { userInfo, cart, setCart } = useAuth();
   let [selectedCart, setSelectedCart] = useState([]);
   let [loading, setLoading] = useState(false);
   let [gateway, setGateway] = useState("");
+  let [charge, setcharge] = useState(100);
   let router = useRouter();
   let path = usePathname();
   // console.log(path);
@@ -131,6 +133,7 @@ export const CartPage = () => {
       let { data } = await Axios.post(`/api/user/checkout/checkout-bkash`, {
         cart: selectedCart,
         total,
+        charge,
         callbackURL: `/api/user/checkout/bkash-callback`,
       });
       router.push(data?.bkashURL);
@@ -148,7 +151,11 @@ export const CartPage = () => {
       if (!selectedCart.length)
         return alert("No item has been selected for check out");
       setLoading(true);
-      let data = await sslInitiatePayment(JSON.stringify(selectedCart), total);
+      let data = await sslInitiatePayment(
+        JSON.stringify(selectedCart),
+        total,
+        charge,
+      );
       // let { data } = await Axios.post(`/api/user/checkout/checkout-ssl`, {
       //   cart: selectedCart,
       //   total,
@@ -347,59 +354,151 @@ export const CartPage = () => {
           <h5>Cart Summary</h5>
           <p>Total || Checkout || Payment</p>
           <hr />
-          <h2>Total: {<PriceFormat price={total} />}</h2>
-          <hr />
-          {userInfo?.name ? (
-            <>
-              <h6>Current Address</h6>
-              <p>{userInfo?.address} </p>
-              <button
-                type="submit"
-                onClick={() =>
-                  router.push(
-                    userInfo?.role === "admin"
-                      ? "/dashboard/admin/profile"
-                      : "/dashboard/user/profile",
-                  )
-                }
-                className="btn btn-primary"
+          <div className="mb-5">
+            {userInfo?.name ? (
+              <>
+                <h6>Current Address</h6>
+                <p>{userInfo?.address} </p>
+                <button
+                  type="submit"
+                  onClick={() =>
+                    router.push(
+                      userInfo?.role === "admin"
+                        ? "/dashboard/admin/profile"
+                        : "/dashboard/user/profile",
+                    )
+                  }
+                  className="btn btn-primary"
+                >
+                  Update address
+                </button>
+              </>
+            ) : (
+              <div>
+                <button
+                  type="submit"
+                  onClick={() => router.push(`/user/login?lastPath=${path}`)}
+                  className="btn btn-indigo"
+                >
+                  Please login to checkout
+                </button>
+              </div>
+            )}
+          </div>
+          <div>
+            <p>Select delivery area</p>
+            {deliveryArea?.map((area, index) => (
+              <div
+                key={index}
+                className="mt-3 flex  border p-1 border-slate-300"
               >
-                Update address
-              </button>
-            </>
-          ) : (
-            <div>
-              <button
-                type="submit"
-                onClick={() => router.push(`/user/login?lastPath=${path}`)}
-                className="btn btn-indigo"
-              >
-                Please login to checkout
-              </button>
+                <div>
+                  <input
+                    checked={ charge === area.charge}
+                    onChange={(e) => setcharge(Number(e.target.value))}
+                    value={area.charge}
+                    className="size-4 mt-1"
+                    type="radio"
+                    id={`area-${index}`}
+                    name="area"
+                    required
+                  />
+                  <label className="ms-2 pb-2" htmlFor={`area-${index}`}>
+                    {area.area}
+                  </label>
+                </div>
+                <p className="ms-auto">{<PriceFormat price={area.charge} />}</p>
+              </div>
+            ))}
+            {/* <div className="mt-3 flex  border p-1 border-slate-300">
+              <div>
+                <input
+                  onChange={(e) => setcharge(Number(e.target.value))}
+                  value={50}
+                  className="size-4 mt-1"
+                  type="radio"
+                  id="area"
+                  name="area"
+                  required
+                />
+                <label className="ms-2 pb-2" htmlFor="area">
+                  Inside Dhaka city
+                </label>
+              </div>
+              <p className="ms-auto">{<PriceFormat price={50} />}</p>
             </div>
-          )}
+            <div className="mt-3 flex  border p-1 border-slate-300">
+              <div>
+                <input
+                  onChange={(e) => setcharge(Number(e.target.value))}
+                  value={80}
+                  className="size-4 mt-1"
+                  type="radio"
+                  id="area2"
+                  name="area"
+                  required
+                />{" "}
+                <label className="ms-2 pb-2" htmlFor="area2">
+                  Outside Dhaka city
+                </label>
+              </div>
+              <p className="ms-auto">{<PriceFormat price={80} />}</p>
+            </div>
+            <div className="mt-3 flex  border p-1 border-slate-300">
+              <div>
+                <input
+                  checked={charge === 100}
+                  onChange={(e) => setcharge(Number(e.target.value))}
+                  value={100}
+                  className="size-4 mt-1"
+                  type="radio"
+                  id="area3"
+                  name="area"
+                  required
+                />
+                <label className="ms-2 pb-2" htmlFor="area3">
+                  Outside Dhaka district
+                </label>
+              </div>
+              <p className="ms-auto">{<PriceFormat price={100} />}</p>
+            </div>*/}
+          </div>
+          <div className=" text-right pe-3 mt-3">
+            <p>Product price: {<PriceFormat price={total} />}</p>
+            <p>Delivery charge: {<PriceFormat price={charge} />}</p>
+            <h6>Total: {<PriceFormat price={total + charge} />}</h6>
+          </div>
+          <hr />
+          <p>Select a payment method</p>
+
           <div className="">
-            <div className="flex ms-20 space-x-3  mt-3">
+            <div className="mt-3 flex  border p-1 border-slate-300">
               <input
-                className=" size-5"
+                className=" size-4 mt-1"
                 onChange={() => setGateway("bkash")}
                 type="radio"
                 id="Bkash"
                 name="same"
                 // checked={user.gender === "Male"}
               />
-              <label htmlFor="Bkash"> Bkash</label>
+              <label className="ms-2" htmlFor="Bkash">
+                {" "}
+                Bkash Payment
+              </label>
             </div>
-            <div className="flex ms-20 space-x-3  mt-3">
+            <div className="mt-3 flex  border p-1 border-slate-300">
               <input
-                className=" size-5"
+                className=" size-4 mt-1"
                 onChange={() => setGateway("ssl")}
                 type="radio"
                 id="ssl"
                 name="same"
                 // checked={user.gender === "Male"}
               />
-              <label htmlFor="ssl"> SSL</label>
+              <label className="ms-2" htmlFor="ssl">
+                {" "}
+                SSL Payment
+              </label>
             </div>
           </div>
           {userInfo && cart?.length && gateway === "ssl" ? (

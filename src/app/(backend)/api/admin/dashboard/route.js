@@ -16,10 +16,16 @@ export async function POST(req) {
     await dbConnect();
     const orders = await OrderModel.find({
       createdAt: { $gte: sdate, $lte: edate },
+      "payment.status": { $ne: "refunded" },
     });
     const dateTotalProds = await OrderModel.find({
       createdAt: { $gte: sdate, $lte: edate },
-    }).select({ total: 1, createdAt: 1, products: 1 });
+      "payment.status": { $ne: "refunded" },
+    }).select({ total: 1, charge: 1, createdAt: 1, products: 1 });
+    const dateTotalProdsRefund = await OrderModel.find({
+      createdAt: { $gte: sdate, $lte: edate },
+      "payment.status": "refunded",
+    }).select({ total: 1, charge: 1, createdAt: 1, products: 1 });
     //==========================
     // total product list
     let list = [];
@@ -31,7 +37,9 @@ export async function POST(req) {
     //===== top 5 products
     let result = {};
     list.forEach((item) => {
-      result[item.name] = (result[item.name] || 0) + item.price;
+      result[item.name] =
+        (result[item.name] || 0) +
+        (item.price - (item.price * item.offer) / 100);
     });
     let resultArr = [];
     for (let k in result) {
@@ -45,16 +53,20 @@ export async function POST(req) {
     //==============
     const ordersToday = await OrderModel.find({
       createdAt: { $gte: today, $lte: todayNow },
+      "payment.status": { $ne: "refunded" },
     });
     let totalSaleToday =
       ordersToday?.length &&
       ordersToday.reduce((previous, current) => {
-        return previous + current.total;
+        return previous + current.total - current?.charge;
       }, 0);
 
     let totalSale =
       orders?.length &&
-      orders.reduce((previous, current) => previous + current.total, 0);
+      orders.reduce(
+        (previous, current) => previous + current.total - current?.charge,
+        0,
+      );
 
     if (!totalSale || totalSale?.length === 0) {
       return Response.json({ msg: "No data found" });
@@ -62,6 +74,7 @@ export async function POST(req) {
 
     return Response.json({
       dateTotalProds,
+      dateTotalProdsRefund,
       topProds,
       totalSaleToday,
       totalSale,
