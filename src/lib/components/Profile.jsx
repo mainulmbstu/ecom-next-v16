@@ -33,7 +33,6 @@ const Profile = () => {
       });
       if (data?.success) {
         setUserInfo("");
-        setProgress(0);
         router.push("/user/login");
         swalModal(data?.message);
         // toast.success(data?.message);

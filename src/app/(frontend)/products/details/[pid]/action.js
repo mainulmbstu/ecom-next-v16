@@ -101,7 +101,7 @@ export const likeAction = async (pid) => {
 export const commentAction = async (pid, formData) => {
   let comment = formData.get("review");
   let { userInfo } = await getTokenData(await getCookieValue("token"));
-  console.log(comment);
+
   try {
     if (!userInfo) {
       throw new Error("User is not authenticated");

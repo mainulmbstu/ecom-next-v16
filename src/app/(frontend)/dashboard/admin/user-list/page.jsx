@@ -7,8 +7,8 @@ import Link from "next/link";
 import DeleteModal from "@/lib/components/DeleteModal";
 import { deleteAction } from "./action";
 import SubmitButton from "@/lib/components/SubmitButton";
-import blurimg from "@/assets/blurr.webp";
 import DateSSR2 from "@/lib/components/DateSSR2";
+import { blurDataURL } from "@/lib/helpers/blurData";
 
 export const metadata = {
   title: "User List",
@@ -78,7 +78,7 @@ const Users = async ({ searchParams }) => {
                   <td>
                     <Link href={item.picture?.secure_url} target="_blank">
                       <Image
-                        blurDataURL={blurimg?.blurDataURL}
+                        blurDataURL={blurDataURL}
                         placeholder="blur"
                         priority={true}
                         className="w-8 h-auto mx-auto"

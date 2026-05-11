@@ -18,12 +18,12 @@ const Card = async ({ item }) => {
       <div className=" shadow-xl h-full flex flex-col cursor-pointer hover:bg-zinc-400 bg-zinc-300 dark:bg-base-300 p-1">
         <figure className=" h-40 md:max-h-80 relative">
           <Image
+            src={item?.picture?.at(0)?.secure_url}
             priority={true}
             // fill
             // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             blurDataURL={blurDataURL()}
             placeholder="blur"
-            src={item?.picture?.at(0)?.secure_url}
             className=" object-contain h-40 w-auto mx-auto"
             alt="image"
             width={200}

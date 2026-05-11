@@ -37,37 +37,42 @@ export const generateMetadata = async ({ params }) => {
   };
 };
 
-const details = async ({ params }) => {
+const Details = async ({ params }) => {
   // console.log(search);
   let { pid } = await params;
   let { details } = await detailsAction(pid);
   let like = await likeStatusAction(pid);
   let subLikeAction = likeAction.bind(null, pid);
 
+  if (!details) return null;
   return (
     <div className="md:px-4">
       <div className="">
         <div className="">
           <div className="">
             <ImagePage picture={details?.picture} />
-            <div className=" pe-3 flex justify-end items-center mt-2 ">
-              <span>{like ? "You liked this ||" : ""} </span>{" "}
-              <Form className="px-3" action={subLikeAction}>
-                <SubmitButton
-                  disable={like?.status}
-                  design={"btn-link"}
-                  title={
-                    <GrLike
-                      className={
-                        like
-                          ? " text-3xl  me-3 text-blue-400"
-                          : "text-black  me-3"
-                      }
-                    />
-                  }
-                />
-              </Form>
-              Like: {details?.like} || Review: {details?.review} ||
+            <div className=" pe-3 flex flex-wrap md:justify-end items-center mt-2 ">
+              <div className="flex items-center">
+                <span>{like ? "You liked this ||" : ""} </span>{" "}
+                <Form className="px-3" action={subLikeAction}>
+                  <SubmitButton
+                    disable={like?.status}
+                    design={"btn-link"}
+                    title={
+                      <GrLike
+                        className={
+                          like
+                            ? " text-3xl  me-3 text-blue-400"
+                            : "text-black  me-3"
+                        }
+                      />
+                    }
+                  />
+                </Form>
+              </div>
+              <div>
+                Like: {details?.like} || Review: {details?.review} ||
+              </div>
             </div>
             <div className="">
               <div>
@@ -150,4 +155,4 @@ const details = async ({ params }) => {
   );
 };
 
-export default details;
+export default Details;
