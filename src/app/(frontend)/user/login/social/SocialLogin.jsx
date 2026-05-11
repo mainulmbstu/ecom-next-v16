@@ -24,11 +24,6 @@ const SocialLoginPage = async () => {
           />
         </div>
       </form>
-      <form action={doLogout}>
-        <div className="mt-3">
-          <SubmitButton title={"Logout"} design={"btn-error  cursor-pointer"} />
-        </div>
-      </form>
     </div>
   );
 };
