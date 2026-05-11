@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [catPlain, setCatPlain] = useState([]);
   const [catNested, setCatNested] = useState("");
   const [cart, setCart] = useState([]);
-  const [loginExpireTime, setLoginExpireTime] = useState(24 * 60 * 60 * 1000);
+  const [loginExpireTime, setLoginExpireTime] = useState(0);
   let router = useRouter();
 
   let getUserInfo = async () => {
@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
   };
   //=================================
   let autoLogout = () => {
+    if (!loginExpireTime) return;
     const timeoutId = setTimeout(() => {
       logout();
     }, loginExpireTime - Date.now());
